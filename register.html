@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register / Enquire — Wadkile Abhyasika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">Wadkile Abhyasika</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="facilities.html">Facilities</a>
+    <a href="pricing.html">Fees</a>
+    <a href="register.html" aria-current="page">Register</a>
+    <a href="contact.html">Visit</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="kicker">Study point &middot; Gangakhed</div>
+  <h1>Register or enquire</h1>
+  <p class="tagline">Fill this in and we'll get back to you, usually within a day.</p>
+</header>
+
+<main class="page">
+  <section class="section">
+    <h2>Your details</h2>
+
+    <form id="reg-form" class="reg-form" action="https://formsubmit.co/rohitwadkile@gmail.com" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_subject" value="New enquiry — Wadkile Abhyasika website">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="thankyou.html">
+      <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off">
+
+      <div class="field">
+        <label>What is this for?</label>
+        <div class="radio-row">
+          <label class="radio-option">
+            <input type="radio" name="Purpose" value="New registration" checked>
+            New registration
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="Purpose" value="General enquiry">
+            General enquiry
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="Name" required>
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone number</label>
+        <input type="tel" id="phone" name="Phone" required pattern="[0-9+ ]{10,15}">
+      </div>
+
+      <div class="field">
+        <label for="seat">Seat preference</label>
+        <select id="seat" name="Seat preference">
+          <option value="Non-AC — ₹600/month">Non-AC — ₹600 / month</option>
+          <option value="AC — ₹800/month">AC — ₹800 / month</option>
+          <option value="Not sure yet">Not sure yet</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="id-photo">Upload identity photo (optional, for registration)</label>
+        <input type="file" id="id-photo" name="Identity photo" accept="image/jpeg,image/png,image/jpg,application/pdf">
+        <span class="field-hint">JPEG, PNG or PDF, up to 5 MB</span>
+      </div>
+
+      <div class="field">
+        <label for="aadhar-photo">Upload Aadhaar card photo (optional, for registration)</label>
+        <input type="file" id="aadhar-photo" name="Aadhaar card photo" accept="image/jpeg,image/png,image/jpg,application/pdf">
+        <span class="field-hint">JPEG, PNG or PDF, up to 5 MB</span>
+      </div>
+
+      <div class="field">
+        <label for="message">Anything else you'd like to tell us (optional)</label>
+        <textarea id="message" name="Message" placeholder="Preferred timing, exam you're preparing for, questions, etc."></textarea>
+      </div>
+
+      <p class="privacy-note">Documents you upload are used only to verify your registration and are not shared with anyone else.</p>
+
+      <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+
+      <p id="form-msg" class="form-msg" hidden></p>
+    </form>
+
+    <p class="note">Prefer to skip the form? Call or WhatsApp us at <a href="tel:+919764841142">9764841142</a>.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="biz-name">Wadkile Abhyasika</div>
+  <div>Dr. Lane, Gangakhed — open daily, 8 AM to 11 PM</div>
+  <div class="credit">Site by Panchganga IT Services and Solutions</div>
+</footer>
+
+<div class="sticky-bar">
+  <a class="btn btn-primary" href="tel:+919764841142">Call now</a>
+  <a class="btn btn-secondary" href="https://wa.me/919764841142" target="_blank" rel="noopener">WhatsApp</a>
+</div>
+
+<script>
+  const form = document.getElementById('reg-form');
+  const msg = document.getElementById('form-msg');
+
+  form.addEventListener('submit', function (e) {
+    msg.hidden = true;
+    msg.classList.remove('success', 'error');
+
+    const maxSize = 5 * 1024 * 1024; // 5 MB
+    const fileFields = [
+      { input: document.getElementById('id-photo'), label: 'Identity photo' },
+      { input: document.getElementById('aadhar-photo'), label: 'Aadhaar card photo' }
+    ];
+
+    for (const { input, label } of fileFields) {
+      const file = input.files[0];
+      if (file && file.size > maxSize) {
+        e.preventDefault();
+        msg.textContent = `${label} is too large (max 5 MB). Please choose a smaller file or compress it.`;
+        msg.classList.add('error');
+        msg.hidden = false;
+        return;
+      }
+    }
+
+    // Validation passed — let the browser submit the form normally so file
+    // attachments upload correctly. FormSubmit will redirect to thankyou.html.
+    const submitBtn = form.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+  });
+</script>
+
+</body>
+</html>

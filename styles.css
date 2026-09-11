@@ -1,0 +1,583 @@
+:root {
+  --ink-900: #16222c;
+  --ink-800: #1e313f;
+  --brass: #c9973f;
+  --brass-soft: #e0b96a;
+  --paper: #f2ece0;
+  --rule: rgba(22, 34, 44, 0.16);
+  --ink-text: #20262b;
+  --max-w: 720px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-text);
+  font-family: 'Work Sans', sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, .display {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+/* ---------- Nav ---------- */
+
+.nav {
+  background: var(--ink-900);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  padding: 1rem 1.5rem;
+}
+
+.nav-brand {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 1.02rem;
+  text-decoration: none;
+  color: var(--paper);
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.3rem;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: rgba(242,236,224,0.72);
+  font-size: 0.92rem;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover {
+  color: var(--paper);
+}
+
+.nav-links a[aria-current="page"] {
+  color: var(--paper);
+  border-bottom-color: var(--brass);
+}
+
+/* ---------- Hero (home only) ---------- */
+
+.hero {
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--ink-800) 0%, var(--ink-900) 65%);
+  color: var(--paper);
+  padding: 4.5rem 1.5rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  width: 520px;
+  height: 520px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(201,151,63,0.35) 0%, rgba(201,151,63,0) 70%);
+  opacity: 0;
+  animation: glow-in 1.8s ease-out forwards;
+}
+
+@keyframes glow-in {
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::before { animation: none; opacity: 1; }
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.kicker {
+  font-size: 0.92rem;
+  color: var(--brass-soft);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 6vw, 3.1rem);
+  line-height: 1.15;
+}
+
+.hero p.tagline {
+  margin-top: 1.1rem;
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  color: rgba(242,236,224,0.86);
+  max-width: 40ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-row {
+  margin-top: 2.2rem;
+  display: flex;
+  gap: 0.9rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 3px;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.98rem;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+  background: var(--brass);
+  color: var(--ink-900);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(242,236,224,0.4);
+}
+
+.hero-address {
+  margin-top: 1.8rem;
+  font-size: 0.92rem;
+  color: rgba(242,236,224,0.65);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink-900);
+  border: 1px solid var(--ink-900);
+}
+
+.btn-outline:hover {
+  background: var(--ink-900);
+  color: var(--paper);
+}
+
+.action-row {
+  display: flex;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin-top: 1.6rem;
+}
+
+/* ---------- Page header (inner pages) ---------- */
+
+.page-header {
+  background: radial-gradient(ellipse 80% 100% at 50% 0%, var(--ink-800) 0%, var(--ink-900) 70%);
+  color: var(--paper);
+  padding: 3rem 1.5rem 2.6rem;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+}
+
+.page-header p.tagline {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  color: rgba(242,236,224,0.8);
+}
+
+/* ---------- Page sections (ruled notebook feel) ---------- */
+
+.page {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 3.4rem 1.5rem;
+}
+
+.section {
+  border-left: 2px solid var(--brass);
+  padding-left: 1.5rem;
+  margin-bottom: 3.2rem;
+}
+
+.section:last-child { margin-bottom: 0; }
+
+.section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.3rem;
+}
+
+.rule-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rule-list li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 1.02rem;
+}
+
+.rule-list li:last-child { border-bottom: none; }
+
+/* ---------- Fee chart ---------- */
+
+.fee-chart {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fee-chart td {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 1.02rem;
+}
+
+.fee-chart td:last-child {
+  text-align: right;
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--ink-900);
+}
+
+.fee-chart tr:last-child td {
+  border-bottom: none;
+  color: #5a5347;
+  font-size: 0.92rem;
+}
+
+.fee-chart tr:last-child td:last-child {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 500;
+  color: #5a5347;
+  font-size: 0.92rem;
+}
+
+.note {
+  margin-top: 1rem;
+  font-size: 0.92rem;
+  color: #5a5347;
+}
+
+.note a {
+  border-bottom: 1px solid var(--brass);
+  text-decoration: none;
+}
+
+/* ---------- Hours ---------- */
+
+.hours-line {
+  font-size: 1.15rem;
+  font-family: 'Lora', serif;
+}
+
+.hours-sub {
+  margin-top: 0.4rem;
+  color: #5a5347;
+  font-size: 0.95rem;
+}
+
+/* ---------- Contact ---------- */
+
+.contact-block p {
+  margin: 0.3rem 0;
+}
+
+.contact-numbers {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.contact-numbers a {
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid var(--brass);
+  width: fit-content;
+}
+
+.map-link {
+  display: inline-block;
+  margin-top: 1.1rem;
+  font-size: 0.92rem;
+  color: #5a5347;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Registration / enquiry form ---------- */
+
+.reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  margin-top: 0.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.field label {
+  font-size: 0.92rem;
+  color: #5a5347;
+}
+
+.field input,
+.field select,
+.field textarea {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1rem;
+  padding: 0.55rem 0;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink-text);
+  outline: none;
+  border-radius: 0;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-bottom-color: var(--brass);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+  font-family: inherit;
+}
+
+.radio-row {
+  display: flex;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.98rem;
+}
+
+.radio-option input[type="radio"] {
+  accent-color: var(--brass);
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.field input[type="file"] {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.6rem 0;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink-text);
+}
+
+.field input[type="file"]::file-selector-button {
+  margin-right: 0.8rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 3px;
+  border: 1px solid var(--brass);
+  background: transparent;
+  color: var(--ink-900);
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.field input[type="file"]::file-selector-button:hover {
+  background: var(--brass);
+  color: var(--paper);
+}
+
+.field-hint {
+  font-size: 0.82rem;
+  color: #8a8271;
+}
+
+.privacy-note {
+  font-size: 0.85rem;
+  color: #5a5347;
+  max-width: 52ch;
+}
+
+.honey {
+  position: absolute;
+  left: -9999px;
+}
+
+.form-msg {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.form-msg.success { color: #3f6b3f; }
+.form-msg.error { color: #8a3b3b; }
+.form-msg[hidden] { display: none; }
+
+.submit-btn {
+  align-self: flex-start;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+  background: var(--ink-900);
+  color: rgba(242,236,224,0.55);
+  text-align: center;
+  padding: 2.2rem 1.5rem 6rem;
+  font-size: 0.85rem;
+}
+
+footer .biz-name {
+  color: var(--paper);
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+footer .credit {
+  margin-top: 1.4rem;
+  font-size: 0.78rem;
+  color: rgba(242,236,224,0.35);
+}
+
+/* ---------- Sticky mobile action bar ---------- */
+
+.sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ink-900);
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+
+.sticky-bar .btn {
+  flex: 1;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  font-size: 0.92rem;
+}
+
+@media (min-width: 640px) {
+  .sticky-bar { display: none; }
+  footer { padding-bottom: 2.2rem; }
+}
+
+/* ---------- Forms ---------- */
+
+form { margin-top: 0.4rem; }
+
+.field {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field label {
+  font-size: 0.92rem;
+  color: #5a5347;
+}
+
+.field input,
+.field select,
+.field textarea {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: #fffdf8;
+  color: var(--ink-text);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+  border-color: var(--brass);
+}
+
+button.btn {
+  cursor: pointer;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+}
+
+button.btn.btn-secondary {
+  border: 1px solid rgba(22,34,44,0.3);
+  background: transparent;
+  color: var(--ink-text);
+}
+
+.form-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.form-note {
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  color: #5a5347;
+}
