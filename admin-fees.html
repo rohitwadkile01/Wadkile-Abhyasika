@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +26,6 @@
   </div>
 </nav>
 
-
 <header class="page-header">
 
   <div class="kicker">
@@ -40,9 +40,7 @@
 
 </header>
 
-
 <main class="page">
-
 
 <!-- ============================= -->
 <!-- ADD STUDENT -->
@@ -64,10 +62,10 @@
         type="text"
         id="s-name"
         required
+        autocomplete="name"
       >
 
     </div>
-
 
     <div class="field">
 
@@ -80,11 +78,12 @@
         id="s-phone"
         required
         pattern="[0-9]{10}"
+        maxlength="10"
+        inputmode="numeric"
         placeholder="9876543210"
       >
 
     </div>
-
 
     <div class="field">
 
@@ -106,7 +105,6 @@
 
     </div>
 
-
     <div class="field">
 
       <label for="s-due">
@@ -123,7 +121,6 @@
 
   </form>
 
-
   <button
     type="button"
     id="add-btn"
@@ -133,8 +130,6 @@
   </button>
 
 </section>
-
-
 
 <!-- ============================= -->
 <!-- STUDENT LIST -->
@@ -158,14 +153,15 @@
 
   </div>
 
-
-  <div id="system-message" class="note" style="margin-top:15px;">
+  <div
+    id="system-message"
+    class="note"
+    style="margin-top:15px;"
+  >
     Loading students...
   </div>
 
-
   <div id="student-list"></div>
-
 
   <p
     id="empty-note"
@@ -177,10 +173,8 @@
 
 </section>
 
-
-
 <!-- ============================= -->
-<!-- BACKUP INFORMATION -->
+<!-- GOOGLE SHEET INFORMATION -->
 <!-- ============================= -->
 
 <section class="section">
@@ -196,10 +190,7 @@
 
 </section>
 
-
 </main>
-
-
 
 <footer>
 
@@ -217,8 +208,6 @@
 
 </footer>
 
-
-
 <script>
 
 /* =====================================================
@@ -234,13 +223,9 @@ const API_URL =
 ===================================================== */
 
 const PRICE = {
-
   "AC": 800,
-
   "Non-AC": 600
-
 };
-
 
 
 /* =====================================================
@@ -263,6 +248,11 @@ async function apiRequest(data) {
 
     });
 
+    if (!response.ok) {
+      throw new Error(
+        "Server returned HTTP " + response.status
+      );
+    }
 
     const result = await response.json();
 
@@ -272,15 +262,11 @@ async function apiRequest(data) {
 
   catch (error) {
 
-    console.error(error);
+    console.error("API Error:", error);
 
     return {
-
       success: false,
-
-      message:
-        "Unable to connect to Google Sheet."
-
+      message: "Unable to connect to Google Sheet."
     };
 
   }
@@ -288,22 +274,30 @@ async function apiRequest(data) {
 }
 
 
-
 /* =====================================================
-   GET STUDENTS
+   LOAD STUDENTS
 ===================================================== */
 
 async function loadStudents() {
 
-  showMessage("Loading students...");
-
+  showMessage("⏳ Loading students from Google Sheet...");
 
   try {
 
-    const response = await fetch(API_URL);
+    const response = await fetch(API_URL, {
+      method: "GET",
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Server returned HTTP " + response.status
+      );
+
+    }
 
     const result = await response.json();
-
 
     if (!result.success) {
 
@@ -313,23 +307,21 @@ async function loadStudents() {
 
     }
 
-
     renderStudents(result.students || []);
 
   }
 
   catch (error) {
 
-    console.error(error);
+    console.error("Load Error:", error);
 
     showMessage(
-      "❌ Unable to load students. Please refresh."
+      "❌ Unable to load students. Please refresh the page."
     );
 
   }
 
 }
-
 
 
 /* =====================================================
@@ -342,16 +334,11 @@ function formatDate(value) {
     return "Not set";
   }
 
-
   const date = new Date(value);
 
-
   if (isNaN(date.getTime())) {
-
-    return value;
-
+    return String(value);
   }
-
 
   return date.toLocaleDateString(
     "en-IN",
@@ -365,15 +352,14 @@ function formatDate(value) {
 }
 
 
-
 /* =====================================================
-   DUE DATE STATUS
+   PAYMENT STATUS
 ===================================================== */
 
 function getPaymentStatus(student) {
 
   if (
-    String(student.status).toLowerCase() !==
+    String(student.status || "").toLowerCase() !==
     "active"
   ) {
 
@@ -381,25 +367,19 @@ function getPaymentStatus(student) {
 
   }
 
-
   if (!student.dueDate) {
 
     return "no-date";
 
   }
 
+  const today = new Date();
 
-  const today =
-    new Date();
+  today.setHours(0, 0, 0, 0);
 
-  today.setHours(0,0,0,0);
+  const dueDate = new Date(student.dueDate);
 
-
-  const dueDate =
-    new Date(student.dueDate);
-
-  dueDate.setHours(0,0,0,0);
-
+  dueDate.setHours(0, 0, 0, 0);
 
   if (student.reminderSent === "Yes") {
 
@@ -407,28 +387,21 @@ function getPaymentStatus(student) {
 
   }
 
-
   if (dueDate < today) {
 
     return "overdue";
 
   }
 
-
-  if (
-    dueDate.getTime() ===
-    today.getTime()
-  ) {
+  if (dueDate.getTime() === today.getTime()) {
 
     return "due";
 
   }
 
-
   return "upcoming";
 
 }
-
 
 
 /* =====================================================
@@ -437,9 +410,7 @@ function getPaymentStatus(student) {
 
 function statusBadge(student) {
 
-  const status =
-    getPaymentStatus(student);
-
+  const status = getPaymentStatus(student);
 
   if (status === "left") {
 
@@ -451,7 +422,6 @@ function statusBadge(student) {
 
   }
 
-
   if (status === "overdue") {
 
     return `
@@ -461,7 +431,6 @@ function statusBadge(student) {
     `;
 
   }
-
 
   if (status === "due") {
 
@@ -473,7 +442,6 @@ function statusBadge(student) {
 
   }
 
-
   if (status === "reminded") {
 
     return `
@@ -484,6 +452,15 @@ function statusBadge(student) {
 
   }
 
+  if (status === "no-date") {
+
+    return `
+      <span class="badge badge-due">
+        No Due Date
+      </span>
+    `;
+
+  }
 
   return `
     <span class="badge badge-due">
@@ -494,7 +471,6 @@ function statusBadge(student) {
 }
 
 
-
 /* =====================================================
    WHATSAPP MESSAGE
 ===================================================== */
@@ -502,20 +478,19 @@ function statusBadge(student) {
 function buildMessage(student) {
 
   const fee =
-    student.seatType === "AC"
-      ? 800
-      : 600;
-
+    Number(student.fee) ||
+    PRICE[student.seatType] ||
+    0;
 
   const dueDate =
     formatDate(student.dueDate);
-
 
   return `नमस्कार ${student.name} जी,
 
 📚 *Wadkile Abhyasika – Monthly Fee Reminder*
 
 आपली monthly seat fee *₹${fee}* आहे.
+
 आपली fee payment due झाली आहे. कृपया आपली monthly fee लवकरात लवकर भरावी.
 
 💺 Seat Type: *${student.seatType}*
@@ -531,6 +506,7 @@ Hello ${student.name},
 📚 *Wadkile Abhyasika – Monthly Fee Reminder*
 
 Your monthly seat fee is *₹${fee}*.
+
 Your monthly fee is now due. Kindly make the payment at your earliest convenience.
 
 💺 Seat Type: *${student.seatType}*
@@ -544,7 +520,6 @@ Thank you for choosing *Wadkile Abhyasika*. 🙏`;
 }
 
 
-
 /* =====================================================
    RENDER STUDENTS
 ===================================================== */
@@ -552,38 +527,27 @@ Thank you for choosing *Wadkile Abhyasika*. 🙏`;
 function renderStudents(students) {
 
   const list =
-    document.getElementById(
-      "student-list"
-    );
-
+    document.getElementById("student-list");
 
   const emptyNote =
-    document.getElementById(
-      "empty-note"
-    );
-
+    document.getElementById("empty-note");
 
   list.innerHTML = "";
-
 
   if (!students.length) {
 
     emptyNote.hidden = false;
 
-    showMessage(
-      "No students found."
-    );
+    showMessage("No students found.");
 
     return;
 
   }
 
-
   emptyNote.hidden = true;
 
-
   showMessage(
-    `${students.length} student(s) loaded from Google Sheet.`
+    `✅ ${students.length} student(s) loaded from Google Sheet.`
   );
 
 
@@ -592,21 +556,23 @@ function renderStudents(students) {
     const card =
       document.createElement("div");
 
-
     card.className =
       "student-card";
 
 
+    /* ==========================
+       STUDENT INFORMATION
+    ========================== */
+
     const info =
       document.createElement("div");
-
 
     info.className =
       "student-info";
 
 
     const fee =
-      student.fee ||
+      Number(student.fee) ||
       PRICE[student.seatType] ||
       0;
 
@@ -618,11 +584,11 @@ function renderStudents(students) {
       </h3>
 
       <p>
-        ${escapeHtml(student.phone)}
+        📱 ${escapeHtml(student.phone)}
         ·
-        ${escapeHtml(student.seatType)}
+        💺 ${escapeHtml(student.seatType)}
         ·
-        ₹${fee}/month
+        💰 ₹${fee}/month
       </p>
 
       <p>
@@ -644,40 +610,39 @@ function renderStudents(students) {
     `;
 
 
+    /* ==========================
+       ACTIONS
+    ========================== */
+
     const actions =
       document.createElement("div");
-
 
     actions.className =
       "student-actions";
 
 
     /* ==========================
-       WHATSAPP
+       WHATSAPP BUTTON
     ========================== */
 
     const sendBtn =
       document.createElement("a");
 
-
     sendBtn.className =
       "btn btn-primary btn-small";
-
 
     sendBtn.target =
       "_blank";
 
-
     sendBtn.rel =
-      "noopener";
-
+      "noopener noreferrer";
 
     sendBtn.textContent =
       "💬 Send Reminder";
 
 
     const phone =
-      String(student.phone)
+      String(student.phone || "")
       .replace(/\D/g, "");
 
 
@@ -685,8 +650,30 @@ function renderStudents(students) {
       buildMessage(student);
 
 
-    sendBtn.href =
-      `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`;
+    if (phone.length === 10) {
+
+      sendBtn.href =
+        `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`;
+
+    }
+    else {
+
+      sendBtn.href = "#";
+
+      sendBtn.addEventListener(
+        "click",
+        event => {
+
+          event.preventDefault();
+
+          alert(
+            "Invalid 10-digit phone number."
+          );
+
+        }
+      );
+
+    }
 
 
     /* ==========================
@@ -696,20 +683,16 @@ function renderStudents(students) {
     const reminderBtn =
       document.createElement("button");
 
-
     reminderBtn.type =
       "button";
 
-
     reminderBtn.className =
       "btn btn-outline btn-small";
-
 
     reminderBtn.textContent =
       student.reminderSent === "Yes"
         ? "Reminder Sent ✓"
         : "Mark Sent";
-
 
     reminderBtn.disabled =
       student.reminderSent === "Yes";
@@ -769,14 +752,11 @@ function renderStudents(students) {
     const paidBtn =
       document.createElement("button");
 
-
     paidBtn.type =
       "button";
 
-
     paidBtn.className =
       "btn btn-outline btn-small";
-
 
     paidBtn.textContent =
       "💰 Mark Paid";
@@ -786,20 +766,18 @@ function renderStudents(students) {
       "click",
       async () => {
 
-        if (
-          !confirm(
+        const confirmed =
+          confirm(
             `Mark ${student.name}'s payment as paid?`
-          )
-        ) {
+          );
 
+        if (!confirmed) {
           return;
-
         }
 
 
         paidBtn.disabled =
           true;
-
 
         paidBtn.textContent =
           "Saving...";
@@ -849,10 +827,8 @@ function renderStudents(students) {
     const statusBtn =
       document.createElement("button");
 
-
     statusBtn.type =
       "button";
-
 
     statusBtn.className =
       "btn btn-outline btn-small";
@@ -872,6 +848,12 @@ function renderStudents(students) {
           student.status === "Active"
             ? "Left"
             : "Active";
+
+
+        statusBtn.disabled = true;
+
+        statusBtn.textContent =
+          "Saving...";
 
 
         const result =
@@ -902,6 +884,13 @@ function renderStudents(students) {
             "Status update failed."
           );
 
+          statusBtn.disabled = false;
+
+          statusBtn.textContent =
+            student.status === "Active"
+              ? "Set Left"
+              : "Set Active";
+
         }
 
       }
@@ -915,14 +904,11 @@ function renderStudents(students) {
     const removeBtn =
       document.createElement("button");
 
-
     removeBtn.type =
       "button";
 
-
     removeBtn.className =
       "remove-link";
-
 
     removeBtn.textContent =
       "Remove";
@@ -932,15 +918,21 @@ function renderStudents(students) {
       "click",
       async () => {
 
-        if (
-          !confirm(
+        const confirmed =
+          confirm(
             `Remove ${student.name} from Google Sheet?`
-          )
-        ) {
+          );
 
+        if (!confirmed) {
           return;
-
         }
+
+
+        removeBtn.disabled =
+          true;
+
+        removeBtn.textContent =
+          "Removing...";
 
 
         const result =
@@ -968,35 +960,31 @@ function renderStudents(students) {
             "Could not delete student."
           );
 
+          removeBtn.disabled =
+            false;
+
+          removeBtn.textContent =
+            "Remove";
+
         }
 
       }
     );
 
 
-    actions.appendChild(
-      sendBtn
-    );
+    /* ==========================
+       APPEND ACTIONS
+    ========================== */
 
+    actions.appendChild(sendBtn);
 
-    actions.appendChild(
-      reminderBtn
-    );
+    actions.appendChild(reminderBtn);
 
+    actions.appendChild(paidBtn);
 
-    actions.appendChild(
-      paidBtn
-    );
+    actions.appendChild(statusBtn);
 
-
-    actions.appendChild(
-      statusBtn
-    );
-
-
-    actions.appendChild(
-      removeBtn
-    );
+    actions.appendChild(removeBtn);
 
 
     card.appendChild(info);
@@ -1010,7 +998,6 @@ function renderStudents(students) {
 }
 
 
-
 /* =====================================================
    ADD STUDENT
 ===================================================== */
@@ -1020,6 +1007,19 @@ document
   .addEventListener(
     "click",
     async () => {
+
+      const form =
+        document.getElementById("student-form");
+
+
+      if (!form.checkValidity()) {
+
+        form.reportValidity();
+
+        return;
+
+      }
+
 
       const name =
         document
@@ -1047,14 +1047,19 @@ document
           .value;
 
 
-      if (
-        !name ||
-        !/^[0-9]{10}$/.test(phone) ||
-        !dueDate
-      ) {
+      if (!name) {
+
+        alert("Please enter student name.");
+
+        return;
+
+      }
+
+
+      if (!/^[0-9]{10}$/.test(phone)) {
 
         alert(
-          "Please enter name, 10-digit phone number and due date."
+          "Please enter exactly 10 digits for phone number."
         );
 
         return;
@@ -1062,15 +1067,21 @@ document
       }
 
 
+      if (!dueDate) {
+
+        alert("Please select due date.");
+
+        return;
+
+      }
+
+
       const button =
-        document.getElementById(
-          "add-btn"
-        );
+        document.getElementById("add-btn");
 
 
       button.disabled =
         true;
-
 
       button.textContent =
         "Adding...";
@@ -1100,7 +1111,6 @@ document
       button.disabled =
         false;
 
-
       button.textContent =
         "Add student";
 
@@ -1122,16 +1132,13 @@ document
       );
 
 
-      document
-        .getElementById("student-form")
-        .reset();
+      form.reset();
 
 
       await loadStudents();
 
     }
   );
-
 
 
 /* =====================================================
@@ -1146,9 +1153,8 @@ document
   );
 
 
-
 /* =====================================================
-   MESSAGE
+   SYSTEM MESSAGE
 ===================================================== */
 
 function showMessage(message) {
@@ -1158,12 +1164,10 @@ function showMessage(message) {
       "system-message"
     );
 
-
   element.textContent =
     message;
 
 }
-
 
 
 /* =====================================================
@@ -1182,7 +1186,6 @@ function escapeHtml(value) {
 }
 
 
-
 /* =====================================================
    START
 ===================================================== */
@@ -1193,3 +1196,4 @@ loadStudents();
 
 </body>
 </html>
+```
