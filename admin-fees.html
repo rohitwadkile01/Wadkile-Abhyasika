@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,10 +42,6 @@
 
 <main class="page">
 
-<!-- ============================= -->
-<!-- ADD STUDENT -->
-<!-- ============================= -->
-
 <section class="section">
 
   <h2>Add a student</h2>
@@ -52,10 +49,7 @@
   <form id="student-form" class="admin-form">
 
     <div class="field">
-
-      <label for="s-name">
-        Full name
-      </label>
+      <label for="s-name">Full name</label>
 
       <input
         type="text"
@@ -63,7 +57,6 @@
         required
         autocomplete="name"
       >
-
     </div>
 
     <div class="field">
@@ -93,11 +86,11 @@
       <select id="s-seat">
 
         <option value="Non-AC">
-          Non-AC — ₹800/month
+          Non-AC — ₹700/month
         </option>
 
         <option value="AC">
-          AC — ₹800/month
+          AC — ₹700/month
         </option>
 
       </select>
@@ -130,9 +123,6 @@
 
 </section>
 
-<!-- ============================= -->
-<!-- STUDENT LIST -->
-<!-- ============================= -->
 
 <section class="section">
 
@@ -172,9 +162,6 @@
 
 </section>
 
-<!-- ============================= -->
-<!-- GOOGLE SHEET INFORMATION -->
-<!-- ============================= -->
 
 <section class="section">
 
@@ -207,6 +194,7 @@
 
 </footer>
 
+
 <script>
 
 /* =====================================================
@@ -221,14 +209,112 @@ const API_URL =
    FEES
 ===================================================== */
 
+const MONTHLY_FEE = 700;
+
 const PRICE = {
-  "AC": 800,
-  "Non-AC": 600
+  "AC": 700,
+  "Non-AC": 700
 };
 
 
 /* =====================================================
-   API HELPER
+   LOAD STUDENTS
+   Uses JSONP because Google Apps Script redirects
+   ContentService responses and normal fetch can fail
+   because of browser CORS handling.
+===================================================== */
+
+function loadStudents() {
+
+  showMessage("⏳ Loading students from Google Sheet...");
+
+  const oldScript =
+    document.getElementById("students-api-script");
+
+  if (oldScript) {
+    oldScript.remove();
+  }
+
+  const callbackName =
+    "studentsCallback_" + Date.now();
+
+  window[callbackName] = function(result) {
+
+    try {
+
+      if (!result || !result.success) {
+
+        throw new Error(
+          result?.message || "Unable to load students."
+        );
+
+      }
+
+      renderStudents(result.students || []);
+
+    }
+
+    catch (error) {
+
+      console.error("Load Error:", error);
+
+      showMessage(
+        "❌ Unable to load students. Please refresh the page."
+      );
+
+    }
+
+    finally {
+
+      delete window[callbackName];
+
+      const script =
+        document.getElementById(
+          "students-api-script"
+        );
+
+      if (script) {
+        script.remove();
+      }
+
+    }
+
+  };
+
+
+  const script =
+    document.createElement("script");
+
+  script.id =
+    "students-api-script";
+
+  script.src =
+    API_URL +
+    "?callback=" +
+    encodeURIComponent(callbackName) +
+    "&t=" +
+    Date.now();
+
+  script.onerror = function() {
+
+    showMessage(
+      "❌ Unable to connect to Google Sheet API."
+    );
+
+    delete window[callbackName];
+
+    script.remove();
+
+  };
+
+
+  document.body.appendChild(script);
+
+}
+
+
+/* =====================================================
+   API POST
 ===================================================== */
 
 async function apiRequest(data) {
@@ -248,14 +334,14 @@ async function apiRequest(data) {
     });
 
     if (!response.ok) {
+
       throw new Error(
         "Server returned HTTP " + response.status
       );
+
     }
 
-    const result = await response.json();
-
-    return result;
+    return await response.json();
 
   }
 
@@ -265,58 +351,9 @@ async function apiRequest(data) {
 
     return {
       success: false,
-      message: "Unable to connect to Google Sheet."
+      message:
+        "Unable to connect to Google Sheet."
     };
-
-  }
-
-}
-
-
-/* =====================================================
-   LOAD STUDENTS
-===================================================== */
-
-async function loadStudents() {
-
-  showMessage("⏳ Loading students from Google Sheet...");
-
-  try {
-
-    const response = await fetch(API_URL, {
-      method: "GET",
-      cache: "no-store"
-    });
-
-    if (!response.ok) {
-
-      throw new Error(
-        "Server returned HTTP " + response.status
-      );
-
-    }
-
-    const result = await response.json();
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message || "Unable to load students."
-      );
-
-    }
-
-    renderStudents(result.students || []);
-
-  }
-
-  catch (error) {
-
-    console.error("Load Error:", error);
-
-    showMessage(
-      "❌ Unable to load students. Please refresh the page."
-    );
 
   }
 
@@ -333,7 +370,8 @@ function formatDate(value) {
     return "Not set";
   }
 
-  const date = new Date(value);
+  const date =
+    new Date(value);
 
   if (isNaN(date.getTime())) {
     return String(value);
@@ -367,35 +405,30 @@ function getPaymentStatus(student) {
   }
 
   if (!student.dueDate) {
-
     return "no-date";
-
   }
 
-  const today = new Date();
+  const today =
+    new Date();
 
   today.setHours(0, 0, 0, 0);
 
-  const dueDate = new Date(student.dueDate);
+  const dueDate =
+    new Date(student.dueDate);
 
   dueDate.setHours(0, 0, 0, 0);
 
+
   if (student.reminderSent === "Yes") {
-
     return "reminded";
-
   }
 
   if (dueDate < today) {
-
     return "overdue";
-
   }
 
   if (dueDate.getTime() === today.getTime()) {
-
     return "due";
-
   }
 
   return "upcoming";
@@ -409,7 +442,9 @@ function getPaymentStatus(student) {
 
 function statusBadge(student) {
 
-  const status = getPaymentStatus(student);
+  const status =
+    getPaymentStatus(student);
+
 
   if (status === "left") {
 
@@ -421,6 +456,7 @@ function statusBadge(student) {
 
   }
 
+
   if (status === "overdue") {
 
     return `
@@ -430,6 +466,7 @@ function statusBadge(student) {
     `;
 
   }
+
 
   if (status === "due") {
 
@@ -441,6 +478,7 @@ function statusBadge(student) {
 
   }
 
+
   if (status === "reminded") {
 
     return `
@@ -451,6 +489,7 @@ function statusBadge(student) {
 
   }
 
+
   if (status === "no-date") {
 
     return `
@@ -460,6 +499,7 @@ function statusBadge(student) {
     `;
 
   }
+
 
   return `
     <span class="badge badge-due">
@@ -476,10 +516,7 @@ function statusBadge(student) {
 
 function buildMessage(student) {
 
-  const fee =
-    Number(student.fee) ||
-    PRICE[student.seatType] ||
-    0;
+  const fee = 700;
 
   const dueDate =
     formatDate(student.dueDate);
@@ -526,24 +563,33 @@ Thank you for choosing *Wadkile Abhyasika*. 🙏`;
 function renderStudents(students) {
 
   const list =
-    document.getElementById("student-list");
+    document.getElementById(
+      "student-list"
+    );
 
   const emptyNote =
-    document.getElementById("empty-note");
+    document.getElementById(
+      "empty-note"
+    );
 
   list.innerHTML = "";
+
 
   if (!students.length) {
 
     emptyNote.hidden = false;
 
-    showMessage("No students found.");
+    showMessage(
+      "No students found."
+    );
 
     return;
 
   }
 
+
   emptyNote.hidden = true;
+
 
   showMessage(
     `✅ ${students.length} student(s) loaded from Google Sheet.`
@@ -559,10 +605,6 @@ function renderStudents(students) {
       "student-card";
 
 
-    /* ==========================
-       STUDENT INFORMATION
-    ========================== */
-
     const info =
       document.createElement("div");
 
@@ -570,10 +612,7 @@ function renderStudents(students) {
       "student-info";
 
 
-    const fee =
-      Number(student.fee) ||
-      PRICE[student.seatType] ||
-      0;
+    const fee = 700;
 
 
     info.innerHTML = `
@@ -609,10 +648,6 @@ function renderStudents(students) {
     `;
 
 
-    /* ==========================
-       ACTIONS
-    ========================== */
-
     const actions =
       document.createElement("div");
 
@@ -620,9 +655,7 @@ function renderStudents(students) {
       "student-actions";
 
 
-    /* ==========================
-       WHATSAPP BUTTON
-    ========================== */
+    /* WHATSAPP */
 
     const sendBtn =
       document.createElement("a");
@@ -655,6 +688,7 @@ function renderStudents(students) {
         `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`;
 
     }
+
     else {
 
       sendBtn.href = "#";
@@ -675,9 +709,7 @@ function renderStudents(students) {
     }
 
 
-    /* ==========================
-       MARK REMINDER SENT
-    ========================== */
+    /* MARK SENT */
 
     const reminderBtn =
       document.createElement("button");
@@ -744,9 +776,7 @@ function renderStudents(students) {
     );
 
 
-    /* ==========================
-       MARK PAID
-    ========================== */
+    /* MARK PAID */
 
     const paidBtn =
       document.createElement("button");
@@ -819,9 +849,7 @@ function renderStudents(students) {
     );
 
 
-    /* ==========================
-       ACTIVE / LEFT
-    ========================== */
+    /* ACTIVE / LEFT */
 
     const statusBtn =
       document.createElement("button");
@@ -831,7 +859,6 @@ function renderStudents(students) {
 
     statusBtn.className =
       "btn btn-outline btn-small";
-
 
     statusBtn.textContent =
       student.status === "Active"
@@ -883,7 +910,8 @@ function renderStudents(students) {
             "Status update failed."
           );
 
-          statusBtn.disabled = false;
+          statusBtn.disabled =
+            false;
 
           statusBtn.textContent =
             student.status === "Active"
@@ -896,9 +924,7 @@ function renderStudents(students) {
     );
 
 
-    /* ==========================
-       DELETE
-    ========================== */
+    /* DELETE */
 
     const removeBtn =
       document.createElement("button");
@@ -971,23 +997,13 @@ function renderStudents(students) {
     );
 
 
-    /* ==========================
-       APPEND ACTIONS
-    ========================== */
-
     actions.appendChild(sendBtn);
-
     actions.appendChild(reminderBtn);
-
     actions.appendChild(paidBtn);
-
     actions.appendChild(statusBtn);
-
     actions.appendChild(removeBtn);
 
-
     card.appendChild(info);
-
     card.appendChild(actions);
 
     list.appendChild(card);
@@ -1002,142 +1018,136 @@ function renderStudents(students) {
 ===================================================== */
 
 document
-  .getElementById("add-btn")
-  .addEventListener(
-    "click",
-    async () => {
+.getElementById("add-btn")
+.addEventListener(
+  "click",
+  async () => {
 
-      const form =
-        document.getElementById("student-form");
-
-
-      if (!form.checkValidity()) {
-
-        form.reportValidity();
-
-        return;
-
-      }
-
-
-      const name =
-        document
-          .getElementById("s-name")
-          .value
-          .trim();
-
-
-      const phone =
-        document
-          .getElementById("s-phone")
-          .value
-          .trim();
-
-
-      const seat =
-        document
-          .getElementById("s-seat")
-          .value;
-
-
-      const dueDate =
-        document
-          .getElementById("s-due")
-          .value;
-
-
-      if (!name) {
-
-        alert("Please enter student name.");
-
-        return;
-
-      }
-
-
-      if (!/^[0-9]{10}$/.test(phone)) {
-
-        alert(
-          "Please enter exactly 10 digits for phone number."
-        );
-
-        return;
-
-      }
-
-
-      if (!dueDate) {
-
-        alert("Please select due date.");
-
-        return;
-
-      }
-
-
-      const button =
-        document.getElementById("add-btn");
-
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Adding...";
-
-
-      const result =
-        await apiRequest({
-
-          action:
-            "addStudent",
-
-          name:
-            name,
-
-          phone:
-            phone,
-
-          seatType:
-            seat,
-
-          dueDate:
-            dueDate
-
-        });
-
-
-      button.disabled =
-        false;
-
-      button.textContent =
-        "Add student";
-
-
-      if (!result.success) {
-
-        alert(
-          result.message ||
-          "Unable to add student."
-        );
-
-        return;
-
-      }
-
-
-      alert(
-        "Student added successfully to Google Sheet! ✅"
+    const form =
+      document.getElementById(
+        "student-form"
       );
 
 
-      form.reset();
+    if (!form.checkValidity()) {
 
+      form.reportValidity();
 
-      await loadStudents();
+      return;
 
     }
-  );
+
+
+    const name =
+      document
+      .getElementById("s-name")
+      .value
+      .trim();
+
+
+    const phone =
+      document
+      .getElementById("s-phone")
+      .value
+      .trim();
+
+
+    const seat =
+      document
+      .getElementById("s-seat")
+      .value;
+
+
+    const dueDate =
+      document
+      .getElementById("s-due")
+      .value;
+
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+
+      alert(
+        "Please enter exactly 10 digits for phone number."
+      );
+
+      return;
+
+    }
+
+
+    if (!dueDate) {
+
+      alert(
+        "Please select due date."
+      );
+
+      return;
+
+    }
+
+
+    const button =
+      document.getElementById(
+        "add-btn"
+      );
+
+
+    button.disabled = true;
+
+    button.textContent =
+      "Adding...";
+
+
+    const result =
+      await apiRequest({
+
+        action:
+          "addStudent",
+
+        name:
+          name,
+
+        phone:
+          phone,
+
+        seatType:
+          seat,
+
+        dueDate:
+          dueDate
+
+      });
+
+
+    button.disabled = false;
+
+    button.textContent =
+      "Add student";
+
+
+    if (!result.success) {
+
+      alert(
+        result.message ||
+        "Unable to add student."
+      );
+
+      return;
+
+    }
+
+
+    alert(
+      "Student added successfully to Google Sheet! ✅"
+    );
+
+
+    form.reset();
+
+    await loadStudents();
+
+  }
+);
 
 
 /* =====================================================
@@ -1145,15 +1155,15 @@ document
 ===================================================== */
 
 document
-  .getElementById("refresh-btn")
-  .addEventListener(
-    "click",
-    loadStudents
-  );
+.getElementById("refresh-btn")
+.addEventListener(
+  "click",
+  loadStudents
+);
 
 
 /* =====================================================
-   SYSTEM MESSAGE
+   MESSAGE
 ===================================================== */
 
 function showMessage(message) {
