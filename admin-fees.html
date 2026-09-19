@@ -224,92 +224,44 @@ const PRICE = {
    because of browser CORS handling.
 ===================================================== */
 
-function loadStudents() {
+async function loadStudents() {
 
   showMessage("⏳ Loading students from Google Sheet...");
 
-  const oldScript =
-    document.getElementById("students-api-script");
+  try {
 
-  if (oldScript) {
-    oldScript.remove();
-  }
-
-  const callbackName =
-    "studentsCallback_" + Date.now();
-
-  window[callbackName] = function(result) {
-
-    try {
-
-      if (!result || !result.success) {
-
-        throw new Error(
-          result?.message || "Unable to load students."
-        );
-
+    const response = await fetch(
+      API_URL + "?t=" + Date.now(),
+      {
+        method: "GET",
+        cache: "no-store"
       }
+    );
 
-      renderStudents(result.students || []);
-
-    }
-
-    catch (error) {
-
-      console.error("Load Error:", error);
-
-      showMessage(
-        "❌ Unable to load students. Please refresh the page."
+    if (!response.ok) {
+      throw new Error(
+        "API returned HTTP " + response.status
       );
-
     }
 
-    finally {
+    const result = await response.json();
 
-      delete window[callbackName];
-
-      const script =
-        document.getElementById(
-          "students-api-script"
-        );
-
-      if (script) {
-        script.remove();
-      }
-
+    if (!result.success) {
+      throw new Error(
+        result.message || "Unable to load students."
+      );
     }
 
-  };
+    renderStudents(result.students || []);
 
+  } catch (error) {
 
-  const script =
-    document.createElement("script");
-
-  script.id =
-    "students-api-script";
-
-  script.src =
-    API_URL +
-    "?callback=" +
-    encodeURIComponent(callbackName) +
-    "&t=" +
-    Date.now();
-
-  script.onerror = function() {
+    console.error("Load Error:", error);
 
     showMessage(
       "❌ Unable to connect to Google Sheet API."
     );
-
-    delete window[callbackName];
-
-    script.remove();
-
-  };
-
-
-  document.body.appendChild(script);
-
+  }
 }
 
 
