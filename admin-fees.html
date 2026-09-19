@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Fee Reminders — Wadkile Abhyasika (Owner Tool)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">Wadkile Abhyasika</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="kicker">Owner tool &middot; not linked publicly</div>
+  <h1>Fee reminders</h1>
+  <p class="tagline">Track monthly dues and send a WhatsApp reminder in one click.</p>
+</header>
+
+<main class="page">
+
+  <section class="section">
+    <h2>Add a student</h2>
+    <form id="student-form" class="admin-form">
+      <div class="field">
+        <label for="s-name">Full name</label>
+        <input type="text" id="s-name" required>
+      </div>
+      <div class="field">
+        <label for="s-phone">Phone (10 digits)</label>
+        <input type="tel" id="s-phone" required pattern="[0-9]{10}" placeholder="9876543210">
+      </div>
+      <div class="field">
+        <label for="s-seat">Seat type</label>
+        <select id="s-seat">
+          <option value="Non-AC">Non-AC — ₹600/month</option>
+          <option value="AC">AC — ₹800/month</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="s-join">Joining date</label>
+        <input type="date" id="s-join" required>
+      </div>
+    </form>
+    <button type="button" id="add-btn" class="btn btn-primary btn-small">Add student</button>
+  </section>
+
+  <section class="section">
+    <h2 id="list-heading">Students</h2>
+    <div id="student-list"></div>
+    <p id="empty-note" class="empty-note" hidden>No students added yet. Add one above to get started.</p>
+  </section>
+
+  <section class="section">
+    <h2>Backup your list</h2>
+    <p class="note">This list is saved only on this device's browser. Use these buttons to back it up or move it to another device.</p>
+    <div class="action-row">
+      <button type="button" id="export-btn" class="btn btn-outline btn-small">Export backup</button>
+      <button type="button" id="import-btn" class="btn btn-outline btn-small">Import backup</button>
+    </div>
+    <div class="backup-box">
+      <textarea id="backup-text" placeholder="Backup text appears here — copy and save it somewhere safe, or paste a previous backup here and click Import."></textarea>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="biz-name">Wadkile Abhyasika</div>
+  <div>Dr. Lane, Gangakhed — open daily, 8 AM to 11 PM</div>
+  <div class="credit">Site by Panchganga IT Services and Solutions</div>
+</footer>
+
+<script>
+  const STORAGE_KEY = 'wadkile_students_v1';
+  const PRICE = { 'AC': 800, 'Non-AC': 600 };
+
+  function loadStudents() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function saveStudents(students) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+  }
+
+  function currentMonthKey(date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  function monthName(date) {
+    return date.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+  }
+
+  function dueDayFromJoin(joinDateStr) {
+    const d = new Date(joinDateStr);
+    return d.getDate();
+  }
+
+  function getStatus(student) {
+    const today = new Date();
+    const thisMonth = currentMonthKey(today);
+    if (student.lastPaidMonth === thisMonth) return 'paid';
+
+    const dueDay = dueDayFromJoin(student.joinDate);
+    if (today.getDate() >= dueDay) {
+      return today.getDate() - dueDay > 10 ? 'overdue' : 'due';
+    }
+    return 'upcoming';
+  }
+
+  function buildMessage(student) {
+    const today = new Date();
+    const amount = PRICE[student.seatType];
+    return `Hi ${student.name}, this is a reminder from Wadkile Abhyasika that your ${student.seatType} seat fee of ₹${amount} for ${monthName(today)} is due. Kindly pay at your earliest convenience. Thank you!`;
+  }
+
+  function render() {
+    const students = loadStudents();
+    const list = document.getElementById('student-list');
+    const emptyNote = document.getElementById('empty-note');
+    list.innerHTML = '';
+
+    if (students.length === 0) {
+      emptyNote.hidden = false;
+      return;
+    }
+    emptyNote.hidden = true;
+
+    students.forEach((student, index) => {
+      const status = getStatus(student);
+      const badgeClass = status === 'paid' ? 'badge-paid' : (status === 'overdue' ? 'badge-overdue' : 'badge-due');
+      const badgeText = status === 'paid' ? 'Paid this month' : (status === 'overdue' ? 'Overdue' : (status === 'due' ? 'Due now' : 'Upcoming'));
+
+      const card = document.createElement('div');
+      card.className = 'student-card';
+
+      const info = document.createElement('div');
+      info.className = 'student-info';
+      info.innerHTML = `
+        <h3>${student.name}</h3>
+        <p>${student.phone} &middot; ${student.seatType} &middot; ₹${PRICE[student.seatType]}/month</p>
+        <span class="badge ${badgeClass}">${badgeText}</span>
+      `;
+
+      const actions = document.createElement('div');
+      actions.className = 'student-actions';
+
+      const sendBtn = document.createElement('a');
+      sendBtn.className = 'btn btn-primary btn-small';
+      sendBtn.target = '_blank';
+      sendBtn.rel = 'noopener';
+      sendBtn.textContent = 'Send reminder';
+      sendBtn.href = `https://wa.me/91${student.phone}?text=${encodeURIComponent(buildMessage(student))}`;
+
+      const paidBtn = document.createElement('button');
+      paidBtn.type = 'button';
+      paidBtn.className = 'btn btn-outline btn-small';
+      paidBtn.textContent = status === 'paid' ? 'Paid ✓' : 'Mark as paid';
+      paidBtn.disabled = status === 'paid';
+      paidBtn.addEventListener('click', () => {
+        const all = loadStudents();
+        all[index].lastPaidMonth = currentMonthKey(new Date());
+        saveStudents(all);
+        render();
+      });
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'remove-link';
+      removeBtn.textContent = 'Remove';
+      removeBtn.addEventListener('click', () => {
+        if (!confirm(`Remove ${student.name} from the list?`)) return;
+        const all = loadStudents();
+        all.splice(index, 1);
+        saveStudents(all);
+        render();
+      });
+
+      actions.appendChild(sendBtn);
+      actions.appendChild(paidBtn);
+      actions.appendChild(removeBtn);
+
+      card.appendChild(info);
+      card.appendChild(actions);
+      list.appendChild(card);
+    });
+  }
+
+  document.getElementById('add-btn').addEventListener('click', () => {
+    const name = document.getElementById('s-name').value.trim();
+    const phone = document.getElementById('s-phone').value.trim();
+    const seat = document.getElementById('s-seat').value;
+    const join = document.getElementById('s-join').value;
+
+    if (!name || !/^[0-9]{10}$/.test(phone) || !join) {
+      alert('Please fill in a name, a 10-digit phone number, and a joining date.');
+      return;
+    }
+
+    const students = loadStudents();
+    students.push({ name, phone, seatType: seat, joinDate: join, lastPaidMonth: null });
+    saveStudents(students);
+
+    document.getElementById('student-form').reset();
+    render();
+  });
+
+  document.getElementById('export-btn').addEventListener('click', () => {
+    document.getElementById('backup-text').value = JSON.stringify(loadStudents(), null, 2);
+  });
+
+  document.getElementById('import-btn').addEventListener('click', () => {
+    const text = document.getElementById('backup-text').value.trim();
+    if (!text) {
+      alert('Paste your backup text into the box first.');
+      return;
+    }
+    try {
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed)) throw new Error('not an array');
+      saveStudents(parsed);
+      render();
+      alert('Backup imported successfully.');
+    } catch (err) {
+      alert('That backup text could not be read. Make sure you pasted it exactly as exported.');
+    }
+  });
+
+  render();
+</script>
+
+</body>
+</html>
