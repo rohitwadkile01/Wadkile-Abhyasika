@@ -45,7 +45,7 @@
 
 <main class="login-wrap">
   <div class="login-card">
-    <p>Enter the admin password to open the fee panel.</p>
+    <p>Enter the admin password to open the admin-fees.html.</p>
     <form id="login-form" class="reg-form">
       <div class="field">
         <label for="password">Password</label>
@@ -68,7 +68,7 @@
 
     if (entered === ADMIN_PASSWORD) {
       sessionStorage.setItem('wadkileAdminAuth', 'true');
-      window.location.href = 'fee-panel-7x9k2q.html';
+      window.location.href = 'admin-fees.html';
     } else {
       error.hidden = false;
     }
