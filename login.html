@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Login — Wadkile Abhyasika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .login-wrap {
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+  }
+  .login-card {
+    border-left: 2px solid var(--brass);
+    padding-left: 1.5rem;
+  }
+  .login-card h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .login-card p {
+    color: #5a5347;
+    font-size: 0.95rem;
+    margin-bottom: 1.6rem;
+  }
+  #login-error {
+    color: #8a3b3b;
+    font-size: 0.9rem;
+    margin-top: 0.8rem;
+  }
+  #login-error[hidden] { display: none; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="kicker">Owner access only</div>
+  <h1>Admin login</h1>
+</header>
+
+<main class="login-wrap">
+  <div class="login-card">
+    <p>Enter the admin password to open the fee panel.</p>
+    <form id="login-form" class="reg-form">
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" required autofocus>
+      </div>
+      <button type="submit" class="btn btn-primary submit-btn">Login</button>
+      <p id="login-error" hidden>Incorrect password. Please try again.</p>
+    </form>
+  </div>
+</main>
+
+<script>
+  // Change this password whenever you like — it's the only thing gating access.
+  const ADMIN_PASSWORD = 'Wadkile@2026';
+
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const entered = document.getElementById('password').value;
+    const error = document.getElementById('login-error');
+
+    if (entered === ADMIN_PASSWORD) {
+      sessionStorage.setItem('wadkileAdminAuth', 'true');
+      window.location.href = 'fee-panel-7x9k2q.html';
+    } else {
+      error.hidden = false;
+    }
+  });
+</script>
+
+</body>
+</html>
