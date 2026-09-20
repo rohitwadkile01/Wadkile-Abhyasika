@@ -820,3 +820,14 @@ button.btn.btn-secondary {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+.seat-student-name {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #334155;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
