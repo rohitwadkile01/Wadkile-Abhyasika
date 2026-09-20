@@ -1,1948 +1,1925 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
 
-  <title>Fee Reminders — Wadkile Abhyasika</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap"
-    rel="stylesheet"
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
   >
 
-  <link rel="stylesheet" href="styles.css">
+  <title>Wadkile Abhyasika - Admin Fees</title>
 
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
+
+  <style>
+
+    /* =====================================
+       ADMIN PAGE
+    ===================================== */
+
+    .admin-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .admin-card {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 25px;
+    }
+
+    .admin-card h2 {
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #fff;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .admin-button {
+      padding: 11px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .primary-button {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .secondary-button {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .danger-button {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .success-button {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .admin-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+
+    /* =====================================
+       STUDENT TABLE
+    ===================================== */
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    .student-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    .student-table th,
+    .student-table td {
+      padding: 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      vertical-align: middle;
+      font-size: 13px;
+    }
+
+    .student-table th {
+      background: #f8fafc;
+      font-weight: 700;
+    }
+
+    .status-active {
+      color: #15803d;
+      font-weight: 700;
+    }
+
+    .status-left {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .table-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .small-button {
+      padding: 6px 9px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+
+    /* =====================================
+       SEAT MANAGEMENT
+    ===================================== */
+
+    .seat-management {
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .seat-management h2 {
+      margin-bottom: 15px;
+    }
+
+    .seat-management h3 {
+      margin-top: 25px;
+      margin-bottom: 12px;
+    }
+
+    .seat-summary {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    .seat-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+    }
+
+    .seat {
+      padding: 10px 6px;
+      min-height: 72px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 700;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .seat:hover {
+      transform: translateY(-2px);
+    }
+
+    .seat-empty {
+      background: #dcfce7;
+      border-color: #86efac;
+    }
+
+    .seat-engaged {
+      background: #fee2e2;
+      border-color: #fca5a5;
+    }
+
+    .seat-number {
+      display: block;
+      font-size: 16px;
+    }
+
+    .seat-status {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .seat-student-name {
+      display: block;
+      margin-top: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.3;
+      text-align: center;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
+      max-height: 30px;
+    }
+
+
+    /* =====================================
+       STUDENT DETAILS MODAL
+    ===================================== */
+
+    .student-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(15, 23, 42, 0.55);
+      padding: 20px;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .student-modal.show {
+      display: flex;
+    }
+
+    .student-modal-content {
+      width: min(500px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 25px;
+      box-sizing: border-box;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #0f172a;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      margin: 0 40px 20px 0;
+      font-size: 22px;
+    }
+
+    .modal-seat-badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 20px;
+      background: #fee2e2;
+      color: #991b1b;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .student-detail-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .student-detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 11px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .student-detail-label {
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .student-detail-value {
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .empty-seat-message {
+      text-align: center;
+      padding: 25px 10px;
+      color: #166534;
+    }
+
+    .empty-seat-icon {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+
+    /* =====================================
+       RESPONSIVE
+    ===================================== */
+
+    @media (max-width: 800px) {
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: auto;
+      }
+
+      .seat-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .admin-container {
+        padding: 12px;
+      }
+
+    }
+
+    @media (max-width: 450px) {
+
+      .seat-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .seat {
+        min-height: 68px;
+      }
+
+      .student-detail-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .student-detail-value {
+        text-align: left;
+      }
+
+    }
+
+  </style>
 </head>
 
 
 <body>
 
+  <main class="admin-container">
 
-<!-- =====================================================
-     NAVIGATION
-===================================================== -->
+    <!-- =====================================
+         PAGE HEADER
+    ====================================== -->
 
-<nav class="nav">
+    <div class="admin-card">
 
-  <a class="nav-brand" href="index.html">
-    Wadkile Abhyasika
-  </a>
+      <h1>📚 Wadkile Abhyasika</h1>
 
-  <div class="nav-links">
-
-    <a href="index.html">
-      Home
-    </a>
-
-  </div>
-
-</nav>
-
-
-
-<!-- =====================================================
-     PAGE HEADER
-===================================================== -->
-
-<header class="page-header">
-
-  <div class="kicker">
-    Owner tool · Google Sheet connected
-  </div>
-
-  <h1>
-    Fee reminders
-  </h1>
-
-  <p class="tagline">
-    Manage students, fees and WhatsApp reminders.
-  </p>
-
-</header>
-
-
-
-<main class="page">
-
-
-
-<!-- =====================================================
-     ADD STUDENT
-===================================================== -->
-
-<section class="section">
-
-  <h2>
-    Add a student
-  </h2>
-
-
-  <form
-    id="student-form"
-    class="admin-form"
-  >
-
-
-    <!-- Full Name -->
-
-    <div class="field">
-
-      <label for="s-name">
-        Full name
-      </label>
-
-      <input
-        type="text"
-        id="s-name"
-        required
-        autocomplete="name"
-      >
+      <p>
+        Admin Fee & Seat Management
+      </p>
 
     </div>
 
 
+    <!-- =====================================
+         ADD STUDENT
+    ====================================== -->
 
-    <!-- Phone -->
+    <section class="admin-card">
 
-    <div class="field">
+      <h2>➕ Add Student</h2>
 
-      <label for="s-phone">
-        Phone (10 digits)
-      </label>
+      <form id="student-form">
 
-      <input
-        type="tel"
-        id="s-phone"
-        required
-        pattern="[0-9]{10}"
-        maxlength="10"
-        inputmode="numeric"
-        placeholder="9764841142"
+        <div class="form-grid">
+
+          <div class="form-group">
+
+            <label for="s-name">
+              Student Full Name
+            </label>
+
+            <input
+              type="text"
+              id="s-name"
+              placeholder="Enter student name"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="s-phone">
+              Phone Number
+            </label>
+
+            <input
+              type="tel"
+              id="s-phone"
+              placeholder="10 digit mobile number"
+              maxlength="10"
+              inputmode="numeric"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="s-seat">
+              Seat Type
+            </label>
+
+            <select id="s-seat" required>
+
+              <option value="">
+                Select Seat Type
+              </option>
+
+              <option value="Non-AC">
+                Non-AC
+              </option>
+
+              <option value="AC">
+                AC
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="s-seat-number">
+              Seat Number
+            </label>
+
+            <select
+              id="s-seat-number"
+              required
+            >
+
+              <option value="">
+                Select Empty Seat
+              </option>
+
+              <optgroup label="👦 Boys Seats — 1 to 48">
+
+                <script>
+                  for (
+                    let i = 1;
+                    i <= 48;
+                    i++
+                  ) {
+
+                    document.write(
+                      `<option value="${i}">Seat ${i}</option>`
+                    );
+
+                  }
+                </script>
+
+              </optgroup>
+
+
+              <optgroup label="👧 Girls Seats — 49 to 70">
+
+                <script>
+                  for (
+                    let i = 49;
+                    i <= 70;
+                    i++
+                  ) {
+
+                    document.write(
+                      `<option value="${i}">Seat ${i}</option>`
+                    );
+
+                  }
+                </script>
+
+              </optgroup>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="s-due">
+              Due Date
+            </label>
+
+            <input
+              type="date"
+              id="s-due"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Monthly Fee
+            </label>
+
+            <input
+              type="text"
+              value="₹700"
+              readonly
+            >
+
+          </div>
+
+
+          <div class="form-group full-width">
+
+            <button
+              type="submit"
+              class="admin-button primary-button"
+            >
+              Add Student
+            </button>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </section>
+
+
+    <!-- =====================================
+         SEAT MANAGEMENT
+    ====================================== -->
+
+    <section class="seat-management">
+
+      <h2>🪑 Seat Management</h2>
+
+
+      <div class="seat-summary">
+
+        <span>
+          🟢 Empty:
+          <strong id="empty-seat-count">
+            0
+          </strong>
+        </span>
+
+        <span>
+          🔴 Engaged:
+          <strong id="engaged-seat-count">
+            0
+          </strong>
+        </span>
+
+      </div>
+
+
+      <h3>
+        👦 Boys Seats — 1 to 48
+      </h3>
+
+      <div
+        id="boys-seats"
+        class="seat-grid"
+      ></div>
+
+
+      <h3>
+        👧 Girls Seats — 49 to 70
+      </h3>
+
+      <div
+        id="girls-seats"
+        class="seat-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- =====================================
+         STUDENTS
+    ====================================== -->
+
+    <section class="admin-card">
+
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:15px;
+          flex-wrap:wrap;
+        "
       >
 
-    </div>
+        <h2>
+          👨‍🎓 Students
+        </h2>
+
+        <button
+          type="button"
+          id="refresh-button"
+          class="admin-button secondary-button"
+        >
+          🔄 Refresh
+        </button>
+
+      </div>
 
 
+      <div class="table-wrapper">
 
-    <!-- Seat Type -->
+        <table class="student-table">
 
-    <div class="field">
+          <thead>
 
-      <label for="s-seat">
-        Seat type
-      </label>
+            <tr>
 
-      <select
-        id="s-seat"
-        required
+              <th>Name</th>
+
+              <th>Phone</th>
+
+              <th>Seat</th>
+
+              <th>Type</th>
+
+              <th>Fee</th>
+
+              <th>Due Date</th>
+
+              <th>Status</th>
+
+              <th>Reminder</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="students-body">
+
+            <tr>
+
+              <td colspan="9">
+                Loading students...
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         GOOGLE SHEET
+    ====================================== -->
+
+    <section class="admin-card">
+
+      <h2>
+        📊 Google Sheet
+      </h2>
+
+      <p>
+        Student records are stored in the Google Sheet.
+      </p>
+
+      <a
+        href="https://docs.google.com/spreadsheets/d/1LWAdTB4nBSGDVVdl49s9RQrV92k7X3lsPiXjDHB97Ag/edit?usp=sharing"
+        target="_blank"
+        rel="noopener"
+        class="admin-button primary-button"
+        style="
+          display:inline-block;
+          text-decoration:none;
+          margin-top:10px;
+        "
       >
+        Open Google Sheet
+      </a>
 
-        <option value="Non-AC">
-          Non-AC — ₹700/month
-        </option>
+    </section>
 
-        <option value="AC">
-          AC — ₹700/month
-        </option>
-
-      </select>
-
-    </div>
+  </main>
 
 
-
-    <!-- Seat Number -->
-
-    <div class="field">
-
-      <label for="s-seat-number">
-        Seat Number
-      </label>
-
-      <select
-        id="s-seat-number"
-        required
-      >
-
-        <option value="">
-          Select Seat Number
-        </option>
-
-
-        <optgroup label="👦 Boys Seats — 1 to 48">
-
-          <option value="1">Seat 1</option>
-          <option value="2">Seat 2</option>
-          <option value="3">Seat 3</option>
-          <option value="4">Seat 4</option>
-          <option value="5">Seat 5</option>
-          <option value="6">Seat 6</option>
-          <option value="7">Seat 7</option>
-          <option value="8">Seat 8</option>
-          <option value="9">Seat 9</option>
-          <option value="10">Seat 10</option>
-          <option value="11">Seat 11</option>
-          <option value="12">Seat 12</option>
-          <option value="13">Seat 13</option>
-          <option value="14">Seat 14</option>
-          <option value="15">Seat 15</option>
-          <option value="16">Seat 16</option>
-          <option value="17">Seat 17</option>
-          <option value="18">Seat 18</option>
-          <option value="19">Seat 19</option>
-          <option value="20">Seat 20</option>
-          <option value="21">Seat 21</option>
-          <option value="22">Seat 22</option>
-          <option value="23">Seat 23</option>
-          <option value="24">Seat 24</option>
-          <option value="25">Seat 25</option>
-          <option value="26">Seat 26</option>
-          <option value="27">Seat 27</option>
-          <option value="28">Seat 28</option>
-          <option value="29">Seat 29</option>
-          <option value="30">Seat 30</option>
-          <option value="31">Seat 31</option>
-          <option value="32">Seat 32</option>
-          <option value="33">Seat 33</option>
-          <option value="34">Seat 34</option>
-          <option value="35">Seat 35</option>
-          <option value="36">Seat 36</option>
-          <option value="37">Seat 37</option>
-          <option value="38">Seat 38</option>
-          <option value="39">Seat 39</option>
-          <option value="40">Seat 40</option>
-          <option value="41">Seat 41</option>
-          <option value="42">Seat 42</option>
-          <option value="43">Seat 43</option>
-          <option value="44">Seat 44</option>
-          <option value="45">Seat 45</option>
-          <option value="46">Seat 46</option>
-          <option value="47">Seat 47</option>
-          <option value="48">Seat 48</option>
-
-        </optgroup>
-
-
-        <optgroup label="👧 Girls Seats — 49 to 70">
-
-          <option value="49">Seat 49</option>
-          <option value="50">Seat 50</option>
-          <option value="51">Seat 51</option>
-          <option value="52">Seat 52</option>
-          <option value="53">Seat 53</option>
-          <option value="54">Seat 54</option>
-          <option value="55">Seat 55</option>
-          <option value="56">Seat 56</option>
-          <option value="57">Seat 57</option>
-          <option value="58">Seat 58</option>
-          <option value="59">Seat 59</option>
-          <option value="60">Seat 60</option>
-          <option value="61">Seat 61</option>
-          <option value="62">Seat 62</option>
-          <option value="63">Seat 63</option>
-          <option value="64">Seat 64</option>
-          <option value="65">Seat 65</option>
-          <option value="66">Seat 66</option>
-          <option value="67">Seat 67</option>
-          <option value="68">Seat 68</option>
-          <option value="69">Seat 69</option>
-          <option value="70">Seat 70</option>
-
-        </optgroup>
-
-      </select>
-
-    </div>
-
-
-
-    <!-- Due Date -->
-
-    <div class="field">
-
-      <label for="s-due">
-        Due Date
-      </label>
-
-      <input
-        type="date"
-        id="s-due"
-        required
-      >
-
-    </div>
-
-
-
-    <!-- Submit -->
-
-    <button
-      type="submit"
-      class="btn-primary"
-    >
-      Add Student
-    </button>
-
-
-  </form>
-
-</section>
-
-
-
-<!-- =====================================================
-     STUDENTS + SEAT MANAGEMENT
-===================================================== -->
-
-<section class="section">
-
+  <!-- =====================================
+       STUDENT DETAILS MODAL
+  ====================================== -->
 
   <div
-    style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:15px;
-      flex-wrap:wrap;
-    "
+    id="student-modal"
+    class="student-modal"
+    aria-hidden="true"
   >
 
-    <h2 id="list-heading">
-      Students
-    </h2>
-
-
-    <button
-      type="button"
-      id="refresh-btn"
-      class="btn btn-outline btn-small"
+    <div
+      class="student-modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
     >
-      🔄 Refresh
-    </button>
 
-  </div>
-
-
-
-  <!-- System Message -->
-
-  <div
-    id="system-message"
-    class="note"
-    style="margin-top:15px;"
-  >
-    Loading students...
-  </div>
+      <button
+        type="button"
+        id="modal-close"
+        class="modal-close"
+        aria-label="Close"
+      >
+        ×
+      </button>
 
 
-
-  <!-- =================================================
-       SEAT MANAGEMENT
-  ================================================= -->
-
-  <section class="seat-management">
-
-    <h2>
-      🪑 Seat Management
-    </h2>
+      <h2
+        id="modal-title"
+        class="modal-title"
+      >
+        Student Details
+      </h2>
 
 
-    <div class="seat-summary">
-
-      <span>
-
-        🟢 Empty:
-
-        <strong id="empty-seat-count">
-          0
-        </strong>
-
-      </span>
-
-
-      <span>
-
-        🔴 Engaged:
-
-        <strong id="engaged-seat-count">
-          0
-        </strong>
-
-      </span>
+      <div
+        id="modal-body"
+      ></div>
 
     </div>
 
-
-
-    <h3>
-      👦 Boys Seats — 1 to 48
-    </h3>
-
-
-    <div
-      id="boys-seats"
-      class="seat-grid"
-    ></div>
-
-
-
-    <h3>
-      👧 Girls Seats — 49 to 70
-    </h3>
-
-
-    <div
-      id="girls-seats"
-      class="seat-grid"
-    ></div>
-
-  </section>
-
-
-
-  <!-- =================================================
-       STUDENT LIST
-  ================================================= -->
-
-  <div id="student-list"></div>
-
-
-  <p
-    id="empty-note"
-    class="empty-note"
-    hidden
-  >
-    No students found.
-  </p>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     GOOGLE SHEET
-===================================================== -->
-
-<section class="section">
-
-  <h2>
-    Google Sheet
-  </h2>
-
-
-  <p class="note">
-
-    Student data is stored in the central Google Sheet.
-    Changes made here are sent to the Google Sheet through Apps Script.
-
-  </p>
-
-</section>
-
-
-</main>
-
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer>
-
-  <div class="biz-name">
-    Wadkile Abhyasika
   </div>
 
 
-  <div>
-    Dr. Lane, Gangakhed — open daily, 8 AM to 11 PM
-  </div>
+  <!-- =====================================
+       JAVASCRIPT
+  ====================================== -->
+
+  <script>
+
+    /* =====================================
+       GOOGLE APPS SCRIPT API
+    ====================================== */
+
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbyJB729sU5LtAOuv7W3QXVv4QhodzTk3rNt2jGBoN43aLOOrEHu8SX4YyLqEiUKE_cNLg/exec";
 
 
-  <div class="credit">
-    Site by Panchganga IT Services and Solutions
-  </div>
-
-</footer>
+    let allStudents = [];
 
 
+    /* =====================================
+       API REQUEST
+    ====================================== */
 
-<script>
+    async function apiRequest(data) {
 
-/* =====================================================
-   GOOGLE APPS SCRIPT API
-===================================================== */
+      try {
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyJB729sU5LtAOuv7W3QXVv4QhodzTk3rNt2jGBoN43aLOOrEHu8SX4YyLqEiUKE_cNLg/exec";
+        await fetch(
+          API_URL,
+          {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
+            body:
+              JSON.stringify(data)
+          }
+        );
+
+        return {
+          success: true
+        };
+
+      } catch (error) {
+
+        console.error(error);
+
+        return {
+          success: false,
+          message:
+            error.message ||
+            "Request failed."
+        };
+
+      }
+
+    }
 
 
+    /* =====================================
+       LOAD STUDENTS
+    ====================================== */
 
-/* =====================================================
-   FEES
-===================================================== */
+    async function loadStudents() {
 
-const MONTHLY_FEE = 700;
+      try {
 
-const PRICE = {
+        const response =
+          await fetch(API_URL);
 
-  "AC": 700,
-
-  "Non-AC": 700
-
-};
-
+        const data =
+          await response.json();
 
 
-/* =====================================================
-   LOAD STUDENTS
-===================================================== */
+        if (!data.success) {
 
-async function loadStudents() {
+          throw new Error(
+            data.message ||
+            "Unable to load students."
+          );
 
-  showMessage(
-    "⏳ Loading students from Google Sheet..."
-  );
-
-
-  try {
-
-    const response =
-      await fetch(
-        API_URL + "?t=" + Date.now(),
-        {
-          method: "GET",
-          cache: "no-store"
         }
-      );
 
 
-    if (!response.ok) {
+        allStudents =
+          Array.isArray(data.students)
+            ? data.students
+            : [];
 
-      throw new Error(
-        "API returned HTTP " +
-        response.status
-      );
+
+        renderSeatMap(
+          allStudents
+        );
+
+        renderStudents(
+          allStudents
+        );
+
+        updateSeatOptions(
+          allStudents
+        );
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        document
+          .getElementById(
+            "students-body"
+          )
+          .innerHTML = `
+            <tr>
+              <td colspan="9">
+                ❌ Unable to load student data.
+                <br>
+                ${escapeHtml(
+                  error.message || ""
+                )}
+              </td>
+            </tr>
+          `;
+
+      }
 
     }
 
 
-    const result =
-      await response.json();
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message ||
-        "Unable to load students."
-      );
-
-    }
-
-
-    renderStudents(
-      result.students || []
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      "Load Error:",
-      error
-    );
-
-
-    showMessage(
-      "❌ Unable to connect to Google Sheet API."
-    );
-
-  }
-
-}
-
-
-
-/* =====================================================
-   API POST
-===================================================== */
-
-async function apiRequest(data) {
-
-  try {
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type":
-              "text/plain;charset=utf-8"
-          },
-          body:
-            JSON.stringify(data)
-        }
-      );
-
-
-    return {
-
-      success: true
-
-    };
-
-
-  } catch (error) {
-
-    console.error(
-      "API Error:",
-      error
-    );
-
-
-    return {
-
-      success: false,
-
-      message:
-        "Unable to connect to Google Sheet."
-
-    };
-
-  }
-
-}
-
-
-
-/* =====================================================
-   DATE FORMAT
-===================================================== */
-
-function formatDate(value) {
-
-  if (!value) {
-
-    return "Not set";
-
-  }
-
-
-  const date =
-    new Date(value);
-
-
-  if (isNaN(date.getTime())) {
-
-    return String(value);
-
-  }
-
-
-  return date.toLocaleDateString(
-    "en-IN",
-    {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric"
-    }
-  );
-
-}
-
-
-
-/* =====================================================
-   PAYMENT STATUS
-===================================================== */
-
-function getPaymentStatus(student) {
-
-  if (
-    String(
-      student.status || ""
-    ).toLowerCase() !== "active"
-  ) {
-
-    return "left";
-
-  }
-
-
-  if (!student.dueDate) {
-
-    return "no-date";
-
-  }
-
-
-  const today =
-    new Date();
-
-  today.setHours(
-    0,
-    0,
-    0,
-    0
-  );
-
-
-  const dueDate =
-    new Date(
-      student.dueDate
-    );
-
-  dueDate.setHours(
-    0,
-    0,
-    0,
-    0
-  );
-
-
-  if (
-    student.reminderSent === "Yes"
-  ) {
-
-    return "reminded";
-
-  }
-
-
-  if (
-    dueDate < today
-  ) {
-
-    return "overdue";
-
-  }
-
-
-  if (
-    dueDate.getTime() ===
-    today.getTime()
-  ) {
-
-    return "due";
-
-  }
-
-
-  return "upcoming";
-
-}
-
-
-
-/* =====================================================
-   STATUS BADGE
-===================================================== */
-
-function statusBadge(student) {
-
-  const status =
-    getPaymentStatus(student);
-
-
-  if (status === "left") {
-
-    return `
-      <span class="badge badge-overdue">
-        Left
-      </span>
-    `;
-
-  }
-
-
-  if (status === "overdue") {
-
-    return `
-      <span class="badge badge-overdue">
-        Overdue
-      </span>
-    `;
-
-  }
-
-
-  if (status === "due") {
-
-    return `
-      <span class="badge badge-due">
-        Due Today
-      </span>
-    `;
-
-  }
-
-
-  if (status === "reminded") {
-
-    return `
-      <span class="badge badge-paid">
-        Reminder Sent
-      </span>
-    `;
-
-  }
-
-
-  if (status === "no-date") {
-
-    return `
-      <span class="badge badge-due">
-        No Due Date
-      </span>
-    `;
-
-  }
-
-
-  return `
-    <span class="badge badge-due">
-      Upcoming
-    </span>
-  `;
-
-}
-
-
-
-/* =====================================================
-   WHATSAPP MESSAGE
-===================================================== */
-
-function buildMessage(student) {
-
-  const fee = 700;
-
-
-  const dueDate =
-    formatDate(
-      student.dueDate
-    );
-
-
-  return `नमस्कार ${student.name} जी,
-
-📚 *Wadkile Abhyasika – Monthly Fee Reminder*
-
-आपली monthly seat fee *₹${fee}* आहे.
-
-आपली fee payment due झाली आहे. कृपया आपली monthly fee लवकरात लवकर भरावी.
-
-💺 Seat Type: *${student.seatType}*
-🪑 Seat Number: *${student.seatNumber || "Not assigned"}*
-💰 Monthly Fee: *₹${fee}*
-📅 Due Date: *${dueDate}*
-
-कृपया payment केल्यानंतर confirmation द्यावे.
-
-━━━━━━━━━━━━━━
-
-Hello ${student.name},
-
-📚 *Wadkile Abhyasika – Monthly Fee Reminder*
-
-Your monthly seat fee is *₹${fee}*.
-
-Your monthly fee is now due. Kindly make the payment at your earliest convenience.
-
-💺 Seat Type: *${student.seatType}*
-🪑 Seat Number: *${student.seatNumber || "Not assigned"}*
-💰 Monthly Fee: *₹${fee}*
-📅 Due Date: *${dueDate}*
-
-Please share the payment confirmation after completing the payment.
-
-Thank you for choosing *Wadkile Abhyasika*. 🙏`;
-
-}
-
-
-
-/* =====================================================
-   RENDER SEAT MAP
-===================================================== */
-
-function renderSeatMap(students) {
-
-  const boysContainer =
-    document.getElementById("boys-seats");
-
-  const girlsContainer =
-    document.getElementById("girls-seats");
-
-  const emptyCount =
-    document.getElementById("empty-seat-count");
-
-  const engagedCount =
-    document.getElementById("engaged-seat-count");
-
-
-  if (!boysContainer || !girlsContainer) {
-    return;
-  }
-
-
-  boysContainer.innerHTML = "";
-  girlsContainer.innerHTML = "";
-
-
-  const activeStudents =
-    students.filter(student =>
-      String(student.status || "")
-        .toLowerCase() === "active"
-    );
-
-
-  const seatMap = new Map();
-
-
-  activeStudents.forEach(student => {
-
-    const seatNumber =
-      Number(student.seatNumber);
-
-    if (
-      seatNumber >= 1 &&
-      seatNumber <= 70
+    /* =====================================
+       UPDATE SEAT DROPDOWN
+    ====================================== */
+
+    function updateSeatOptions(
+      students
     ) {
 
-      seatMap.set(
-        seatNumber,
-        student
-      );
-
-    }
-
-  });
-
-
-  let emptySeats = 0;
-  let engagedSeats = 0;
-
-
-  // ================================
-  // CREATE SEATS
-  // ================================
-
-  for (
-    let seatNumber = 1;
-    seatNumber <= 70;
-    seatNumber++
-  ) {
-
-    const student =
-      seatMap.get(seatNumber);
-
-
-    const seat =
-      document.createElement("div");
-
-    seat.className = "seat";
-
-
-    const number =
-      document.createElement("span");
-
-    number.className =
-      "seat-number";
-
-    number.textContent =
-      "Seat " + seatNumber;
-
-
-    const status =
-      document.createElement("span");
-
-    status.className =
-      "seat-status";
-
-
-    if (student) {
-
-      // ================================
-      // ENGAGED SEAT
-      // ================================
-
-      seat.classList.add(
-        "seat-engaged"
-      );
-
-      status.textContent =
-        "🔴 Engaged";
-
-      engagedSeats++;
-
-
-      const studentName =
-        document.createElement("small");
-
-      studentName.className =
-        "seat-student-name";
-
-      studentName.textContent =
-        student.name || "Student";
-
-
-      seat.appendChild(number);
-      seat.appendChild(status);
-      seat.appendChild(studentName);
-
-
-    } else {
-
-      // ================================
-      // EMPTY SEAT
-      // ================================
-
-      seat.classList.add(
-        "seat-empty"
-      );
-
-      status.textContent =
-        "🟢 Empty";
-
-      emptySeats++;
-
-
-      seat.appendChild(number);
-      seat.appendChild(status);
-
-    }
-
-
-    // ================================
-    // BOYS / GIRLS
-    // ================================
-
-    if (seatNumber <= 48) {
-
-      boysContainer.appendChild(
-        seat
-      );
-
-    } else {
-
-      girlsContainer.appendChild(
-        seat
-      );
-
-    }
-
-  }
-
-
-  // ================================
-  // SUMMARY
-  // ================================
-
-  if (emptyCount) {
-
-    emptyCount.textContent =
-      emptySeats;
-
-  }
-
-
-  if (engagedCount) {
-
-    engagedCount.textContent =
-      engagedSeats;
-
-  }
-
-}
-
-
-/* =====================================================
-   RENDER STUDENTS
-===================================================== */
-
-function renderStudents(students) {
-
-  renderSeatMap(
-    students
-  );
-
-
-  updateSeatOptions(
-    students
-  );
-
-
-  const list =
-    document.getElementById(
-      "student-list"
-    );
-
-
-  const emptyNote =
-    document.getElementById(
-      "empty-note"
-    );
-
-
-  list.innerHTML = "";
-
-
-  if (!students.length) {
-
-    emptyNote.hidden = false;
-
-
-    showMessage(
-      "No students found."
-    );
-
-
-    return;
-
-  }
-
-
-  emptyNote.hidden = true;
-
-
-  showMessage(
-    `✅ ${students.length} student(s) loaded from Google Sheet.`
-  );
-
-
-  students.forEach(
-    student => {
-
-
-      const card =
-        document.createElement(
-          "div"
+      const select =
+        document.getElementById(
+          "s-seat-number"
         );
 
 
-      card.className =
-        "student-card";
+      if (!select) {
+        return;
+      }
 
 
-      const info =
-        document.createElement(
-          "div"
-        );
+      const occupiedSeats =
+        new Set();
 
 
-      info.className =
-        "student-info";
+      students.forEach(
+        student => {
 
-
-      const fee = 700;
-
-
-      info.innerHTML = `
-
-        <h3>
-          ${escapeHtml(
-            student.name
-          )}
-        </h3>
-
-        <p>
-          📱
-          ${escapeHtml(
-            student.phone
-          )}
-
-          ·
-
-          💺
-          ${escapeHtml(
-            student.seatType
-          )}
-
-          ·
-
-          🪑 Seat
-          ${escapeHtml(
-            student.seatNumber || "Not assigned"
-          )}
-
-          ·
-
-          💰 ₹${fee}/month
-        </p>
-
-
-        <p>
-          Due Date:
-
-          <strong>
-            ${formatDate(
-              student.dueDate
-            )}
-          </strong>
-        </p>
-
-
-        <p>
-          Status:
-
-          <strong>
-            ${escapeHtml(
+          if (
+            String(
               student.status || ""
-            )}
-          </strong>
-        </p>
+            ).toLowerCase() ===
+            "active"
+          ) {
+
+            const seat =
+              Number(
+                student.seatNumber
+              );
 
 
-        ${statusBadge(student)}
+            if (
+              seat >= 1 &&
+              seat <= 70
+            ) {
+
+              occupiedSeats.add(
+                seat
+              );
+
+            }
+
+          }
+
+        }
+      );
+
+
+      Array.from(
+        select.options
+      ).forEach(
+        option => {
+
+          const seat =
+            Number(
+              option.value
+            );
+
+
+          if (
+            seat >= 1 &&
+            seat <= 70
+          ) {
+
+            option.disabled =
+              occupiedSeats.has(
+                seat
+              );
+
+          }
+
+        }
+      );
+
+
+      if (
+        select.value &&
+        occupiedSeats.has(
+          Number(
+            select.value
+          )
+        )
+      ) {
+
+        select.value = "";
+
+      }
+
+    }
+
+
+    /* =====================================
+       RENDER SEAT MAP
+    ====================================== */
+
+    function renderSeatMap(
+      students
+    ) {
+
+      const boysContainer =
+        document.getElementById(
+          "boys-seats"
+        );
+
+      const girlsContainer =
+        document.getElementById(
+          "girls-seats"
+        );
+
+      const emptyCount =
+        document.getElementById(
+          "empty-seat-count"
+        );
+
+      const engagedCount =
+        document.getElementById(
+          "engaged-seat-count"
+        );
+
+
+      if (
+        !boysContainer ||
+        !girlsContainer
+      ) {
+
+        return;
+
+      }
+
+
+      boysContainer.innerHTML =
+        "";
+
+      girlsContainer.innerHTML =
+        "";
+
+
+      const activeStudents =
+        students.filter(
+          student =>
+            String(
+              student.status || ""
+            ).toLowerCase() ===
+            "active"
+        );
+
+
+      const seatMap =
+        new Map();
+
+
+      activeStudents.forEach(
+        student => {
+
+          const seatNumber =
+            Number(
+              student.seatNumber
+            );
+
+
+          if (
+            seatNumber >= 1 &&
+            seatNumber <= 70
+          ) {
+
+            seatMap.set(
+              seatNumber,
+              student
+            );
+
+          }
+
+        }
+      );
+
+
+      let emptySeats = 0;
+      let engagedSeats = 0;
+
+
+      for (
+        let seatNumber = 1;
+        seatNumber <= 70;
+        seatNumber++
+      ) {
+
+        const student =
+          seatMap.get(
+            seatNumber
+          );
+
+
+        const seat =
+          document.createElement(
+            "div"
+          );
+
+
+        seat.className =
+          "seat";
+
+
+        seat.setAttribute(
+          "role",
+          "button"
+        );
+
+
+        seat.setAttribute(
+          "tabindex",
+          "0"
+        );
+
+
+        seat.dataset.seatNumber =
+          seatNumber;
+
+
+        const number =
+          document.createElement(
+            "span"
+          );
+
+
+        number.className =
+          "seat-number";
+
+
+        number.textContent =
+          "Seat " +
+          seatNumber;
+
+
+        const status =
+          document.createElement(
+            "span"
+          );
+
+
+        status.className =
+          "seat-status";
+
+
+        if (student) {
+
+          /* =========================
+             ENGAGED
+          ========================= */
+
+          seat.classList.add(
+            "seat-engaged"
+          );
+
+
+          status.textContent =
+            "🔴 Engaged";
+
+
+          engagedSeats++;
+
+
+          const studentName =
+            document.createElement(
+              "small"
+            );
+
+
+          studentName.className =
+            "seat-student-name";
+
+
+          studentName.textContent =
+            student.name ||
+            "Student";
+
+
+          seat.appendChild(
+            number
+          );
+
+          seat.appendChild(
+            status
+          );
+
+          seat.appendChild(
+            studentName
+          );
+
+
+          seat.addEventListener(
+            "click",
+            () => {
+
+              showStudentDetails(
+                student
+              );
+
+            }
+          );
+
+
+          seat.addEventListener(
+            "keydown",
+            event => {
+
+              if (
+                event.key ===
+                "Enter" ||
+                event.key ===
+                " "
+              ) {
+
+                event.preventDefault();
+
+                showStudentDetails(
+                  student
+                );
+
+              }
+
+            }
+          );
+
+
+        } else {
+
+          /* =========================
+             EMPTY
+          ========================= */
+
+          seat.classList.add(
+            "seat-empty"
+          );
+
+
+          status.textContent =
+            "🟢 Empty";
+
+
+          emptySeats++;
+
+
+          seat.appendChild(
+            number
+          );
+
+          seat.appendChild(
+            status
+          );
+
+
+          seat.addEventListener(
+            "click",
+            () => {
+
+              showEmptySeat(
+                seatNumber
+              );
+
+            }
+          );
+
+
+          seat.addEventListener(
+            "keydown",
+            event => {
+
+              if (
+                event.key ===
+                "Enter" ||
+                event.key ===
+                " "
+              ) {
+
+                event.preventDefault();
+
+                showEmptySeat(
+                  seatNumber
+                );
+
+              }
+
+            }
+          );
+
+        }
+
+
+        if (
+          seatNumber <= 48
+        ) {
+
+          boysContainer.appendChild(
+            seat
+          );
+
+        } else {
+
+          girlsContainer.appendChild(
+            seat
+          );
+
+        }
+
+      }
+
+
+      if (emptyCount) {
+
+        emptyCount.textContent =
+          emptySeats;
+
+      }
+
+
+      if (engagedCount) {
+
+        engagedCount.textContent =
+          engagedSeats;
+
+      }
+
+    }
+
+
+    /* =====================================
+       SHOW STUDENT DETAILS
+    ====================================== */
+
+    function showStudentDetails(
+      student
+    ) {
+
+      const modal =
+        document.getElementById(
+          "student-modal"
+        );
+
+      const modalBody =
+        document.getElementById(
+          "modal-body"
+        );
+
+
+      const dueDate =
+        formatDate(
+          student.dueDate
+        );
+
+
+      modalBody.innerHTML = `
+
+        <div class="modal-seat-badge">
+          💺 Seat ${escapeHtml(
+            String(
+              student.seatNumber ||
+              "-"
+            )
+          )}
+          — 🔴 Engaged
+        </div>
+
+
+        <div class="student-detail-list">
+
+          <div class="student-detail-row">
+
+            <span class="student-detail-label">
+              👤 Name
+            </span>
+
+            <span class="student-detail-value">
+              ${escapeHtml(
+                student.name ||
+                "-"
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="student-detail-row">
+
+            <span class="student-detail-label">
+              📞 Phone
+            </span>
+
+            <span class="student-detail-value">
+              ${escapeHtml(
+                student.phone ||
+                "-"
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="student-detail-row">
+
+            <span class="student-detail-label">
+              💺 Seat Number
+            </span>
+
+            <span class="student-detail-value">
+              ${escapeHtml(
+                String(
+                  student.seatNumber ||
+                  "-"
+                )
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="student-detail-row">
+
+            <span class="student-detail-label">
+              🪑 Seat Type
+            </span>
+
+            <span class="student-detail-value">
+              ${escapeHtml(
+                student.seatType ||
+                "-"
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="student-detail-row">
+
+            <span class="student-detail-label">
+              💰 Monthly Fee
+            </span>
+
+            <span class="student-detail-value">
+              ₹${escapeHtml(
+                String(
+                  student.fee ||
+                  "700"
+                )
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="student-detail-row">
+
+            <span class="student-detail-label">
+              📅 Due Date
+            </span>
+
+            <span class="student-detail-value">
+              ${escapeHtml(
+                dueDate
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="student-detail-row">
+
+            <span class="student-detail-label">
+              📌 Status
+            </span>
+
+            <span class="student-detail-value">
+              ${escapeHtml(
+                student.status ||
+                "-"
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="student-detail-row">
+
+            <span class="student-detail-label">
+              🔔 Reminder
+            </span>
+
+            <span class="student-detail-value">
+              ${escapeHtml(
+                student.reminderSent ||
+                "No"
+              )}
+            </span>
+
+          </div>
+
+        </div>
 
       `;
 
 
-      const actions =
-        document.createElement(
-          "div"
-        );
-
-
-      actions.className =
-        "student-actions";
-
-
-
-      /* =================================================
-         WHATSAPP
-      ================================================= */
-
-      const sendBtn =
-        document.createElement(
-          "a"
-        );
-
-
-      sendBtn.className =
-        "btn btn-primary btn-small";
-
-
-      sendBtn.target =
-        "_blank";
-
-
-      sendBtn.rel =
-        "noopener noreferrer";
-
-
-      sendBtn.textContent =
-        "💬 Send Reminder";
-
-
-      const phone =
-        String(
-          student.phone || ""
-        )
-        .replace(
-          /\D/g,
-          ""
-        );
-
-
-      const message =
-        buildMessage(
-          student
-        );
-
-
-      if (
-        phone.length === 10
-      ) {
-
-        sendBtn.href =
-          `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`;
-
-      }
-
-      else {
-
-        sendBtn.href =
-          "#";
-
-
-        sendBtn.addEventListener(
-          "click",
-          event => {
-
-            event.preventDefault();
-
-
-            alert(
-              "Invalid 10-digit phone number."
-            );
-
-          }
-        );
-
-      }
-
-
-
-      /* =================================================
-         MARK SENT
-      ================================================= */
-
-      const reminderBtn =
-        document.createElement(
-          "button"
-        );
-
-
-      reminderBtn.type =
-        "button";
-
-
-      reminderBtn.className =
-        "btn btn-outline btn-small";
-
-
-      reminderBtn.textContent =
-        student.reminderSent === "Yes"
-          ? "Reminder Sent ✓"
-          : "Mark Sent";
-
-
-      reminderBtn.disabled =
-        student.reminderSent === "Yes";
-
-
-      reminderBtn.addEventListener(
-        "click",
-        async () => {
-
-          reminderBtn.disabled =
-            true;
-
-
-          reminderBtn.textContent =
-            "Saving...";
-
-
-          const result =
-            await apiRequest({
-
-              action:
-                "markReminderSent",
-
-              row:
-                student.row
-
-            });
-
-
-          if (
-            result.success
-          ) {
-
-            await loadStudents();
-
-          }
-
-          else {
-
-            alert(
-              result.message ||
-              "Could not update reminder."
-            );
-
-
-            reminderBtn.disabled =
-              false;
-
-
-            reminderBtn.textContent =
-              "Mark Sent";
-
-          }
-
-        }
+      modal.classList.add(
+        "show"
       );
 
 
-
-      /* =================================================
-         MARK PAID
-      ================================================= */
-
-      const paidBtn =
-        document.createElement(
-          "button"
-        );
-
-
-      paidBtn.type =
-        "button";
-
-
-      paidBtn.className =
-        "btn btn-outline btn-small";
-
-
-      paidBtn.textContent =
-        "💰 Mark Paid";
-
-
-      paidBtn.addEventListener(
-        "click",
-        async () => {
-
-          const confirmed =
-            confirm(
-              `Mark ${student.name}'s payment as paid?`
-            );
-
-
-          if (!confirmed) {
-
-            return;
-
-          }
-
-
-          paidBtn.disabled =
-            true;
-
-
-          paidBtn.textContent =
-            "Saving...";
-
-
-          const result =
-            await apiRequest({
-
-              action:
-                "markPaid",
-
-              row:
-                student.row
-
-            });
-
-
-          if (
-            result.success
-          ) {
-
-            await loadStudents();
-
-          }
-
-          else {
-
-            alert(
-              result.message ||
-              "Payment update failed."
-            );
-
-
-            paidBtn.disabled =
-              false;
-
-
-            paidBtn.textContent =
-              "💰 Mark Paid";
-
-          }
-
-        }
-      );
-
-
-
-      /* =================================================
-         ACTIVE / LEFT
-      ================================================= */
-
-      const statusBtn =
-        document.createElement(
-          "button"
-        );
-
-
-      statusBtn.type =
-        "button";
-
-
-      statusBtn.className =
-        "btn btn-outline btn-small";
-
-
-      statusBtn.textContent =
-        student.status === "Active"
-          ? "Set Left"
-          : "Set Active";
-
-
-      statusBtn.addEventListener(
-        "click",
-        async () => {
-
-          const newStatus =
-            student.status === "Active"
-              ? "Left"
-              : "Active";
-
-
-          statusBtn.disabled =
-            true;
-
-
-          statusBtn.textContent =
-            "Saving...";
-
-
-          const result =
-            await apiRequest({
-
-              action:
-                "updateStatus",
-
-              row:
-                student.row,
-
-              status:
-                newStatus
-
-            });
-
-
-          if (
-            result.success
-          ) {
-
-            await loadStudents();
-
-          }
-
-          else {
-
-            alert(
-              result.message ||
-              "Status update failed."
-            );
-
-
-            statusBtn.disabled =
-              false;
-
-
-            statusBtn.textContent =
-              student.status === "Active"
-                ? "Set Left"
-                : "Set Active";
-
-          }
-
-        }
-      );
-
-
-
-      /* =================================================
-         DELETE
-      ================================================= */
-
-      const removeBtn =
-        document.createElement(
-          "button"
-        );
-
-
-      removeBtn.type =
-        "button";
-
-
-      removeBtn.className =
-        "remove-link";
-
-
-      removeBtn.textContent =
-        "Remove";
-
-
-      removeBtn.addEventListener(
-        "click",
-        async () => {
-
-          const confirmed =
-            confirm(
-              `Remove ${student.name} from Google Sheet?`
-            );
-
-
-          if (!confirmed) {
-
-            return;
-
-          }
-
-
-          removeBtn.disabled =
-            true;
-
-
-          removeBtn.textContent =
-            "Removing...";
-
-
-          const result =
-            await apiRequest({
-
-              action:
-                "deleteStudent",
-
-              row:
-                student.row
-
-            });
-
-
-          if (
-            result.success
-          ) {
-
-            await loadStudents();
-
-          }
-
-          else {
-
-            alert(
-              result.message ||
-              "Could not delete student."
-            );
-
-
-            removeBtn.disabled =
-              false;
-
-
-            removeBtn.textContent =
-              "Remove";
-
-          }
-
-        }
-      );
-
-
-
-      actions.appendChild(
-        sendBtn
-      );
-
-
-      actions.appendChild(
-        reminderBtn
-      );
-
-
-      actions.appendChild(
-        paidBtn
-      );
-
-
-      actions.appendChild(
-        statusBtn
-      );
-
-
-      actions.appendChild(
-        removeBtn
-      );
-
-
-      card.appendChild(
-        info
-      );
-
-
-      card.appendChild(
-        actions
-      );
-
-
-      list.appendChild(
-        card
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
       );
 
     }
-  );
-
-}
 
 
+    /* =====================================
+       SHOW EMPTY SEAT
+    ====================================== */
 
-/* =====================================================
-   UPDATE SEAT OPTIONS
-   Disable seats already occupied by Active students
-===================================================== */
+    function showEmptySeat(
+      seatNumber
+    ) {
 
-function updateSeatOptions(students) {
-
-  const select =
-    document.getElementById(
-      "s-seat-number"
-    );
-
-
-  if (!select) {
-
-    return;
-
-  }
-
-
-  const occupiedSeats =
-    new Set();
-
-
-  students.forEach(
-    student => {
-
-      if (
-        String(
-          student.status || ""
-        ).toLowerCase() === "active"
-      ) {
-
-        const seat =
-          Number(
-            student.seatNumber
-          );
-
-
-        if (
-          seat >= 1 &&
-          seat <= 70
-        ) {
-
-          occupiedSeats.add(
-            seat
-          );
-
-        }
-
-      }
-
-    }
-  );
-
-
-  Array.from(
-    select.options
-  ).forEach(
-    option => {
-
-      const seat =
-        Number(
-          option.value
-        );
-
-
-      if (
-        seat >= 1 &&
-        seat <= 70
-      ) {
-
-        option.disabled =
-          occupiedSeats.has(
-            seat
-          );
-
-      }
-
-    }
-  );
-
-
-  if (
-    select.value &&
-    occupiedSeats.has(
-      Number(select.value)
-    )
-  ) {
-
-    select.value = "";
-
-  }
-
-}
-
-
-
-/* =====================================================
-   ADD STUDENT
-===================================================== */
-
-document
-  .getElementById(
-    "student-form"
-  )
-  .addEventListener(
-    "submit",
-    async event => {
-
-      event.preventDefault();
-
-
-      const form =
+      const modal =
         document.getElementById(
-          "student-form"
+          "student-modal"
+        );
+
+      const modalBody =
+        document.getElementById(
+          "modal-body"
         );
 
 
-      if (
-        !form.checkValidity()
-      ) {
+      modalBody.innerHTML = `
 
-        form.reportValidity();
+        <div class="empty-seat-message">
+
+          <div class="empty-seat-icon">
+            🟢
+          </div>
+
+          <h3>
+            Seat ${escapeHtml(
+              String(seatNumber)
+            )}
+          </h3>
+
+          <p>
+            This seat is currently empty.
+          </p>
+
+          <p>
+            No student is assigned to this seat.
+          </p>
+
+        </div>
+
+      `;
+
+
+      modal.classList.add(
+        "show"
+      );
+
+
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+    }
+
+
+    /* =====================================
+       CLOSE MODAL
+    ====================================== */
+
+    function closeStudentModal() {
+
+      const modal =
+        document.getElementById(
+          "student-modal"
+        );
+
+
+      modal.classList.remove(
+        "show"
+      );
+
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+    }
+
+
+    document
+      .getElementById(
+        "modal-close"
+      )
+      .addEventListener(
+        "click",
+        closeStudentModal
+      );
+
+
+    document
+      .getElementById(
+        "student-modal"
+      )
+      .addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target.id ===
+            "student-modal"
+          ) {
+
+            closeStudentModal();
+
+          }
+
+        }
+      );
+
+
+    document
+      .addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key ===
+            "Escape"
+          ) {
+
+            closeStudentModal();
+
+          }
+
+        }
+      );
+
+
+    /* =====================================
+       RENDER STUDENTS
+    ====================================== */
+
+    function renderStudents(
+      students
+    ) {
+
+      const body =
+        document.getElementById(
+          "students-body"
+        );
+
+
+      if (!students.length) {
+
+        body.innerHTML = `
+
+          <tr>
+
+            <td colspan="9">
+              No students found.
+            </td>
+
+          </tr>
+
+        `;
 
         return;
 
       }
 
 
-      const name =
-        document
-          .getElementById(
-            "s-name"
+      body.innerHTML =
+        students
+          .map(
+            student => {
+
+              const status =
+                String(
+                  student.status ||
+                  ""
+                ).toLowerCase();
+
+
+              const statusClass =
+                status === "active"
+                  ? "status-active"
+                  : "status-left";
+
+
+              const reminder =
+                String(
+                  student.reminderSent ||
+                  "No"
+                );
+
+
+              return `
+
+                <tr>
+
+                  <td>
+                    <strong>
+                      ${escapeHtml(
+                        student.name ||
+                        "-"
+                      )}
+                    </strong>
+                  </td>
+
+
+                  <td>
+                    ${escapeHtml(
+                      student.phone ||
+                      "-"
+                    )}
+                  </td>
+
+
+                  <td>
+                    💺 ${
+                      escapeHtml(
+                        String(
+                          student.seatNumber ||
+                          "-"
+                        )
+                      )
+                    }
+                  </td>
+
+
+                  <td>
+                    ${escapeHtml(
+                      student.seatType ||
+                      "-"
+                    )}
+                  </td>
+
+
+                  <td>
+                    ₹${escapeHtml(
+                      String(
+                        student.fee ||
+                        "700"
+                      )
+                    )}
+                  </td>
+
+
+                  <td>
+                    ${escapeHtml(
+                      formatDate(
+                        student.dueDate
+                      )
+                    )}
+                  </td>
+
+
+                  <td
+                    class="${statusClass}"
+                  >
+                    ${escapeHtml(
+                      student.status ||
+                      "-"
+                    )}
+                  </td>
+
+
+                  <td>
+                    ${escapeHtml(
+                      reminder
+                    )}
+                  </td>
+
+
+                  <td>
+
+                    <div class="table-actions">
+
+                      <button
+                        type="button"
+                        class="small-button success-button"
+                        onclick="markStudentPaid(${Number(student.row)})"
+                      >
+                        Paid
+                      </button>
+
+
+                      <button
+                        type="button"
+                        class="small-button primary-button"
+                        onclick="sendReminder(${Number(student.row)})"
+                      >
+                        WhatsApp
+                      </button>
+
+
+                      <button
+                        type="button"
+                        class="small-button secondary-button"
+                        onclick="changeStudentStatus(${Number(student.row)}, '${escapeJs(student.status || "Active")}')"
+                      >
+                        Status
+                      </button>
+
+
+                      <button
+                        type="button"
+                        class="small-button danger-button"
+                        onclick="removeStudent(${Number(student.row)})"
+                      >
+                        Delete
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `;
+
+            }
           )
-          .value
-          .trim();
+          .join("");
+
+    }
 
 
-      const phone =
-        document
-          .getElementById(
-            "s-phone"
-          )
-          .value
-          .trim();
+    /* =====================================
+       MARK PAID
+    ====================================== */
 
-
-      const seat =
-        document
-          .getElementById(
-            "s-seat"
-          )
-          .value;
-
-
-      const seatNumber =
-        document
-          .getElementById(
-            "s-seat-number"
-          )
-          .value;
-
-
-      const dueDate =
-        document
-          .getElementById(
-            "s-due"
-          )
-          .value;
-
+    async function markStudentPaid(
+      row
+    ) {
 
       if (
-        !/^[0-9]{10}$/.test(
-          phone
+        !confirm(
+          "Mark this student's fee as paid?"
         )
       ) {
 
-        alert(
-          "Please enter exactly 10 digits for phone number."
-        );
-
         return;
 
       }
-
-
-      if (!seatNumber) {
-
-        alert(
-          "Please select a seat number."
-        );
-
-        return;
-
-      }
-
-
-      const button =
-        form.querySelector(
-          "button[type='submit']"
-        );
-
-
-      button.disabled =
-        true;
-
-
-      button.textContent =
-        "Adding...";
 
 
       const result =
         await apiRequest({
 
           action:
-            "addStudent",
+            "markPaid",
 
-          name:
-            name,
-
-          phone:
-            phone,
-
-          seatType:
-            seat,
-
-          seatNumber:
-            seatNumber,
-
-          dueDate:
-            dueDate
+          row:
+            row
 
         });
 
 
-      button.disabled =
-        false;
-
-
-      button.textContent =
-        "Add Student";
-
-
-      if (
-        !result.success
-      ) {
+      if (!result.success) {
 
         alert(
           result.message ||
-          "Unable to add student."
+          "Unable to mark payment."
         );
 
         return;
@@ -1951,102 +1928,573 @@ document
 
 
       alert(
-        "Student added successfully to Google Sheet! ✅"
+        "Payment marked successfully. ✅"
       );
-
-
-      form.reset();
 
 
       await loadStudents();
 
     }
-  );
 
 
+    /* =====================================
+       MARK REMINDER / WHATSAPP
+    ====================================== */
 
-/* =====================================================
-   REFRESH
-===================================================== */
+    async function sendReminder(
+      row
+    ) {
 
-document
-  .getElementById(
-    "refresh-btn"
-  )
-  .addEventListener(
-    "click",
-    loadStudents
-  );
-
-
-
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-function showMessage(message) {
-
-  const element =
-    document.getElementById(
-      "system-message"
-    );
+      const student =
+        allStudents.find(
+          item =>
+            Number(item.row) ===
+            Number(row)
+        );
 
 
-  element.textContent =
-    message;
+      if (!student) {
 
-}
+        alert(
+          "Student not found."
+        );
 
+        return;
 
-
-/* =====================================================
-   HTML ESCAPE
-===================================================== */
-
-function escapeHtml(value) {
-
-  return String(
-    value ?? ""
-  )
-
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-
-  .replace(
-    /</g,
-    "&lt;"
-  )
-
-  .replace(
-    />/g,
-    "&gt;"
-  )
-
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-
-  .replace(
-    /'/g,
-    "&#039;"
-  );
-
-}
+      }
 
 
+      const phone =
+        String(
+          student.phone || ""
+        ).replace(
+          /\D/g,
+          ""
+        );
 
-/* =====================================================
-   START
-===================================================== */
 
-loadStudents();
+      if (
+        phone.length !== 10
+      ) {
 
-</script>
+        alert(
+          "Invalid phone number."
+        );
 
+        return;
+
+      }
+
+
+      const message =
+
+        `नमस्कार ${student.name || ""} जी,%0A%0A` +
+
+        `📚 *Study Point Monthly Fee Reminder*%0A%0A` +
+
+        `आपली Study Point ची monthly seat fee *₹${student.fee || 700}* आहे.%0A` +
+
+        `आपली fee payment due झाली आहे. कृपया आपली monthly fee लवकरात लवकर भरावी.%0A%0A` +
+
+        `💺 Seat Number: ${student.seatNumber || "-"}%0A` +
+
+        `💺 Seat Type: ${student.seatType || "-"}%0A` +
+
+        `💰 Monthly Fee: ₹${student.fee || 700}%0A%0A` +
+
+        `कृपया payment केल्यानंतर confirmation द्यावे.%0A%0A` +
+
+        `Thank you for choosing Wadkile Abhysika. 🙏`;
+
+
+      const whatsappUrl =
+        "https://wa.me/91" +
+        phone +
+        "?text=" +
+        message;
+
+
+      window.open(
+        whatsappUrl,
+        "_blank"
+      );
+
+
+      await apiRequest({
+
+        action:
+          "markReminderSent",
+
+        row:
+          row
+
+      });
+
+
+      await loadStudents();
+
+    }
+
+
+    /* =====================================
+       CHANGE STATUS
+    ====================================== */
+
+    async function changeStudentStatus(
+      row,
+      currentStatus
+    ) {
+
+      const newStatus =
+        currentStatus === "Active"
+          ? "Left"
+          : "Active";
+
+
+      const confirmText =
+        currentStatus === "Active"
+          ? "Mark this student as Left?"
+          : "Mark this student as Active?";
+
+
+      if (
+        !confirm(confirmText)
+      ) {
+
+        return;
+
+      }
+
+
+      const result =
+        await apiRequest({
+
+          action:
+            "updateStatus",
+
+          row:
+            row,
+
+          status:
+            newStatus
+
+        });
+
+
+      if (!result.success) {
+
+        alert(
+          result.message ||
+          "Unable to update status."
+        );
+
+        return;
+
+      }
+
+
+      alert(
+        "Status updated successfully. ✅"
+      );
+
+
+      await loadStudents();
+
+    }
+
+
+    /* =====================================
+       DELETE STUDENT
+    ====================================== */
+
+    async function removeStudent(
+      row
+    ) {
+
+      if (
+        !confirm(
+          "Are you sure you want to delete this student?"
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      const result =
+        await apiRequest({
+
+          action:
+            "deleteStudent",
+
+          row:
+            row
+
+        });
+
+
+      if (!result.success) {
+
+        alert(
+          result.message ||
+          "Unable to delete student."
+        );
+
+        return;
+
+      }
+
+
+      alert(
+        "Student deleted successfully. ✅"
+      );
+
+
+      await loadStudents();
+
+    }
+
+
+    /* =====================================
+       ADD STUDENT
+    ====================================== */
+
+    document
+      .getElementById(
+        "student-form"
+      )
+      .addEventListener(
+        "submit",
+        async event => {
+
+          event.preventDefault();
+
+
+          const form =
+            document.getElementById(
+              "student-form"
+            );
+
+
+          if (
+            !form.checkValidity()
+          ) {
+
+            form.reportValidity();
+
+            return;
+
+          }
+
+
+          const name =
+            document
+              .getElementById(
+                "s-name"
+              )
+              .value
+              .trim();
+
+
+          const phone =
+            document
+              .getElementById(
+                "s-phone"
+              )
+              .value
+              .trim();
+
+
+          const seatType =
+            document
+              .getElementById(
+                "s-seat"
+              )
+              .value;
+
+
+          const seatNumber =
+            document
+              .getElementById(
+                "s-seat-number"
+              )
+              .value;
+
+
+          const dueDate =
+            document
+              .getElementById(
+                "s-due"
+              )
+              .value;
+
+
+          if (
+            !/^[0-9]{10}$/.test(
+              phone
+            )
+          ) {
+
+            alert(
+              "Please enter exactly 10 digits for phone number."
+            );
+
+            return;
+
+          }
+
+
+          if (!seatNumber) {
+
+            alert(
+              "Please select an empty seat."
+            );
+
+            return;
+
+          }
+
+
+          const button =
+            form.querySelector(
+              "button[type='submit']"
+            );
+
+
+          button.disabled =
+            true;
+
+
+          button.textContent =
+            "Adding...";
+
+
+          const result =
+            await apiRequest({
+
+              action:
+                "addStudent",
+
+              name:
+                name,
+
+              phone:
+                phone,
+
+              seatType:
+                seatType,
+
+              seatNumber:
+                seatNumber,
+
+              dueDate:
+                dueDate
+
+            });
+
+
+          button.disabled =
+            false;
+
+
+          button.textContent =
+            "Add Student";
+
+
+          if (
+            !result.success
+          ) {
+
+            alert(
+              result.message ||
+              "Unable to add student."
+            );
+
+            return;
+
+          }
+
+
+          alert(
+            "Student added successfully! ✅"
+          );
+
+
+          form.reset();
+
+
+          await loadStudents();
+
+        }
+      );
+
+
+    /* =====================================
+       REFRESH
+    ====================================== */
+
+    document
+      .getElementById(
+        "refresh-button"
+      )
+      .addEventListener(
+        "click",
+        async () => {
+
+          const button =
+            document.getElementById(
+              "refresh-button"
+            );
+
+
+          button.disabled =
+            true;
+
+
+          button.textContent =
+            "Refreshing...";
+
+
+          await loadStudents();
+
+
+          button.disabled =
+            false;
+
+
+          button.textContent =
+            "🔄 Refresh";
+
+        }
+      );
+
+
+    /* =====================================
+       DATE FORMAT
+    ====================================== */
+
+    function formatDate(
+      value
+    ) {
+
+      if (!value) {
+        return "-";
+      }
+
+
+      try {
+
+        const date =
+          new Date(value);
+
+
+        if (
+          Number.isNaN(
+            date.getTime()
+          )
+        ) {
+
+          return String(value);
+
+        }
+
+
+        return date.toLocaleDateString(
+          "en-IN",
+          {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+          }
+        );
+
+      } catch (error) {
+
+        return String(value);
+
+      }
+
+    }
+
+
+    /* =====================================
+       ESCAPE HTML
+    ====================================== */
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(
+        value ?? ""
+      )
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    /* =====================================
+       ESCAPE JAVASCRIPT
+    ====================================== */
+
+    function escapeJs(
+      value
+    ) {
+
+      return String(
+        value ?? ""
+      )
+        .replace(
+          /\\/g,
+          "\\\\"
+        )
+        .replace(
+          /'/g,
+          "\\'"
+        )
+        .replace(
+          /"/g,
+          '\\"'
+        )
+        .replace(
+          /\n/g,
+          "\\n"
+        )
+        .replace(
+          /\r/g,
+          "\\r"
+        );
+
+    }
+
+
+    /* =====================================
+       INITIAL LOAD
+    ====================================== */
+
+    loadStudents();
+
+  </script>
 
 </body>
-
 </html>
