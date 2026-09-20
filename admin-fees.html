@@ -881,48 +881,64 @@ Thank you for choosing *Wadkile Abhyasika*. 🙏`;
 function renderSeatMap(students) {
 
   const boysContainer =
-    document.getElementById(
-      "boys-seats"
-    );
-
+    document.getElementById("boys-seats");
 
   const girlsContainer =
-    document.getElementById(
-      "girls-seats"
-    );
-
+    document.getElementById("girls-seats");
 
   const emptyCount =
-    document.getElementById(
-      "empty-seat-count"
-    );
-
+    document.getElementById("empty-seat-count");
 
   const engagedCount =
-    document.getElementById(
-      "engaged-seat-count"
-    );
+    document.getElementById("engaged-seat-count");
 
 
-  if (
-    !boysContainer ||
-    !girlsContainer
-  ) {
-
+  if (!boysContainer || !girlsContainer) {
     return;
-
   }
 
 
   boysContainer.innerHTML = "";
-
   girlsContainer.innerHTML = "";
 
 
-  let empty = 0;
+  const activeStudents =
+    students.filter(student =>
+      String(student.status || "")
+        .toLowerCase() === "active"
+    );
 
-  let engaged = 0;
 
+  const seatMap = new Map();
+
+
+  activeStudents.forEach(student => {
+
+    const seatNumber =
+      Number(student.seatNumber);
+
+    if (
+      seatNumber >= 1 &&
+      seatNumber <= 70
+    ) {
+
+      seatMap.set(
+        seatNumber,
+        student
+      );
+
+    }
+
+  });
+
+
+  let emptySeats = 0;
+  let engagedSeats = 0;
+
+
+  // ================================
+  // CREATE SEATS
+  // ================================
 
   for (
     let seatNumber = 1;
@@ -931,43 +947,27 @@ function renderSeatMap(students) {
   ) {
 
     const student =
-      students.find(
-        student =>
-          Number(
-            student.seatNumber
-          ) === seatNumber &&
-          String(
-            student.status || ""
-          ).toLowerCase() === "active"
-      );
+      seatMap.get(seatNumber);
 
 
     const seat =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
-
-    seat.className =
-      "seat";
+    seat.className = "seat";
 
 
     const number =
-      document.createElement(
-        "span"
-      );
+      document.createElement("span");
 
     number.className =
       "seat-number";
 
     number.textContent =
-      `Seat ${seatNumber}`;
+      "Seat " + seatNumber;
 
 
     const status =
-      document.createElement(
-        "span"
-      );
+      document.createElement("span");
 
     status.className =
       "seat-status";
@@ -975,52 +975,60 @@ function renderSeatMap(students) {
 
     if (student) {
 
+      // ================================
+      // ENGAGED SEAT
+      // ================================
+
       seat.classList.add(
         "seat-engaged"
       );
 
-
       status.textContent =
-        "ENGAGED";
+        "🔴 Engaged";
+
+      engagedSeats++;
 
 
-      engaged++;
+      const studentName =
+        document.createElement("small");
+
+      studentName.className =
+        "seat-student-name";
+
+      studentName.textContent =
+        student.name || "Student";
 
 
-      seat.title =
-        `${student.name} - ${student.phone}`;
+      seat.appendChild(number);
+      seat.appendChild(status);
+      seat.appendChild(studentName);
 
-    }
 
-    else {
+    } else {
+
+      // ================================
+      // EMPTY SEAT
+      // ================================
 
       seat.classList.add(
         "seat-empty"
       );
 
-
       status.textContent =
-        "EMPTY";
+        "🟢 Empty";
+
+      emptySeats++;
 
 
-      empty++;
-
-
-      seat.title =
-        `Seat ${seatNumber} is available`;
+      seat.appendChild(number);
+      seat.appendChild(status);
 
     }
 
 
-    seat.appendChild(
-      number
-    );
-
-
-    seat.appendChild(
-      status
-    );
-
+    // ================================
+    // BOYS / GIRLS
+    // ================================
 
     if (seatNumber <= 48) {
 
@@ -1028,9 +1036,7 @@ function renderSeatMap(students) {
         seat
       );
 
-    }
-
-    else {
+    } else {
 
       girlsContainer.appendChild(
         seat
@@ -1041,15 +1047,26 @@ function renderSeatMap(students) {
   }
 
 
-  emptyCount.textContent =
-    empty;
+  // ================================
+  // SUMMARY
+  // ================================
+
+  if (emptyCount) {
+
+    emptyCount.textContent =
+      emptySeats;
+
+  }
 
 
-  engagedCount.textContent =
-    engaged;
+  if (engagedCount) {
+
+    engagedCount.textContent =
+      engagedSeats;
+
+  }
 
 }
-
 
 
 /* =====================================================
