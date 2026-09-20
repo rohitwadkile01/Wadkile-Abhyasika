@@ -112,6 +112,13 @@
       cursor: not-allowed;
     }
 
+    /* Link that needs to look like a button (e.g. Open Google Sheet) */
+    a.admin-button {
+      display: inline-block;
+      text-decoration: none;
+      text-align: center;
+    }
+
 
     /* =====================================
        STUDENT TABLE
@@ -139,6 +146,12 @@
     .student-table th {
       background: #f8fafc;
       font-weight: 700;
+    }
+
+    .seat-cell-clickable {
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     .status-active {
@@ -204,7 +217,7 @@
 
     .seat {
       padding: 10px 6px;
-      min-height: 72px;
+      min-height: 56px;
       border-radius: 10px;
       text-align: center;
       font-weight: 700;
@@ -243,20 +256,8 @@
       font-size: 11px;
     }
 
-    .seat-student-name {
-      display: block;
-      margin-top: 5px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #334155;
-      line-height: 1.3;
-      text-align: center;
-      white-space: normal;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      word-break: break-word;
-      max-height: 30px;
-    }
+    /* Student name intentionally no longer shown directly on the seat tile —
+       full details only appear in the popup when the seat is clicked. */
 
 
     /* =====================================
@@ -391,7 +392,7 @@
       }
 
       .seat {
-        min-height: 68px;
+        min-height: 52px;
       }
 
       .student-detail-row {
@@ -751,7 +752,7 @@
 
       <a href="https://docs.google.com/spreadsheets/d/1hUh09lop0drpElnH66LDcGokMD9D0xPsTquMUWGzLC8/edit?gid=0#gid=0"
    target="_blank"
-   class="btn btn-secondary">
+   class="admin-button secondary-button">
   📊 Open Google Sheet
 </a>
 
@@ -823,29 +824,41 @@
 
     /* =====================================
        API REQUEST
+       IMPORTANT: previously this used
+       `mode: "no-cors"`, which makes the
+       browser send the request but blocks
+       JavaScript from reading anything back.
+       That meant this function ALWAYS
+       returned success, even if the Apps
+       Script backend failed or the row was
+       never added. Removing no-cors and
+       actually reading the response is the
+       fix for "success shown but nothing in
+       the sheet."
     ====================================== */
 
     async function apiRequest(data) {
 
       try {
 
-        await fetch(
-          API_URL,
-          {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-              "Content-Type":
-                "text/plain;charset=utf-8"
-            },
-            body:
-              JSON.stringify(data)
-          }
-        );
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "text/plain;charset=utf-8"
+              },
+              body:
+                JSON.stringify(data)
+            }
+          );
 
-        return {
-          success: true
-        };
+        const result =
+          await response.json();
+
+        return result;
 
       } catch (error) {
 
@@ -855,7 +868,7 @@
           success: false,
           message:
             error.message ||
-            "Request failed."
+            "Request failed. Check your internet connection or try again."
         };
 
       }
@@ -1187,6 +1200,12 @@
 
           /* =========================
              ENGAGED
+             Only the seat number and a
+             status dot show directly on
+             the tile. Full student
+             details (including name)
+             only appear in the popup —
+             see showStudentDetails().
           ========================= */
 
           seat.classList.add(
@@ -1201,31 +1220,12 @@
           engagedSeats++;
 
 
-          const studentName =
-            document.createElement(
-              "small"
-            );
-
-
-          studentName.className =
-            "seat-student-name";
-
-
-          studentName.textContent =
-            student.name ||
-            "Student";
-
-
           seat.appendChild(
             number
           );
 
           seat.appendChild(
             status
-          );
-
-          seat.appendChild(
-            studentName
           );
 
 
@@ -1687,6 +1687,43 @@
 
 
     /* =====================================
+       SHOW SEAT FROM TABLE ROW
+       Clicking the seat number in the
+       students table opens the same
+       popup used by the seat grid.
+    ====================================== */
+
+    function showSeatFromRow(
+      row
+    ) {
+
+      const student =
+        allStudents.find(
+          item =>
+            Number(item.row) ===
+            Number(row)
+        );
+
+
+      if (!student) {
+
+        alert(
+          "Student not found."
+        );
+
+        return;
+
+      }
+
+
+      showStudentDetails(
+        student
+      );
+
+    }
+
+
+    /* =====================================
        RENDER STUDENTS
     ====================================== */
 
@@ -1766,7 +1803,10 @@
                   </td>
 
 
-                  <td>
+                  <td
+                    class="seat-cell-clickable"
+                    onclick="showSeatFromRow(${Number(student.row)})"
+                  >
                     💺 ${
                       escapeHtml(
                         String(
