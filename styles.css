@@ -745,3 +745,78 @@ button.btn.btn-secondary {
   font-size: 0.85rem;
   color: #5a5347;
 }
+/* =========================
+   SEAT MANAGEMENT
+========================= */
+
+.seat-management {
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.seat-management h2 {
+  margin-bottom: 15px;
+}
+
+.seat-management h3 {
+  margin-top: 25px;
+  margin-bottom: 12px;
+}
+
+.seat-summary {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.seat {
+  padding: 12px 6px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 700;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.seat:hover {
+  transform: translateY(-2px);
+}
+
+.seat-empty {
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.seat-engaged {
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.seat-number {
+  display: block;
+  font-size: 16px;
+}
+
+.seat-status {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+@media (max-width: 700px) {
+  .seat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
