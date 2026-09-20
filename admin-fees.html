@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
@@ -13,17 +14,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body>
 
 <nav class="nav">
-  <a class="nav-brand" href="index.html">Wadkile Abhyasika</a>
+
+  <a class="nav-brand" href="index.html">
+    Wadkile Abhyasika
+  </a>
 
   <div class="nav-links">
     <a href="index.html">Home</a>
   </div>
+
 </nav>
+
 
 <header class="page-header">
 
@@ -39,7 +46,13 @@
 
 </header>
 
+
 <main class="page">
+
+
+<!-- =====================================================
+     ADD STUDENT
+===================================================== -->
 
 <section class="section">
 
@@ -48,7 +61,10 @@
   <form id="student-form" class="admin-form">
 
     <div class="field">
-      <label for="s-name">Full name</label>
+
+      <label for="s-name">
+        Full name
+      </label>
 
       <input
         type="text"
@@ -56,7 +72,9 @@
         required
         autocomplete="name"
       >
+
     </div>
+
 
     <div class="field">
 
@@ -75,6 +93,7 @@
       >
 
     </div>
+
 
     <div class="field">
 
@@ -96,6 +115,7 @@
 
     </div>
 
+
     <div class="field">
 
       <label for="s-due">
@@ -112,6 +132,7 @@
 
   </form>
 
+
   <button
     type="button"
     id="add-btn"
@@ -123,13 +144,27 @@
 </section>
 
 
+
+<!-- =====================================================
+     STUDENTS + SEAT MANAGEMENT
+===================================================== -->
+
 <section class="section">
 
-  <div style="display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;">
+  <div
+    style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      flex-wrap:wrap;
+    "
+  >
 
     <h2 id="list-heading">
       Students
     </h2>
+
 
     <button
       type="button"
@@ -141,6 +176,7 @@
 
   </div>
 
+
   <div
     id="system-message"
     class="note"
@@ -148,21 +184,69 @@
   >
     Loading students...
   </div>
-<section class="seat-management">
-  <h2>🪑 Seat Management</h2>
 
-  <div class="seat-summary">
-    <span>🟢 Empty: <strong id="empty-seat-count">0</strong></span>
-    <span>🔴 Engaged: <strong id="engaged-seat-count">0</strong></span>
-  </div>
 
-  <h3>👦 Boys Seats — 1 to 48</h3>
-  <div id="boys-seats" class="seat-grid"></div>
 
-  <h3>👧 Girls Seats — 49 to 70</h3>
-  <div id="girls-seats" class="seat-grid"></div>
-</section>
+  <!-- =================================================
+       SEAT MANAGEMENT
+  ================================================== -->
+
+  <section class="seat-management">
+
+    <h2>
+      🪑 Seat Management
+    </h2>
+
+
+    <div class="seat-summary">
+
+      <span>
+        🟢 Empty:
+        <strong id="empty-seat-count">
+          0
+        </strong>
+      </span>
+
+
+      <span>
+        🔴 Engaged:
+        <strong id="engaged-seat-count">
+          0
+        </strong>
+      </span>
+
+    </div>
+
+
+    <h3>
+      👦 Boys Seats — 1 to 48
+    </h3>
+
+    <div
+      id="boys-seats"
+      class="seat-grid"
+    ></div>
+
+
+    <h3>
+      👧 Girls Seats — 49 to 70
+    </h3>
+
+    <div
+      id="girls-seats"
+      class="seat-grid"
+    ></div>
+
+  </section>
+
+
+
+  <!-- =================================================
+       STUDENT LIST
+  ================================================== -->
+
   <div id="student-list"></div>
+
 
   <p
     id="empty-note"
@@ -175,9 +259,16 @@
 </section>
 
 
+
+<!-- =====================================================
+     GOOGLE SHEET
+===================================================== -->
+
 <section class="section">
 
-  <h2>Google Sheet</h2>
+  <h2>
+    Google Sheet
+  </h2>
 
   <p class="note">
 
@@ -188,7 +279,14 @@
 
 </section>
 
+
 </main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
@@ -205,6 +303,7 @@
   </div>
 
 </footer>
+
 
 
 <script>
@@ -231,49 +330,69 @@ const PRICE = {
 
 /* =====================================================
    LOAD STUDENTS
-   Uses JSONP because Google Apps Script redirects
-   ContentService responses and normal fetch can fail
-   because of browser CORS handling.
 ===================================================== */
 
 async function loadStudents() {
 
-  showMessage("⏳ Loading students from Google Sheet...");
+  showMessage(
+    "⏳ Loading students from Google Sheet..."
+  );
 
   try {
 
-    const response = await fetch(
-      API_URL + "?t=" + Date.now(),
-      {
-        method: "GET",
-        cache: "no-store"
-      }
-    );
+    const response =
+      await fetch(
+        API_URL + "?t=" + Date.now(),
+        {
+          method: "GET",
+          cache: "no-store"
+        }
+      );
+
 
     if (!response.ok) {
+
       throw new Error(
-        "API returned HTTP " + response.status
+        "API returned HTTP " +
+        response.status
       );
+
     }
 
-    const result = await response.json();
+
+    const result =
+      await response.json();
+
 
     if (!result.success) {
+
       throw new Error(
-        result.message || "Unable to load students."
+        result.message ||
+        "Unable to load students."
       );
+
     }
 
-    renderStudents(result.students || []);
+
+    renderStudents(
+      result.students || []
+    );
+
 
   } catch (error) {
 
-    console.error("Load Error:", error);
+    console.error(
+      "Load Error:",
+      error
+    );
+
 
     showMessage(
       "❌ Unable to connect to Google Sheet API."
     );
+
   }
+
 }
 
 
@@ -285,31 +404,45 @@ async function apiRequest(data) {
 
   try {
 
-    const response = await fetch(API_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify(data)
-    });
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+          body:
+            JSON.stringify(data)
+        }
+      );
+
 
     return {
       success: true
     };
 
+
   } catch (error) {
 
-    console.error("API Error:", error);
+    console.error(
+      "API Error:",
+      error
+    );
+
 
     return {
       success: false,
-      message: "Unable to connect to Google Sheet."
+      message:
+        "Unable to connect to Google Sheet."
     };
 
   }
 
 }
+
 
 /* =====================================================
    DATE FORMAT
@@ -321,12 +454,15 @@ function formatDate(value) {
     return "Not set";
   }
 
+
   const date =
     new Date(value);
+
 
   if (isNaN(date.getTime())) {
     return String(value);
   }
+
 
   return date.toLocaleDateString(
     "en-IN",
@@ -347,40 +483,72 @@ function formatDate(value) {
 function getPaymentStatus(student) {
 
   if (
-    String(student.status || "").toLowerCase() !==
-    "active"
+    String(
+      student.status || ""
+    ).toLowerCase() !== "active"
   ) {
 
     return "left";
 
   }
 
+
   if (!student.dueDate) {
     return "no-date";
   }
 
+
   const today =
     new Date();
 
-  today.setHours(0, 0, 0, 0);
+  today.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
 
   const dueDate =
-    new Date(student.dueDate);
+    new Date(
+      student.dueDate
+    );
 
-  dueDate.setHours(0, 0, 0, 0);
+  dueDate.setHours(
+    0,
+    0,
+    0,
+    0
+  );
 
 
-  if (student.reminderSent === "Yes") {
+  if (
+    student.reminderSent === "Yes"
+  ) {
+
     return "reminded";
+
   }
 
-  if (dueDate < today) {
+
+  if (
+    dueDate < today
+  ) {
+
     return "overdue";
+
   }
 
-  if (dueDate.getTime() === today.getTime()) {
+
+  if (
+    dueDate.getTime() ===
+    today.getTime()
+  ) {
+
     return "due";
+
   }
+
 
   return "upcoming";
 
@@ -469,8 +637,12 @@ function buildMessage(student) {
 
   const fee = 700;
 
+
   const dueDate =
-    formatDate(student.dueDate);
+    formatDate(
+      student.dueDate
+    );
+
 
   return `नमस्कार ${student.name} जी,
 
@@ -508,20 +680,205 @@ Thank you for choosing *Wadkile Abhyasika*. 🙏`;
 
 
 /* =====================================================
+   RENDER SEAT MAP
+===================================================== */
+
+function renderSeatMap(students) {
+
+  const boysContainer =
+    document.getElementById(
+      "boys-seats"
+    );
+
+
+  const girlsContainer =
+    document.getElementById(
+      "girls-seats"
+    );
+
+
+  const emptyCount =
+    document.getElementById(
+      "empty-seat-count"
+    );
+
+
+  const engagedCount =
+    document.getElementById(
+      "engaged-seat-count"
+    );
+
+
+  if (
+    !boysContainer ||
+    !girlsContainer
+  ) {
+
+    return;
+
+  }
+
+
+  boysContainer.innerHTML = "";
+  girlsContainer.innerHTML = "";
+
+
+  let empty = 0;
+  let engaged = 0;
+
+
+  for (
+    let seatNumber = 1;
+    seatNumber <= 70;
+    seatNumber++
+  ) {
+
+
+    const student =
+      students.find(
+        student =>
+          Number(
+            student.seatNumber
+          ) === seatNumber &&
+          String(
+            student.status || ""
+          ).toLowerCase() === "active"
+      );
+
+
+    const seat =
+      document.createElement(
+        "div"
+      );
+
+
+    seat.className =
+      "seat";
+
+
+    const number =
+      document.createElement(
+        "span"
+      );
+
+    number.className =
+      "seat-number";
+
+    number.textContent =
+      `Seat ${seatNumber}`;
+
+
+    const status =
+      document.createElement(
+        "span"
+      );
+
+    status.className =
+      "seat-status";
+
+
+    if (student) {
+
+      seat.classList.add(
+        "seat-engaged"
+      );
+
+
+      status.textContent =
+        "ENGAGED";
+
+
+      engaged++;
+
+
+      seat.title =
+        `${student.name} - ${student.phone}`;
+
+    }
+
+    else {
+
+      seat.classList.add(
+        "seat-empty"
+      );
+
+
+      status.textContent =
+        "EMPTY";
+
+
+      empty++;
+
+
+      seat.title =
+        `Seat ${seatNumber} is available`;
+
+    }
+
+
+    seat.appendChild(
+      number
+    );
+
+
+    seat.appendChild(
+      status
+    );
+
+
+    if (seatNumber <= 48) {
+
+      boysContainer.appendChild(
+        seat
+      );
+
+    }
+
+    else {
+
+      girlsContainer.appendChild(
+        seat
+      );
+
+    }
+
+  }
+
+
+  emptyCount.textContent =
+    empty;
+
+
+  engagedCount.textContent =
+    engaged;
+
+}
+
+
+/* =====================================================
    RENDER STUDENTS
 ===================================================== */
 
 function renderStudents(students) {
+
+  /* Render seats first */
+
+  renderSeatMap(
+    students
+  );
+
 
   const list =
     document.getElementById(
       "student-list"
     );
 
+
   const emptyNote =
     document.getElementById(
       "empty-note"
     );
+
 
   list.innerHTML = "";
 
@@ -530,9 +887,11 @@ function renderStudents(students) {
 
     emptyNote.hidden = false;
 
+
     showMessage(
       "No students found."
     );
+
 
     return;
 
@@ -547,419 +906,557 @@ function renderStudents(students) {
   );
 
 
-  students.forEach(student => {
-
-    const card =
-      document.createElement("div");
-
-    card.className =
-      "student-card";
+  students.forEach(
+    student => {
 
 
-    const info =
-      document.createElement("div");
-
-    info.className =
-      "student-info";
-
-
-    const fee = 700;
+      const card =
+        document.createElement(
+          "div"
+        );
 
 
-    info.innerHTML = `
-
-      <h3>
-        ${escapeHtml(student.name)}
-      </h3>
-
-      <p>
-        📱 ${escapeHtml(student.phone)}
-        ·
-        💺 ${escapeHtml(student.seatType)}
-        ·
-        💰 ₹${fee}/month
-      </p>
-
-      <p>
-        Due Date:
-        <strong>
-          ${formatDate(student.dueDate)}
-        </strong>
-      </p>
-
-      <p>
-        Status:
-        <strong>
-          ${escapeHtml(student.status || "")}
-        </strong>
-      </p>
-
-      ${statusBadge(student)}
-
-    `;
+      card.className =
+        "student-card";
 
 
-    const actions =
-      document.createElement("div");
-
-    actions.className =
-      "student-actions";
-
-
-    /* WHATSAPP */
-
-    const sendBtn =
-      document.createElement("a");
-
-    sendBtn.className =
-      "btn btn-primary btn-small";
-
-    sendBtn.target =
-      "_blank";
-
-    sendBtn.rel =
-      "noopener noreferrer";
-
-    sendBtn.textContent =
-      "💬 Send Reminder";
+      const info =
+        document.createElement(
+          "div"
+        );
 
 
-    const phone =
-      String(student.phone || "")
-      .replace(/\D/g, "");
+      info.className =
+        "student-info";
 
 
-    const message =
-      buildMessage(student);
+      const fee = 700;
 
 
-    if (phone.length === 10) {
+      info.innerHTML = `
 
-      sendBtn.href =
-        `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`;
+        <h3>
+          ${escapeHtml(
+            student.name
+          )}
+        </h3>
 
-    }
+        <p>
+          📱
+          ${escapeHtml(
+            student.phone
+          )}
 
-    else {
+          ·
 
-      sendBtn.href = "#";
+          💺
+          ${escapeHtml(
+            student.seatType
+          )}
 
-      sendBtn.addEventListener(
+          ·
+
+          💰 ₹${fee}/month
+        </p>
+
+
+        <p>
+          Due Date:
+
+          <strong>
+            ${formatDate(
+              student.dueDate
+            )}
+          </strong>
+        </p>
+
+
+        <p>
+          Status:
+
+          <strong>
+            ${escapeHtml(
+              student.status || ""
+            )}
+          </strong>
+        </p>
+
+
+        ${
+          statusBadge(
+            student
+          )
+        }
+
+      `;
+
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+
+      actions.className =
+        "student-actions";
+
+
+      /* =================================================
+         WHATSAPP
+      ================================================= */
+
+      const sendBtn =
+        document.createElement(
+          "a"
+        );
+
+
+      sendBtn.className =
+        "btn btn-primary btn-small";
+
+
+      sendBtn.target =
+        "_blank";
+
+
+      sendBtn.rel =
+        "noopener noreferrer";
+
+
+      sendBtn.textContent =
+        "💬 Send Reminder";
+
+
+      const phone =
+        String(
+          student.phone || ""
+        )
+        .replace(
+          /\D/g,
+          ""
+        );
+
+
+      const message =
+        buildMessage(
+          student
+        );
+
+
+      if (
+        phone.length === 10
+      ) {
+
+        sendBtn.href =
+          `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`;
+
+      }
+
+      else {
+
+        sendBtn.href =
+          "#";
+
+
+        sendBtn.addEventListener(
+          "click",
+          event => {
+
+            event.preventDefault();
+
+
+            alert(
+              "Invalid 10-digit phone number."
+            );
+
+          }
+        );
+
+      }
+
+
+      /* =================================================
+         MARK SENT
+      ================================================= */
+
+      const reminderBtn =
+        document.createElement(
+          "button"
+        );
+
+
+      reminderBtn.type =
+        "button";
+
+
+      reminderBtn.className =
+        "btn btn-outline btn-small";
+
+
+      reminderBtn.textContent =
+        student.reminderSent === "Yes"
+          ? "Reminder Sent ✓"
+          : "Mark Sent";
+
+
+      reminderBtn.disabled =
+        student.reminderSent === "Yes";
+
+
+      reminderBtn.addEventListener(
         "click",
-        event => {
+        async () => {
 
-          event.preventDefault();
+          reminderBtn.disabled =
+            true;
 
-          alert(
-            "Invalid 10-digit phone number."
-          );
+
+          reminderBtn.textContent =
+            "Saving...";
+
+
+          const result =
+            await apiRequest({
+
+              action:
+                "markReminderSent",
+
+              row:
+                student.row
+
+            });
+
+
+          if (
+            result.success
+          ) {
+
+            await loadStudents();
+
+          }
+
+          else {
+
+            alert(
+              result.message ||
+              "Could not update reminder."
+            );
+
+
+            reminderBtn.disabled =
+              false;
+
+
+            reminderBtn.textContent =
+              "Mark Sent";
+
+          }
 
         }
       );
 
-    }
+
+      /* =================================================
+         MARK PAID
+      ================================================= */
+
+      const paidBtn =
+        document.createElement(
+          "button"
+        );
 
 
-    /* MARK SENT */
-
-    const reminderBtn =
-      document.createElement("button");
-
-    reminderBtn.type =
-      "button";
-
-    reminderBtn.className =
-      "btn btn-outline btn-small";
-
-    reminderBtn.textContent =
-      student.reminderSent === "Yes"
-        ? "Reminder Sent ✓"
-        : "Mark Sent";
-
-    reminderBtn.disabled =
-      student.reminderSent === "Yes";
+      paidBtn.type =
+        "button";
 
 
-    reminderBtn.addEventListener(
-      "click",
-      async () => {
-
-        reminderBtn.disabled = true;
-
-        reminderBtn.textContent =
-          "Saving...";
+      paidBtn.className =
+        "btn btn-outline btn-small";
 
 
-        const result =
-          await apiRequest({
-
-            action:
-              "markReminderSent",
-
-            row:
-              student.row
-
-          });
+      paidBtn.textContent =
+        "💰 Mark Paid";
 
 
-        if (result.success) {
+      paidBtn.addEventListener(
+        "click",
+        async () => {
 
-          await loadStudents();
-
-        }
-
-        else {
-
-          alert(
-            result.message ||
-            "Could not update reminder."
-          );
-
-          reminderBtn.disabled =
-            false;
-
-          reminderBtn.textContent =
-            "Mark Sent";
-
-        }
-
-      }
-    );
+          const confirmed =
+            confirm(
+              `Mark ${student.name}'s payment as paid?`
+            );
 
 
-    /* MARK PAID */
+          if (!confirmed) {
+            return;
+          }
 
-    const paidBtn =
-      document.createElement("button");
-
-    paidBtn.type =
-      "button";
-
-    paidBtn.className =
-      "btn btn-outline btn-small";
-
-    paidBtn.textContent =
-      "💰 Mark Paid";
-
-
-    paidBtn.addEventListener(
-      "click",
-      async () => {
-
-        const confirmed =
-          confirm(
-            `Mark ${student.name}'s payment as paid?`
-          );
-
-        if (!confirmed) {
-          return;
-        }
-
-
-        paidBtn.disabled =
-          true;
-
-        paidBtn.textContent =
-          "Saving...";
-
-
-        const result =
-          await apiRequest({
-
-            action:
-              "markPaid",
-
-            row:
-              student.row
-
-          });
-
-
-        if (result.success) {
-
-          await loadStudents();
-
-        }
-
-        else {
-
-          alert(
-            result.message ||
-            "Payment update failed."
-          );
 
           paidBtn.disabled =
-            false;
+            true;
+
 
           paidBtn.textContent =
-            "💰 Mark Paid";
+            "Saving...";
+
+
+          const result =
+            await apiRequest({
+
+              action:
+                "markPaid",
+
+              row:
+                student.row
+
+            });
+
+
+          if (
+            result.success
+          ) {
+
+            await loadStudents();
+
+          }
+
+          else {
+
+            alert(
+              result.message ||
+              "Payment update failed."
+            );
+
+
+            paidBtn.disabled =
+              false;
+
+
+            paidBtn.textContent =
+              "💰 Mark Paid";
+
+          }
 
         }
-
-      }
-    );
+      );
 
 
-    /* ACTIVE / LEFT */
+      /* =================================================
+         ACTIVE / LEFT
+      ================================================= */
 
-    const statusBtn =
-      document.createElement("button");
-
-    statusBtn.type =
-      "button";
-
-    statusBtn.className =
-      "btn btn-outline btn-small";
-
-    statusBtn.textContent =
-      student.status === "Active"
-        ? "Set Left"
-        : "Set Active";
+      const statusBtn =
+        document.createElement(
+          "button"
+        );
 
 
-    statusBtn.addEventListener(
-      "click",
-      async () => {
-
-        const newStatus =
-          student.status === "Active"
-            ? "Left"
-            : "Active";
+      statusBtn.type =
+        "button";
 
 
-        statusBtn.disabled = true;
-
-        statusBtn.textContent =
-          "Saving...";
+      statusBtn.className =
+        "btn btn-outline btn-small";
 
 
-        const result =
-          await apiRequest({
-
-            action:
-              "updateStatus",
-
-            row:
-              student.row,
-
-            status:
-              newStatus
-
-          });
+      statusBtn.textContent =
+        student.status === "Active"
+          ? "Set Left"
+          : "Set Active";
 
 
-        if (result.success) {
+      statusBtn.addEventListener(
+        "click",
+        async () => {
 
-          await loadStudents();
+          const newStatus =
+            student.status === "Active"
+              ? "Left"
+              : "Active";
 
-        }
-
-        else {
-
-          alert(
-            result.message ||
-            "Status update failed."
-          );
 
           statusBtn.disabled =
-            false;
+            true;
+
 
           statusBtn.textContent =
-            student.status === "Active"
-              ? "Set Left"
-              : "Set Active";
+            "Saving...";
+
+
+          const result =
+            await apiRequest({
+
+              action:
+                "updateStatus",
+
+              row:
+                student.row,
+
+              status:
+                newStatus
+
+            });
+
+
+          if (
+            result.success
+          ) {
+
+            await loadStudents();
+
+          }
+
+          else {
+
+            alert(
+              result.message ||
+              "Status update failed."
+            );
+
+
+            statusBtn.disabled =
+              false;
+
+
+            statusBtn.textContent =
+              student.status === "Active"
+                ? "Set Left"
+                : "Set Active";
+
+          }
 
         }
-
-      }
-    );
+      );
 
 
-    /* DELETE */
+      /* =================================================
+         DELETE
+      ================================================= */
 
-    const removeBtn =
-      document.createElement("button");
-
-    removeBtn.type =
-      "button";
-
-    removeBtn.className =
-      "remove-link";
-
-    removeBtn.textContent =
-      "Remove";
+      const removeBtn =
+        document.createElement(
+          "button"
+        );
 
 
-    removeBtn.addEventListener(
-      "click",
-      async () => {
-
-        const confirmed =
-          confirm(
-            `Remove ${student.name} from Google Sheet?`
-          );
-
-        if (!confirmed) {
-          return;
-        }
+      removeBtn.type =
+        "button";
 
 
-        removeBtn.disabled =
-          true;
-
-        removeBtn.textContent =
-          "Removing...";
+      removeBtn.className =
+        "remove-link";
 
 
-        const result =
-          await apiRequest({
-
-            action:
-              "deleteStudent",
-
-            row:
-              student.row
-
-          });
+      removeBtn.textContent =
+        "Remove";
 
 
-        if (result.success) {
+      removeBtn.addEventListener(
+        "click",
+        async () => {
 
-          await loadStudents();
+          const confirmed =
+            confirm(
+              `Remove ${student.name} from Google Sheet?`
+            );
 
-        }
 
-        else {
+          if (!confirmed) {
+            return;
+          }
 
-          alert(
-            result.message ||
-            "Could not delete student."
-          );
 
           removeBtn.disabled =
-            false;
+            true;
+
 
           removeBtn.textContent =
-            "Remove";
+            "Removing...";
+
+
+          const result =
+            await apiRequest({
+
+              action:
+                "deleteStudent",
+
+              row:
+                student.row
+
+            });
+
+
+          if (
+            result.success
+          ) {
+
+            await loadStudents();
+
+          }
+
+          else {
+
+            alert(
+              result.message ||
+              "Could not delete student."
+            );
+
+
+            removeBtn.disabled =
+              false;
+
+
+            removeBtn.textContent =
+              "Remove";
+
+          }
 
         }
-
-      }
-    );
+      );
 
 
-    actions.appendChild(sendBtn);
-    actions.appendChild(reminderBtn);
-    actions.appendChild(paidBtn);
-    actions.appendChild(statusBtn);
-    actions.appendChild(removeBtn);
+      actions.appendChild(
+        sendBtn
+      );
 
-    card.appendChild(info);
-    card.appendChild(actions);
 
-    list.appendChild(card);
+      actions.appendChild(
+        reminderBtn
+      );
 
-  });
+
+      actions.appendChild(
+        paidBtn
+      );
+
+
+      actions.appendChild(
+        statusBtn
+      );
+
+
+      actions.appendChild(
+        removeBtn
+      );
+
+
+      card.appendChild(
+        info
+      );
+
+
+      card.appendChild(
+        actions
+      );
+
+
+      list.appendChild(
+        card
+      );
+
+    }
+  );
 
 }
 
@@ -969,136 +1466,160 @@ function renderStudents(students) {
 ===================================================== */
 
 document
-.getElementById("add-btn")
-.addEventListener(
-  "click",
-  async () => {
-
-    const form =
-      document.getElementById(
-        "student-form"
-      );
+  .getElementById(
+    "add-btn"
+  )
+  .addEventListener(
+    "click",
+    async () => {
 
 
-    if (!form.checkValidity()) {
-
-      form.reportValidity();
-
-      return;
-
-    }
+      const form =
+        document.getElementById(
+          "student-form"
+        );
 
 
-    const name =
-      document
-      .getElementById("s-name")
-      .value
-      .trim();
+      if (
+        !form.checkValidity()
+      ) {
+
+        form.reportValidity();
+
+        return;
+
+      }
 
 
-    const phone =
-      document
-      .getElementById("s-phone")
-      .value
-      .trim();
+      const name =
+        document
+          .getElementById(
+            "s-name"
+          )
+          .value
+          .trim();
 
 
-    const seat =
-      document
-      .getElementById("s-seat")
-      .value;
+      const phone =
+        document
+          .getElementById(
+            "s-phone"
+          )
+          .value
+          .trim();
 
 
-    const dueDate =
-      document
-      .getElementById("s-due")
-      .value;
+      const seat =
+        document
+          .getElementById(
+            "s-seat"
+          )
+          .value;
 
 
-    if (!/^[0-9]{10}$/.test(phone)) {
+      const dueDate =
+        document
+          .getElementById(
+            "s-due"
+          )
+          .value;
+
+
+      if (
+        !/^[0-9]{10}$/.test(
+          phone
+        )
+      ) {
+
+        alert(
+          "Please enter exactly 10 digits for phone number."
+        );
+
+        return;
+
+      }
+
+
+      if (!dueDate) {
+
+        alert(
+          "Please select due date."
+        );
+
+        return;
+
+      }
+
+
+      const button =
+        document.getElementById(
+          "add-btn"
+        );
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        "Adding...";
+
+
+      const result =
+        await apiRequest({
+
+          action:
+            "addStudent",
+
+          name:
+            name,
+
+          phone:
+            phone,
+
+          seatType:
+            seat,
+
+          dueDate:
+            dueDate
+
+        });
+
+
+      button.disabled =
+        false;
+
+
+      button.textContent =
+        "Add student";
+
+
+      if (
+        !result.success
+      ) {
+
+        alert(
+          result.message ||
+          "Unable to add student."
+        );
+
+        return;
+
+      }
+
 
       alert(
-        "Please enter exactly 10 digits for phone number."
+        "Student added successfully to Google Sheet! ✅"
       );
 
-      return;
+
+      form.reset();
+
+
+      await loadStudents();
 
     }
-
-
-    if (!dueDate) {
-
-      alert(
-        "Please select due date."
-      );
-
-      return;
-
-    }
-
-
-    const button =
-      document.getElementById(
-        "add-btn"
-      );
-
-
-    button.disabled = true;
-
-    button.textContent =
-      "Adding...";
-
-
-    const result =
-      await apiRequest({
-
-        action:
-          "addStudent",
-
-        name:
-          name,
-
-        phone:
-          phone,
-
-        seatType:
-          seat,
-
-        dueDate:
-          dueDate
-
-      });
-
-
-    button.disabled = false;
-
-    button.textContent =
-      "Add student";
-
-
-    if (!result.success) {
-
-      alert(
-        result.message ||
-        "Unable to add student."
-      );
-
-      return;
-
-    }
-
-
-    alert(
-      "Student added successfully to Google Sheet! ✅"
-    );
-
-
-    form.reset();
-
-    await loadStudents();
-
-  }
-);
+  );
 
 
 /* =====================================================
@@ -1106,11 +1627,13 @@ document
 ===================================================== */
 
 document
-.getElementById("refresh-btn")
-.addEventListener(
-  "click",
-  loadStudents
-);
+  .getElementById(
+    "refresh-btn"
+  )
+  .addEventListener(
+    "click",
+    loadStudents
+  );
 
 
 /* =====================================================
@@ -1124,6 +1647,7 @@ function showMessage(message) {
       "system-message"
     );
 
+
   element.textContent =
     message;
 
@@ -1136,12 +1660,29 @@ function showMessage(message) {
 
 function escapeHtml(value) {
 
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
