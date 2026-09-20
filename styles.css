@@ -781,13 +781,18 @@ button.btn.btn-secondary {
 }
 
 .seat {
-  padding: 12px 6px;
+  padding: 10px 6px;
+  min-height: 72px;
   border-radius: 10px;
   text-align: center;
   font-weight: 700;
   border: 1px solid #ddd;
   cursor: pointer;
   transition: 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .seat:hover {
