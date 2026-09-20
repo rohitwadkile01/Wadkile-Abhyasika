@@ -79,15 +79,15 @@
       </div>
 
       <div class="field">
-        <label for="aadhar front side-photo">Upload Aadhaar card front side photo (optional, for registration)</label>
-        <input type="file" id="aadhar front side-photo" name="Aadhaar card front side photo" accept="image/jpeg,image/png,image/jpg,application/pdf">
-        <span class="field-hint">JPEG, PNG or PDF, up to 8 MB (10 MB combined with the identity photo)</span>
+        <label for="aadhar-front-photo">Upload Aadhaar card front side photo (optional, for registration)</label>
+        <input type="file" id="aadhar-front-photo" name="Aadhaar card front side photo" accept="image/jpeg,image/png,image/jpg,application/pdf">
+        <span class="field-hint">JPEG, PNG or PDF, up to 8 MB (10 MB combined with the other uploads)</span>
       </div>
 
       <div class="field">
-        <label for="aadhar back side-photo">Upload Aadhaar card back side photo (optional, for registration)</label>
-        <input type="file" id="aadhar back side-photo" name="Aadhaar card back side photo" accept="image/jpeg,image/png,image/jpg,application/pdf">
-        <span class="field-hint">JPEG, PNG or PDF, up to 8 MB (10 MB combined with the identity photo)</span>
+        <label for="aadhar-back-photo">Upload Aadhaar card back side photo (optional, for registration)</label>
+        <input type="file" id="aadhar-back-photo" name="Aadhaar card back side photo" accept="image/jpeg,image/png,image/jpg,application/pdf">
+        <span class="field-hint">JPEG, PNG or PDF, up to 8 MB (10 MB combined with the other uploads)</span>
       </div>
 
       <div class="field">
@@ -136,7 +136,8 @@
   const form = document.getElementById('reg-form');
   const msg = document.getElementById('form-msg');
   const idInput = document.getElementById('id-photo');
-  const aadharInput = document.getElementById('aadhar-photo');
+  const aadharFrontInput = document.getElementById('aadhar-front-photo');
+  const aadharBackInput = document.getElementById('aadhar-back-photo');
   const iframe = document.querySelector('iframe[name="hidden_iframe"]');
   const overlay = document.getElementById('modal-overlay');
   const modalIcon = document.getElementById('modal-icon');
@@ -165,7 +166,8 @@
   }
 
   idInput.addEventListener('change', () => refreshFile(idInput));
-  aadharInput.addEventListener('change', () => refreshFile(aadharInput));
+  aadharFrontInput.addEventListener('change', () => refreshFile(aadharFrontInput));
+  aadharBackInput.addEventListener('change', () => refreshFile(aadharBackInput));
 
   function openModal(success) {
     const purpose = form.querySelector('input[name="Purpose"]:checked').value;
@@ -176,7 +178,7 @@
       modalTitle.textContent = 'Thank you!';
       modalBody.textContent = `We've received your ${purposeLabel} and will get back to you within a day. You can also call or WhatsApp us anytime.`;
       form.reset();
-    } 
+    }
 
     overlay.hidden = false;
   }
@@ -218,7 +220,8 @@
 
     for (const { input, label } of [
       { input: idInput, label: 'Identity photo' },
-      { input: aadharInput, label: 'Aadhaar card photo' }
+      { input: aadharFrontInput, label: 'Aadhaar front photo' },
+      { input: aadharBackInput, label: 'Aadhaar back photo' }
     ]) {
       const file = input.files[0];
       if (file) {
