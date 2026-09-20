@@ -841,17 +841,14 @@
 
       try {
 
+        const params =
+          new URLSearchParams(data).toString();
+
         const response =
           await fetch(
-            API_URL,
+            API_URL + "?" + params,
             {
-              method: "POST",
-              headers: {
-                "Content-Type":
-                  "text/plain;charset=utf-8"
-              },
-              body:
-                JSON.stringify(data)
+              method: "GET"
             }
           );
 
@@ -2020,30 +2017,31 @@
 
       const message =
 
-        `नमस्कार ${student.name || ""} जी,%0A%0A` +
-
-        `📚 *Study Point Monthly Fee Reminder*%0A%0A` +
-
-        `आपली Study Point ची monthly seat fee *₹${student.fee || 700}* आहे.%0A` +
-
-        `आपली fee payment due झाली आहे. कृपया आपली monthly fee लवकरात लवकर भरावी.%0A%0A` +
-
-        `💺 Seat Number: ${student.seatNumber || "-"}%0A` +
-
-        `💺 Seat Type: ${student.seatType || "-"}%0A` +
-
-        `💰 Monthly Fee: ₹${student.fee || 700}%0A%0A` +
-
-        `कृपया payment केल्यानंतर confirmation द्यावे.%0A%0A` +
-
-        `Thank you for choosing Wadkile Abhysika. 🙏`;
+        `नमस्कार ${student.name || ""} जी,\n\n` +
+        `📚 *Wadkile Abhyasika – Monthly Fee Reminder*\n\n` +
+        `आपली monthly seat fee *₹${student.fee || 700}* आहे.\n\n` +
+        `आपली fee payment due झाली आहे. कृपया आपली monthly fee लवकरात लवकर भरावी.\n\n` +
+        `💺 Seat Type: *${student.seatType || "-"}*\n` +
+        `💰 Monthly Fee: *₹${student.fee || 700}*\n` +
+        `📅 Due Date: *${formatDate(student.dueDate)}*\n\n` +
+        `कृपया payment केल्यानंतर confirmation द्यावे.\n\n` +
+        `━━━━━━━━━━━━━━\n\n` +
+        `Hello ${student.name || ""},\n\n` +
+        `📚 *Wadkile Abhyasika – Monthly Fee Reminder*\n\n` +
+        `Your monthly seat fee is *₹${student.fee || 700}*.\n\n` +
+        `Your monthly fee is now due. Kindly make the payment at your earliest convenience.\n\n` +
+        `💺 Seat Type: *${student.seatType || "-"}*\n` +
+        `💰 Monthly Fee: *₹${student.fee || 700}*\n` +
+        `📅 Due Date: *${formatDate(student.dueDate)}*\n\n` +
+        `Please share the payment confirmation after completing the payment.\n\n` +
+        `Thank you for choosing *Wadkile Abhyasika*. 🙏`;
 
 
       const whatsappUrl =
         "https://wa.me/91" +
         phone +
         "?text=" +
-        message;
+        encodeURIComponent(message);
 
 
       window.open(
