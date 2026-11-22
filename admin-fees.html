@@ -339,7 +339,7 @@
 
               <optgroup label="👧 Girls Seats — 49 to 58">
                 <script>
-                  for (let i = 49; i <= 70; i++) {
+                  for (let i = 49; i <= 58; i++) {
                     document.write(`<option value="${i}">Seat ${i}</option>`);
                   }
                 </script>
@@ -347,11 +347,12 @@
 
               <optgroup label="👦 Boys Seats — 59 to 70">
                 <script>
-                  for (let i = 1; i <= 48; i++) {
+                  for (let i = 59; i <= 70; i++) {
                     document.write(`<option value="${i}">Seat ${i}</option>`);
                   }
                 </script>
               </optgroup>
+
             </select>
           </div>
 
@@ -441,7 +442,8 @@
       <div id="girls-seats" class="seat-grid"></div>
 
       <h3>👦 Boys Seats — 59 to 70</h3>
-      <div id="boys-seats" class="seat-grid"></div>
+      <div id="boys-seats-2" class="seat-grid"></div>
+
     </section>
 
 
@@ -679,21 +681,24 @@
 
     /* =====================================
        RENDER SEAT MAP
+       Boys 1–48 | Girls 49–58 | Boys 59–70
     ====================================== */
 
     function renderSeatMap(students) {
 
       const boysContainer = document.getElementById("boys-seats");
       const girlsContainer = document.getElementById("girls-seats");
+      const boysContainer2 = document.getElementById("boys-seats-2");
       const emptyCount = document.getElementById("empty-seat-count");
       const engagedCount = document.getElementById("engaged-seat-count");
 
-      if (!boysContainer || !girlsContainer) {
+      if (!boysContainer || !girlsContainer || !boysContainer2) {
         return;
       }
 
       boysContainer.innerHTML = "";
       girlsContainer.innerHTML = "";
+      boysContainer2.innerHTML = "";
 
       const activeStudents = students.filter(
         student => String(student.status || "").toLowerCase() === "active"
@@ -780,8 +785,10 @@
 
         if (seatNumber <= 48) {
           boysContainer.appendChild(seat);
-        } else {
+        } else if (seatNumber <= 58) {
           girlsContainer.appendChild(seat);
+        } else {
+          boysContainer2.appendChild(seat);
         }
 
       }
