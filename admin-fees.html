@@ -2,18 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wadkile Abhyasika - Admin Fees</title>
-
-  <link
-    rel="stylesheet"
-    href="styles.css"
-  >
+  <link rel="stylesheet" href="styles.css">
 
   <style>
 
@@ -21,11 +12,7 @@
        ADMIN PAGE
     ===================================== */
 
-    .admin-container {
-      max-width: 1200px;
-      margin: 30px auto;
-      padding: 20px;
-    }
+    .admin-container { max-width: 1200px; margin: 30px auto; padding: 20px; }
 
     .admin-card {
       background: #ffffff;
@@ -35,27 +22,17 @@
       margin-bottom: 25px;
     }
 
-    .admin-card h2 {
-      margin-bottom: 20px;
-    }
+    .admin-card h2 { margin-bottom: 20px; }
 
     .form-grid {
       display: grid;
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 15px;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
 
-    .form-group label {
-      font-weight: 600;
-      font-size: 14px;
-    }
+    .form-group label { font-weight: 600; font-size: 14px; }
 
     .form-group input,
     .form-group select {
@@ -69,14 +46,9 @@
     }
 
     .form-group input:focus,
-    .form-group select:focus {
-      outline: none;
-      border-color: #2563eb;
-    }
+    .form-group select:focus { outline: none; border-color: #2563eb; }
 
-    .full-width {
-      grid-column: 1 / -1;
-    }
+    .full-width { grid-column: 1 / -1; }
 
     .admin-button {
       padding: 11px 18px;
@@ -87,51 +59,27 @@
       font-size: 14px;
     }
 
-    .primary-button {
-      background: #2563eb;
-      color: #fff;
-    }
+    .primary-button { background: #2563eb; color: #fff; }
+    .secondary-button { background: #e2e8f0; color: #0f172a; }
+    .danger-button { background: #dc2626; color: #fff; }
+    .success-button { background: #16a34a; color: #fff; }
 
-    .secondary-button {
-      background: #e2e8f0;
-      color: #0f172a;
-    }
-
-    .danger-button {
-      background: #dc2626;
-      color: #fff;
-    }
-
-    .success-button {
-      background: #16a34a;
-      color: #fff;
-    }
-
-    .admin-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    .admin-button:disabled { opacity: 0.6; cursor: not-allowed; }
 
     /* Link that needs to look like a button (e.g. Open Google Sheet) */
-    a.admin-button {
-      display: inline-block;
-      text-decoration: none;
-      text-align: center;
-    }
+    a.admin-button { display: inline-block; text-decoration: none; text-align: center; }
 
 
     /* =====================================
        STUDENT TABLE
     ===================================== */
 
-    .table-wrapper {
-      overflow-x: auto;
-    }
+    .table-wrapper { overflow-x: auto; }
 
     .student-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 900px;
+      min-width: 1300px;
     }
 
     .student-table th,
@@ -143,10 +91,7 @@
       font-size: 13px;
     }
 
-    .student-table th {
-      background: #f8fafc;
-      font-weight: 700;
-    }
+    .student-table th { background: #f8fafc; font-weight: 700; }
 
     .seat-cell-clickable {
       cursor: pointer;
@@ -154,21 +99,10 @@
       text-underline-offset: 2px;
     }
 
-    .status-active {
-      color: #15803d;
-      font-weight: 700;
-    }
+    .status-active { color: #15803d; font-weight: 700; }
+    .status-left { color: #dc2626; font-weight: 700; }
 
-    .status-left {
-      color: #dc2626;
-      font-weight: 700;
-    }
-
-    .table-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
+    .table-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 
     .small-button {
       padding: 6px 9px;
@@ -192,14 +126,8 @@
       border: 1px solid #e2e8f0;
     }
 
-    .seat-management h2 {
-      margin-bottom: 15px;
-    }
-
-    .seat-management h3 {
-      margin-top: 25px;
-      margin-bottom: 12px;
-    }
+    .seat-management h2 { margin-bottom: 15px; }
+    .seat-management h3 { margin-top: 25px; margin-bottom: 12px; }
 
     .seat-summary {
       display: flex;
@@ -209,11 +137,7 @@
       font-size: 15px;
     }
 
-    .seat-grid {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 10px;
-    }
+    .seat-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; }
 
     .seat {
       padding: 10px 6px;
@@ -231,32 +155,15 @@
       box-sizing: border-box;
     }
 
-    .seat:hover {
-      transform: translateY(-2px);
-    }
+    .seat:hover { transform: translateY(-2px); }
 
-    .seat-empty {
-      background: #dcfce7;
-      border-color: #86efac;
-    }
+    .seat-empty { background: #dcfce7; border-color: #86efac; }
+    .seat-engaged { background: #fee2e2; border-color: #fca5a5; }
 
-    .seat-engaged {
-      background: #fee2e2;
-      border-color: #fca5a5;
-    }
+    .seat-number { display: block; font-size: 16px; }
+    .seat-status { display: block; margin-top: 4px; font-size: 11px; }
 
-    .seat-number {
-      display: block;
-      font-size: 16px;
-    }
-
-    .seat-status {
-      display: block;
-      margin-top: 4px;
-      font-size: 11px;
-    }
-
-    /* Student name intentionally no longer shown directly on the seat tile —
+    /* Student name intentionally not shown on the seat tile —
        full details only appear in the popup when the seat is clicked. */
 
 
@@ -276,9 +183,7 @@
       justify-content: center;
     }
 
-    .student-modal.show {
-      display: flex;
-    }
+    .student-modal.show { display: flex; }
 
     .student-modal-content {
       width: min(500px, 100%);
@@ -306,10 +211,7 @@
       cursor: pointer;
     }
 
-    .modal-title {
-      margin: 0 40px 20px 0;
-      font-size: 22px;
-    }
+    .modal-title { margin: 0 40px 20px 0; font-size: 22px; }
 
     .modal-seat-badge {
       display: inline-block;
@@ -322,10 +224,7 @@
       margin-bottom: 18px;
     }
 
-    .student-detail-list {
-      display: grid;
-      gap: 12px;
-    }
+    .student-detail-list { display: grid; gap: 12px; }
 
     .student-detail-row {
       display: flex;
@@ -335,11 +234,7 @@
       border-bottom: 1px solid #e2e8f0;
     }
 
-    .student-detail-label {
-      color: #64748b;
-      font-size: 13px;
-      font-weight: 600;
-    }
+    .student-detail-label { color: #64748b; font-size: 13px; font-weight: 600; }
 
     .student-detail-value {
       color: #0f172a;
@@ -349,16 +244,8 @@
       word-break: break-word;
     }
 
-    .empty-seat-message {
-      text-align: center;
-      padding: 25px 10px;
-      color: #166534;
-    }
-
-    .empty-seat-icon {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
+    .empty-seat-message { text-align: center; padding: 25px 10px; color: #166534; }
+    .empty-seat-icon { font-size: 42px; margin-bottom: 10px; }
 
 
     /* =====================================
@@ -366,44 +253,17 @@
     ===================================== */
 
     @media (max-width: 800px) {
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .full-width {
-        grid-column: auto;
-      }
-
-      .seat-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .admin-container {
-        padding: 12px;
-      }
-
+      .form-grid { grid-template-columns: 1fr; }
+      .full-width { grid-column: auto; }
+      .seat-grid { grid-template-columns: repeat(4, 1fr); }
+      .admin-container { padding: 12px; }
     }
 
     @media (max-width: 450px) {
-
-      .seat-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .seat {
-        min-height: 52px;
-      }
-
-      .student-detail-row {
-        flex-direction: column;
-        gap: 4px;
-      }
-
-      .student-detail-value {
-        text-align: left;
-      }
-
+      .seat-grid { grid-template-columns: repeat(3, 1fr); }
+      .seat { min-height: 52px; }
+      .student-detail-row { flex-direction: column; gap: 4px; }
+      .student-detail-value { text-align: left; }
     }
 
   </style>
@@ -414,18 +274,11 @@
 
   <main class="admin-container">
 
-    <!-- =====================================
-         PAGE HEADER
-    ====================================== -->
+    <!-- PAGE HEADER -->
 
     <div class="admin-card">
-
       <h1>📚 Wadkile Abhyasika</h1>
-
-      <p>
-        Admin Fee & Seat Management
-      </p>
-
+      <p>Admin Fee &amp; Seat Management</p>
     </div>
 
 
@@ -442,27 +295,13 @@
         <div class="form-grid">
 
           <div class="form-group">
-
-            <label for="s-name">
-              Student Full Name
-            </label>
-
-            <input
-              type="text"
-              id="s-name"
-              placeholder="Enter student name"
-              required
-            >
-
+            <label for="s-name">Student Full Name</label>
+            <input type="text" id="s-name" placeholder="Enter student name" required>
           </div>
 
 
           <div class="form-group">
-
-            <label for="s-phone">
-              Phone Number
-            </label>
-
+            <label for="s-phone">Phone Number</label>
             <input
               type="tel"
               id="s-phone"
@@ -471,121 +310,101 @@
               inputmode="numeric"
               required
             >
-
           </div>
 
 
           <div class="form-group">
-
-            <label for="s-seat">
-              Seat Type
-            </label>
-
+            <label for="s-seat">Seat Type</label>
             <select id="s-seat" required>
-
-              <option value="">
-                Select Seat Type
-              </option>
-
-              <option value="Non-AC">
-                Non-AC
-              </option>
-
-              <option value="AC">
-                AC
-              </option>
-
+              <option value="">Select Seat Type</option>
+              <option value="Non-AC">Non-AC</option>
+              <option value="AC">AC</option>
             </select>
-
           </div>
 
 
           <div class="form-group">
+            <label for="s-seat-number">Seat Number</label>
+            <select id="s-seat-number" required>
 
-            <label for="s-seat-number">
-              Seat Number
-            </label>
-
-            <select
-              id="s-seat-number"
-              required
-            >
-
-              <option value="">
-                Select Empty Seat
-              </option>
+              <option value="">Select Empty Seat</option>
 
               <optgroup label="👦 Boys Seats — 1 to 48">
-
                 <script>
-                  for (
-                    let i = 1;
-                    i <= 48;
-                    i++
-                  ) {
-
-                    document.write(
-                      `<option value="${i}">Seat ${i}</option>`
-                    );
-
+                  for (let i = 1; i <= 48; i++) {
+                    document.write(`<option value="${i}">Seat ${i}</option>`);
                   }
                 </script>
-
               </optgroup>
 
-
               <optgroup label="👧 Girls Seats — 49 to 70">
-
                 <script>
-                  for (
-                    let i = 49;
-                    i <= 70;
-                    i++
-                  ) {
-
-                    document.write(
-                      `<option value="${i}">Seat ${i}</option>`
-                    );
-
+                  for (let i = 49; i <= 70; i++) {
+                    document.write(`<option value="${i}">Seat ${i}</option>`);
                   }
                 </script>
-
               </optgroup>
 
             </select>
-
           </div>
 
 
           <div class="form-group">
-
-            <label for="s-due">
-              Due Date
-            </label>
-
-            <input
-              type="date"
-              id="s-due"
-              required
-            >
-
+            <label for="s-due">Due Date</label>
+            <input type="date" id="s-due" required>
           </div>
 
 
-            <div class="form-group">
-              <label for="s-fee">Monthly Fee (₹)</label>
-              <input type="number" id="s-fee" min="0" required>
-            </div>
+          <div class="form-group">
+            <label for="s-fee">Monthly Fee (₹)</label>
+            <input type="number" id="s-fee" placeholder="उदा. 600" min="0" required>
+          </div>
+
+
+          <div class="form-group">
+            <label for="s-admission">Admission Date</label>
+            <input type="date" id="s-admission" required>
+          </div>
+
 
           <div class="form-group full-width">
+            <label for="s-galli">Galli / Street / Area</label>
+            <input type="text" id="s-galli" placeholder="उदा. डॉ. लेन">
+          </div>
 
-            <button
-              type="submit"
-              class="admin-button primary-button"
-            >
+
+          <div class="form-group">
+            <label for="s-village">Village / Town</label>
+            <input type="text" id="s-village" placeholder="उदा. Gangakhed" required>
+          </div>
+
+
+          <div class="form-group">
+            <label for="s-taluka">Taluka</label>
+            <input type="text" id="s-taluka" placeholder="उदा. Gangakhed" required>
+          </div>
+
+
+          <div class="form-group full-width">
+            <label for="s-district">District</label>
+            <select id="s-district" required>
+              <option value="">Select District</option>
+              <option>Parbhani</option>
+              <option>Beed</option>
+              <option>Latur</option>
+              <option>Nanded</option>
+              <option>Hingoli</option>
+              <option>Jalna</option>
+              <option>Pune</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+
+          <div class="form-group full-width">
+            <button type="submit" class="admin-button primary-button">
               Add Student
             </button>
-
           </div>
 
         </div>
@@ -603,44 +422,16 @@
 
       <h2>🪑 Seat Management</h2>
 
-
       <div class="seat-summary">
-
-        <span>
-          🟢 Empty:
-          <strong id="empty-seat-count">
-            0
-          </strong>
-        </span>
-
-        <span>
-          🔴 Engaged:
-          <strong id="engaged-seat-count">
-            0
-          </strong>
-        </span>
-
+        <span>🟢 Empty: <strong id="empty-seat-count">0</strong></span>
+        <span>🔴 Engaged: <strong id="engaged-seat-count">0</strong></span>
       </div>
 
+      <h3>👦 Boys Seats — 1 to 48</h3>
+      <div id="boys-seats" class="seat-grid"></div>
 
-      <h3>
-        👦 Boys Seats — 1 to 48
-      </h3>
-
-      <div
-        id="boys-seats"
-        class="seat-grid"
-      ></div>
-
-
-      <h3>
-        👧 Girls Seats — 49 to 70
-      </h3>
-
-      <div
-        id="girls-seats"
-        class="seat-grid"
-      ></div>
+      <h3>👧 Girls Seats — 49 to 70</h3>
+      <div id="girls-seats" class="seat-grid"></div>
 
     </section>
 
@@ -660,19 +451,11 @@
           flex-wrap:wrap;
         "
       >
+        <h2>👨‍🎓 Students</h2>
 
-        <h2>
-          👨‍🎓 Students
-        </h2>
-
-        <button
-          type="button"
-          id="refresh-button"
-          class="admin-button secondary-button"
-        >
+        <button type="button" id="refresh-button" class="admin-button secondary-button">
           🔄 Refresh
         </button>
-
       </div>
 
 
@@ -681,42 +464,25 @@
         <table class="student-table">
 
           <thead>
-
             <tr>
-
               <th>Name</th>
-
               <th>Phone</th>
-
               <th>Seat</th>
-
               <th>Type</th>
-
               <th>Fee</th>
-
+              <th>Admission</th>
+              <th>Address</th>
               <th>Due Date</th>
-
               <th>Status</th>
-
               <th>Reminder</th>
-
               <th>Actions</th>
-
             </tr>
-
           </thead>
 
-
           <tbody id="students-body">
-
             <tr>
-
-              <td colspan="9">
-                Loading students...
-              </td>
-
+              <td colspan="11">Loading students...</td>
             </tr>
-
           </tbody>
 
         </table>
@@ -726,40 +492,28 @@
     </section>
 
 
-    <!-- =====================================
-         GOOGLE SHEET
-    ====================================== -->
+    <!-- GOOGLE SHEET -->
 
     <section class="admin-card">
 
-      <h2>
-        📊 Google Sheet
-      </h2>
+      <h2>📊 Google Sheet</h2>
 
-      <p>
-        Student records are stored in the Google Sheet.
-      </p>
+      <p>Student records are stored in the Google Sheet.</p>
 
       <a href="https://docs.google.com/spreadsheets/d/1hUh09lop0drpElnH66LDcGokMD9D0xPsTquMUWGzLC8/edit?gid=0#gid=0"
-   target="_blank"
-   class="admin-button secondary-button">
-  📊 Open Google Sheet
-</a>
+         target="_blank"
+         class="admin-button secondary-button">
+        📊 Open Google Sheet
+      </a>
 
     </section>
 
   </main>
 
 
-  <!-- =====================================
-       STUDENT DETAILS MODAL
-  ====================================== -->
+  <!-- STUDENT DETAILS MODAL -->
 
-  <div
-    id="student-modal"
-    class="student-modal"
-    aria-hidden="true"
-  >
+  <div id="student-modal" class="student-modal" aria-hidden="true">
 
     <div
       class="student-modal-content"
@@ -768,27 +522,11 @@
       aria-labelledby="modal-title"
     >
 
-      <button
-        type="button"
-        id="modal-close"
-        class="modal-close"
-        aria-label="Close"
-      >
-        ×
-      </button>
+      <button type="button" id="modal-close" class="modal-close" aria-label="Close">×</button>
 
+      <h2 id="modal-title" class="modal-title">Student Details</h2>
 
-      <h2
-        id="modal-title"
-        class="modal-title"
-      >
-        Student Details
-      </h2>
-
-
-      <div
-        id="modal-body"
-      ></div>
+      <div id="modal-body"></div>
 
     </div>
 
@@ -808,42 +546,23 @@
     const API_URL =
       "https://script.google.com/macros/s/AKfycbyJB729sU5LtAOuv7W3QXVv4QhodzTk3rNt2jGBoN43aLOOrEHu8SX4YyLqEiUKE_cNLg/exec";
 
-
     let allStudents = [];
 
 
     /* =====================================
        API REQUEST
-       IMPORTANT: previously this used
-       `mode: "no-cors"`, which makes the
-       browser send the request but blocks
-       JavaScript from reading anything back.
-       That meant this function ALWAYS
-       returned success, even if the Apps
-       Script backend failed or the row was
-       never added. Removing no-cors and
-       actually reading the response is the
-       fix for "success shown but nothing in
-       the sheet."
+       (no `no-cors`, so the real response is read)
     ====================================== */
 
     async function apiRequest(data) {
 
       try {
 
-        const params =
-          new URLSearchParams(data).toString();
+        const params = new URLSearchParams(data).toString();
 
-        const response =
-          await fetch(
-            API_URL + "?" + params,
-            {
-              method: "GET"
-            }
-          );
+        const response = await fetch(API_URL + "?" + params, { method: "GET" });
 
-        const result =
-          await response.json();
+        const result = await response.json();
 
         return result;
 
@@ -871,61 +590,33 @@
 
       try {
 
-        const response =
-          await fetch(API_URL);
+        const response = await fetch(API_URL);
 
-        const data =
-          await response.json();
-
+        const data = await response.json();
 
         if (!data.success) {
-
-          throw new Error(
-            data.message ||
-            "Unable to load students."
-          );
-
+          throw new Error(data.message || "Unable to load students.");
         }
 
+        allStudents = Array.isArray(data.students) ? data.students : [];
 
-        allStudents =
-          Array.isArray(data.students)
-            ? data.students
-            : [];
-
-
-        renderSeatMap(
-          allStudents
-        );
-
-        renderStudents(
-          allStudents
-        );
-
-        updateSeatOptions(
-          allStudents
-        );
-
+        renderSeatMap(allStudents);
+        renderStudents(allStudents);
+        updateSeatOptions(allStudents);
 
       } catch (error) {
 
         console.error(error);
 
-        document
-          .getElementById(
-            "students-body"
-          )
-          .innerHTML = `
-            <tr>
-              <td colspan="9">
-                ❌ Unable to load student data.
-                <br>
-                ${escapeHtml(
-                  error.message || ""
-                )}
-              </td>
-            </tr>
-          `;
+        document.getElementById("students-body").innerHTML = `
+          <tr>
+            <td colspan="11">
+              ❌ Unable to load student data.
+              <br>
+              ${escapeHtml(error.message || "")}
+            </td>
+          </tr>
+        `;
 
       }
 
@@ -936,96 +627,42 @@
        UPDATE SEAT DROPDOWN
     ====================================== */
 
-    function updateSeatOptions(
-      students
-    ) {
+    function updateSeatOptions(students) {
 
-      const select =
-        document.getElementById(
-          "s-seat-number"
-        );
-
+      const select = document.getElementById("s-seat-number");
 
       if (!select) {
         return;
       }
 
+      const occupiedSeats = new Set();
 
-      const occupiedSeats =
-        new Set();
+      students.forEach(student => {
 
+        if (String(student.status || "").toLowerCase() === "active") {
 
-      students.forEach(
-        student => {
+          const seat = Number(student.seatNumber);
 
-          if (
-            String(
-              student.status || ""
-            ).toLowerCase() ===
-            "active"
-          ) {
-
-            const seat =
-              Number(
-                student.seatNumber
-              );
-
-
-            if (
-              seat >= 1 &&
-              seat <= 70
-            ) {
-
-              occupiedSeats.add(
-                seat
-              );
-
-            }
-
+          if (seat >= 1 && seat <= 70) {
+            occupiedSeats.add(seat);
           }
 
         }
-      );
 
+      });
 
-      Array.from(
-        select.options
-      ).forEach(
-        option => {
+      Array.from(select.options).forEach(option => {
 
-          const seat =
-            Number(
-              option.value
-            );
+        const seat = Number(option.value);
 
-
-          if (
-            seat >= 1 &&
-            seat <= 70
-          ) {
-
-            option.disabled =
-              occupiedSeats.has(
-                seat
-              );
-
-          }
-
+        if (seat >= 1 && seat <= 70) {
+          option.disabled = occupiedSeats.has(seat);
         }
-      );
 
+      });
 
-      if (
-        select.value &&
-        occupiedSeats.has(
-          Number(
-            select.value
-          )
-        )
-      ) {
-
+      if (select.value && occupiedSeats.has(Number(select.value))) {
         select.value = "";
-
       }
 
     }
@@ -1035,318 +672,117 @@
        RENDER SEAT MAP
     ====================================== */
 
-    function renderSeatMap(
-      students
-    ) {
+    function renderSeatMap(students) {
 
-      const boysContainer =
-        document.getElementById(
-          "boys-seats"
-        );
+      const boysContainer = document.getElementById("boys-seats");
+      const girlsContainer = document.getElementById("girls-seats");
+      const emptyCount = document.getElementById("empty-seat-count");
+      const engagedCount = document.getElementById("engaged-seat-count");
 
-      const girlsContainer =
-        document.getElementById(
-          "girls-seats"
-        );
-
-      const emptyCount =
-        document.getElementById(
-          "empty-seat-count"
-        );
-
-      const engagedCount =
-        document.getElementById(
-          "engaged-seat-count"
-        );
-
-
-      if (
-        !boysContainer ||
-        !girlsContainer
-      ) {
-
+      if (!boysContainer || !girlsContainer) {
         return;
-
       }
 
+      boysContainer.innerHTML = "";
+      girlsContainer.innerHTML = "";
 
-      boysContainer.innerHTML =
-        "";
-
-      girlsContainer.innerHTML =
-        "";
-
-
-      const activeStudents =
-        students.filter(
-          student =>
-            String(
-              student.status || ""
-            ).toLowerCase() ===
-            "active"
-        );
-
-
-      const seatMap =
-        new Map();
-
-
-      activeStudents.forEach(
-        student => {
-
-          const seatNumber =
-            Number(
-              student.seatNumber
-            );
-
-
-          if (
-            seatNumber >= 1 &&
-            seatNumber <= 70
-          ) {
-
-            seatMap.set(
-              seatNumber,
-              student
-            );
-
-          }
-
-        }
+      const activeStudents = students.filter(
+        student => String(student.status || "").toLowerCase() === "active"
       );
 
+      const seatMap = new Map();
+
+      activeStudents.forEach(student => {
+
+        const seatNumber = Number(student.seatNumber);
+
+        if (seatNumber >= 1 && seatNumber <= 70) {
+          seatMap.set(seatNumber, student);
+        }
+
+      });
 
       let emptySeats = 0;
       let engagedSeats = 0;
 
+      for (let seatNumber = 1; seatNumber <= 70; seatNumber++) {
 
-      for (
-        let seatNumber = 1;
-        seatNumber <= 70;
-        seatNumber++
-      ) {
+        const student = seatMap.get(seatNumber);
 
-        const student =
-          seatMap.get(
-            seatNumber
-          );
+        const seat = document.createElement("div");
+        seat.className = "seat";
+        seat.setAttribute("role", "button");
+        seat.setAttribute("tabindex", "0");
+        seat.dataset.seatNumber = seatNumber;
 
+        const number = document.createElement("span");
+        number.className = "seat-number";
+        number.textContent = "Seat " + seatNumber;
 
-        const seat =
-          document.createElement(
-            "div"
-          );
-
-
-        seat.className =
-          "seat";
-
-
-        seat.setAttribute(
-          "role",
-          "button"
-        );
-
-
-        seat.setAttribute(
-          "tabindex",
-          "0"
-        );
-
-
-        seat.dataset.seatNumber =
-          seatNumber;
-
-
-        const number =
-          document.createElement(
-            "span"
-          );
-
-
-        number.className =
-          "seat-number";
-
-
-        number.textContent =
-          "Seat " +
-          seatNumber;
-
-
-        const status =
-          document.createElement(
-            "span"
-          );
-
-
-        status.className =
-          "seat-status";
-
+        const status = document.createElement("span");
+        status.className = "seat-status";
 
         if (student) {
 
-          /* =========================
-             ENGAGED
-             Only the seat number and a
-             status dot show directly on
-             the tile. Full student
-             details (including name)
-             only appear in the popup —
-             see showStudentDetails().
-          ========================= */
+          /* ENGAGED — only seat number + status on the tile;
+             full details appear in the popup. */
 
-          seat.classList.add(
-            "seat-engaged"
-          );
-
-
-          status.textContent =
-            "🔴 Engaged";
-
-
+          seat.classList.add("seat-engaged");
+          status.textContent = "🔴 Engaged";
           engagedSeats++;
 
+          seat.appendChild(number);
+          seat.appendChild(status);
 
-          seat.appendChild(
-            number
-          );
+          seat.addEventListener("click", () => {
+            showStudentDetails(student);
+          });
 
-          seat.appendChild(
-            status
-          );
-
-
-          seat.addEventListener(
-            "click",
-            () => {
-
-              showStudentDetails(
-                student
-              );
-
+          seat.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              showStudentDetails(student);
             }
-          );
-
-
-          seat.addEventListener(
-            "keydown",
-            event => {
-
-              if (
-                event.key ===
-                "Enter" ||
-                event.key ===
-                " "
-              ) {
-
-                event.preventDefault();
-
-                showStudentDetails(
-                  student
-                );
-
-              }
-
-            }
-          );
-
+          });
 
         } else {
 
-          /* =========================
-             EMPTY
-          ========================= */
+          /* EMPTY */
 
-          seat.classList.add(
-            "seat-empty"
-          );
-
-
-          status.textContent =
-            "🟢 Empty";
-
-
+          seat.classList.add("seat-empty");
+          status.textContent = "🟢 Empty";
           emptySeats++;
 
+          seat.appendChild(number);
+          seat.appendChild(status);
 
-          seat.appendChild(
-            number
-          );
+          seat.addEventListener("click", () => {
+            showEmptySeat(seatNumber);
+          });
 
-          seat.appendChild(
-            status
-          );
-
-
-          seat.addEventListener(
-            "click",
-            () => {
-
-              showEmptySeat(
-                seatNumber
-              );
-
+          seat.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              showEmptySeat(seatNumber);
             }
-          );
-
-
-          seat.addEventListener(
-            "keydown",
-            event => {
-
-              if (
-                event.key ===
-                "Enter" ||
-                event.key ===
-                " "
-              ) {
-
-                event.preventDefault();
-
-                showEmptySeat(
-                  seatNumber
-                );
-
-              }
-
-            }
-          );
+          });
 
         }
 
-
-        if (
-          seatNumber <= 48
-        ) {
-
-          boysContainer.appendChild(
-            seat
-          );
-
+        if (seatNumber <= 48) {
+          boysContainer.appendChild(seat);
         } else {
-
-          girlsContainer.appendChild(
-            seat
-          );
-
+          girlsContainer.appendChild(seat);
         }
 
       }
-
 
       if (emptyCount) {
-
-        emptyCount.textContent =
-          emptySeats;
-
+        emptyCount.textContent = emptySeats;
       }
 
-
       if (engagedCount) {
-
-        engagedCount.textContent =
-          engagedSeats;
-
+        engagedCount.textContent = engagedSeats;
       }
 
     }
@@ -1356,36 +792,17 @@
        SHOW STUDENT DETAILS
     ====================================== */
 
-    function showStudentDetails(
-      student
-    ) {
+    function showStudentDetails(student) {
 
-      const modal =
-        document.getElementById(
-          "student-modal"
-        );
+      const modal = document.getElementById("student-modal");
+      const modalBody = document.getElementById("modal-body");
 
-      const modalBody =
-        document.getElementById(
-          "modal-body"
-        );
-
-
-      const dueDate =
-        formatDate(
-          student.dueDate
-        );
-
+      const dueDate = formatDate(student.dueDate);
 
       modalBody.innerHTML = `
 
         <div class="modal-seat-badge">
-          💺 Seat ${escapeHtml(
-            String(
-              student.seatNumber ||
-              "-"
-            )
-          )}
+          💺 Seat ${escapeHtml(String(student.seatNumber || "-"))}
           — 🔴 Engaged
         </div>
 
@@ -1393,149 +810,90 @@
         <div class="student-detail-list">
 
           <div class="student-detail-row">
-
-            <span class="student-detail-label">
-              👤 Name
-            </span>
-
+            <span class="student-detail-label">👤 Name</span>
             <span class="student-detail-value">
-              ${escapeHtml(
-                student.name ||
-                "-"
-              )}
+              ${escapeHtml(student.name || "-")}
             </span>
-
           </div>
 
 
           <div class="student-detail-row">
-
-            <span class="student-detail-label">
-              📞 Phone
-            </span>
-
+            <span class="student-detail-label">📞 Phone</span>
             <span class="student-detail-value">
-              ${escapeHtml(
-                student.phone ||
-                "-"
-              )}
+              ${escapeHtml(student.phone || "-")}
             </span>
-
           </div>
 
 
           <div class="student-detail-row">
-
-            <span class="student-detail-label">
-              💺 Seat Number
-            </span>
-
+            <span class="student-detail-label">💺 Seat Number</span>
             <span class="student-detail-value">
-              ${escapeHtml(
-                String(
-                  student.seatNumber ||
-                  "-"
-                )
-              )}
+              ${escapeHtml(String(student.seatNumber || "-"))}
             </span>
-
           </div>
 
 
           <div class="student-detail-row">
-
-            <span class="student-detail-label">
-              🪑 Seat Type
-            </span>
-
+            <span class="student-detail-label">🪑 Seat Type</span>
             <span class="student-detail-value">
-              ${escapeHtml(
-                student.seatType ||
-                "-"
-              )}
+              ${escapeHtml(student.seatType || "-")}
             </span>
-
           </div>
 
 
           <div class="student-detail-row">
-
-            <span class="student-detail-label">
-              💰 Monthly Fee
-            </span>
-
+            <span class="student-detail-label">💰 Monthly Fee</span>
             <span class="student-detail-value">
-              ₹${escapeHtml(
-                String(
-                  student.fee ||
-                  "700"
-                )
-              )}
+              ₹${escapeHtml(String(student.fee || "700"))}
             </span>
-
           </div>
 
 
           <div class="student-detail-row">
-
-            <span class="student-detail-label">
-              📅 Due Date
-            </span>
-
+            <span class="student-detail-label">🗓️ Admission Date</span>
             <span class="student-detail-value">
-              ${escapeHtml(
-                dueDate
-              )}
+              ${escapeHtml(formatDate(student.admissionDate))}
             </span>
-
           </div>
 
 
           <div class="student-detail-row">
-
-            <span class="student-detail-label">
-              📌 Status
-            </span>
-
+            <span class="student-detail-label">🏠 Address</span>
             <span class="student-detail-value">
-              ${escapeHtml(
-                student.status ||
-                "-"
-              )}
+              ${escapeHtml(formatAddress(student))}
             </span>
-
           </div>
 
 
           <div class="student-detail-row">
-
-            <span class="student-detail-label">
-              🔔 Reminder
-            </span>
-
+            <span class="student-detail-label">📅 Due Date</span>
             <span class="student-detail-value">
-              ${escapeHtml(
-                student.reminderSent ||
-                "No"
-              )}
+              ${escapeHtml(dueDate)}
             </span>
+          </div>
 
+
+          <div class="student-detail-row">
+            <span class="student-detail-label">📌 Status</span>
+            <span class="student-detail-value">
+              ${escapeHtml(student.status || "-")}
+            </span>
+          </div>
+
+
+          <div class="student-detail-row">
+            <span class="student-detail-label">🔔 Reminder</span>
+            <span class="student-detail-value">
+              ${escapeHtml(student.reminderSent || "No")}
+            </span>
           </div>
 
         </div>
 
       `;
 
-
-      modal.classList.add(
-        "show"
-      );
-
-
-      modal.setAttribute(
-        "aria-hidden",
-        "false"
-      );
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
 
     }
 
@@ -1544,57 +902,29 @@
        SHOW EMPTY SEAT
     ====================================== */
 
-    function showEmptySeat(
-      seatNumber
-    ) {
+    function showEmptySeat(seatNumber) {
 
-      const modal =
-        document.getElementById(
-          "student-modal"
-        );
-
-      const modalBody =
-        document.getElementById(
-          "modal-body"
-        );
-
+      const modal = document.getElementById("student-modal");
+      const modalBody = document.getElementById("modal-body");
 
       modalBody.innerHTML = `
 
         <div class="empty-seat-message">
 
-          <div class="empty-seat-icon">
-            🟢
-          </div>
+          <div class="empty-seat-icon">🟢</div>
 
-          <h3>
-            Seat ${escapeHtml(
-              String(seatNumber)
-            )}
-          </h3>
+          <h3>Seat ${escapeHtml(String(seatNumber))}</h3>
 
-          <p>
-            This seat is currently empty.
-          </p>
+          <p>This seat is currently empty.</p>
 
-          <p>
-            No student is assigned to this seat.
-          </p>
+          <p>No student is assigned to this seat.</p>
 
         </div>
 
       `;
 
-
-      modal.classList.add(
-        "show"
-      );
-
-
-      modal.setAttribute(
-        "aria-hidden",
-        "false"
-      );
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
 
     }
 
@@ -1605,107 +935,48 @@
 
     function closeStudentModal() {
 
-      const modal =
-        document.getElementById(
-          "student-modal"
-        );
+      const modal = document.getElementById("student-modal");
 
-
-      modal.classList.remove(
-        "show"
-      );
-
-
-      modal.setAttribute(
-        "aria-hidden",
-        "true"
-      );
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
 
     }
 
+    document
+      .getElementById("modal-close")
+      .addEventListener("click", closeStudentModal);
 
     document
-      .getElementById(
-        "modal-close"
-      )
-      .addEventListener(
-        "click",
-        closeStudentModal
-      );
-
-
-    document
-      .getElementById(
-        "student-modal"
-      )
-      .addEventListener(
-        "click",
-        event => {
-
-          if (
-            event.target.id ===
-            "student-modal"
-          ) {
-
-            closeStudentModal();
-
-          }
-
+      .getElementById("student-modal")
+      .addEventListener("click", event => {
+        if (event.target.id === "student-modal") {
+          closeStudentModal();
         }
-      );
+      });
 
-
-    document
-      .addEventListener(
-        "keydown",
-        event => {
-
-          if (
-            event.key ===
-            "Escape"
-          ) {
-
-            closeStudentModal();
-
-          }
-
-        }
-      );
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeStudentModal();
+      }
+    });
 
 
     /* =====================================
        SHOW SEAT FROM TABLE ROW
-       Clicking the seat number in the
-       students table opens the same
-       popup used by the seat grid.
     ====================================== */
 
-    function showSeatFromRow(
-      row
-    ) {
+    function showSeatFromRow(row) {
 
-      const student =
-        allStudents.find(
-          item =>
-            Number(item.row) ===
-            Number(row)
-        );
-
+      const student = allStudents.find(
+        item => Number(item.row) === Number(row)
+      );
 
       if (!student) {
-
-        alert(
-          "Student not found."
-        );
-
+        alert("Student not found.");
         return;
-
       }
 
-
-      showStudentDetails(
-        student
-      );
+      showStudentDetails(student);
 
     }
 
@@ -1714,191 +985,121 @@
        RENDER STUDENTS
     ====================================== */
 
-    function renderStudents(
-      students
-    ) {
+    function renderStudents(students) {
 
-      const body =
-        document.getElementById(
-          "students-body"
-        );
-
+      const body = document.getElementById("students-body");
 
       if (!students.length) {
 
         body.innerHTML = `
-
           <tr>
-
-            <td colspan="9">
-              No students found.
-            </td>
-
+            <td colspan="11">No students found.</td>
           </tr>
-
         `;
 
         return;
 
       }
 
+      body.innerHTML = students
+        .map(student => {
 
-      body.innerHTML =
-        students
-          .map(
-            student => {
+          const status = String(student.status || "").toLowerCase();
 
-              const status =
-                String(
-                  student.status ||
-                  ""
-                ).toLowerCase();
+          const statusClass =
+            status === "active" ? "status-active" : "status-left";
 
+          const reminder = String(student.reminderSent || "No");
 
-              const statusClass =
-                status === "active"
-                  ? "status-active"
-                  : "status-left";
+          return `
 
+            <tr>
 
-              const reminder =
-                String(
-                  student.reminderSent ||
-                  "No"
-                );
+              <td>
+                <strong>${escapeHtml(student.name || "-")}</strong>
+              </td>
 
 
-              return `
-
-                <tr>
-
-                  <td>
-                    <strong>
-                      ${escapeHtml(
-                        student.name ||
-                        "-"
-                      )}
-                    </strong>
-                  </td>
+              <td>${escapeHtml(student.phone || "-")}</td>
 
 
-                  <td>
-                    ${escapeHtml(
-                      student.phone ||
-                      "-"
-                    )}
-                  </td>
+              <td
+                class="seat-cell-clickable"
+                onclick="showSeatFromRow(${Number(student.row)})"
+              >
+                💺 ${escapeHtml(String(student.seatNumber || "-"))}
+              </td>
 
 
-                  <td
-                    class="seat-cell-clickable"
-                    onclick="showSeatFromRow(${Number(student.row)})"
+              <td>${escapeHtml(student.seatType || "-")}</td>
+
+
+              <td>₹${escapeHtml(String(student.fee || "700"))}</td>
+
+
+              <td>${escapeHtml(formatDate(student.admissionDate))}</td>
+
+
+              <td>${escapeHtml(formatAddress(student))}</td>
+
+
+              <td>${escapeHtml(formatDate(student.dueDate))}</td>
+
+
+              <td class="${statusClass}">
+                ${escapeHtml(student.status || "-")}
+              </td>
+
+
+              <td>${escapeHtml(reminder)}</td>
+
+
+              <td>
+
+                <div class="table-actions">
+
+                  <button
+                    type="button"
+                    class="small-button success-button"
+                    onclick="markStudentPaid(${Number(student.row)})"
                   >
-                    💺 ${
-                      escapeHtml(
-                        String(
-                          student.seatNumber ||
-                          "-"
-                        )
-                      )
-                    }
-                  </td>
+                    Paid
+                  </button>
 
-
-                  <td>
-                    ${escapeHtml(
-                      student.seatType ||
-                      "-"
-                    )}
-                  </td>
-
-
-                  <td>
-                    ₹${escapeHtml(
-                      String(
-                        student.fee ||
-                        "700"
-                      )
-                    )}
-                  </td>
-
-
-                  <td>
-                    ${escapeHtml(
-                      formatDate(
-                        student.dueDate
-                      )
-                    )}
-                  </td>
-
-
-                  <td
-                    class="${statusClass}"
+                  <button
+                    type="button"
+                    class="small-button primary-button"
+                    onclick="sendReminder(${Number(student.row)})"
                   >
-                    ${escapeHtml(
-                      student.status ||
-                      "-"
-                    )}
-                  </td>
+                    WhatsApp
+                  </button>
 
+                  <button
+                    type="button"
+                    class="small-button secondary-button"
+                    onclick="changeStudentStatus(${Number(student.row)}, '${escapeJs(student.status || "Active")}')"
+                  >
+                    Status
+                  </button>
 
-                  <td>
-                    ${escapeHtml(
-                      reminder
-                    )}
-                  </td>
+                  <button
+                    type="button"
+                    class="small-button danger-button"
+                    onclick="removeStudent(${Number(student.row)})"
+                  >
+                    Delete
+                  </button>
 
+                </div>
 
-                  <td>
+              </td>
 
-                    <div class="table-actions">
+            </tr>
 
-                      <button
-                        type="button"
-                        class="small-button success-button"
-                        onclick="markStudentPaid(${Number(student.row)})"
-                      >
-                        Paid
-                      </button>
+          `;
 
-
-                      <button
-                        type="button"
-                        class="small-button primary-button"
-                        onclick="sendReminder(${Number(student.row)})"
-                      >
-                        WhatsApp
-                      </button>
-
-
-                      <button
-                        type="button"
-                        class="small-button secondary-button"
-                        onclick="changeStudentStatus(${Number(student.row)}, '${escapeJs(student.status || "Active")}')"
-                      >
-                        Status
-                      </button>
-
-
-                      <button
-                        type="button"
-                        class="small-button danger-button"
-                        onclick="removeStudent(${Number(student.row)})"
-                      >
-                        Delete
-                      </button>
-
-                    </div>
-
-                  </td>
-
-                </tr>
-
-              `;
-
-            }
-          )
-          .join("");
+        })
+        .join("");
 
     }
 
@@ -1907,49 +1108,23 @@
        MARK PAID
     ====================================== */
 
-    async function markStudentPaid(
-      row
-    ) {
+    async function markStudentPaid(row) {
 
-      if (
-        !confirm(
-          "Mark this student's fee as paid?"
-        )
-      ) {
-
+      if (!confirm("Mark this student's fee as paid?")) {
         return;
-
       }
 
-
-      const result =
-        await apiRequest({
-
-          action:
-            "markPaid",
-
-          row:
-            row
-
-        });
-
+      const result = await apiRequest({
+        action: "markPaid",
+        row: row
+      });
 
       if (!result.success) {
-
-        alert(
-          result.message ||
-          "Unable to mark payment."
-        );
-
+        alert(result.message || "Unable to mark payment.");
         return;
-
       }
 
-
-      alert(
-        "Payment marked successfully. ✅"
-      );
-
+      alert("Payment marked successfully. ✅");
 
       await loadStudents();
 
@@ -1960,50 +1135,23 @@
        MARK REMINDER / WHATSAPP
     ====================================== */
 
-    async function sendReminder(
-      row
-    ) {
+    async function sendReminder(row) {
 
-      const student =
-        allStudents.find(
-          item =>
-            Number(item.row) ===
-            Number(row)
-        );
-
+      const student = allStudents.find(
+        item => Number(item.row) === Number(row)
+      );
 
       if (!student) {
-
-        alert(
-          "Student not found."
-        );
-
+        alert("Student not found.");
         return;
-
       }
 
+      const phone = String(student.phone || "").replace(/\D/g, "");
 
-      const phone =
-        String(
-          student.phone || ""
-        ).replace(
-          /\D/g,
-          ""
-        );
-
-
-      if (
-        phone.length !== 10
-      ) {
-
-        alert(
-          "Invalid phone number."
-        );
-
+      if (phone.length !== 10) {
+        alert("Invalid phone number.");
         return;
-
       }
-
 
       const message =
 
@@ -2028,30 +1176,15 @@
         `Please share the payment confirmation after completing the payment.\n\n` +
         `Thank you for choosing *Wadkile Abhyasika*. 🙏`;
 
-
       const whatsappUrl =
-        "https://wa.me/91" +
-        phone +
-        "?text=" +
-        encodeURIComponent(message);
+        "https://wa.me/91" + phone + "?text=" + encodeURIComponent(message);
 
-
-      window.open(
-        whatsappUrl,
-        "_blank"
-      );
-
+      window.open(whatsappUrl, "_blank");
 
       await apiRequest({
-
-        action:
-          "markReminderSent",
-
-        row:
-          row
-
+        action: "markReminderSent",
+        row: row
       });
-
 
       await loadStudents();
 
@@ -2062,63 +1195,31 @@
        CHANGE STATUS
     ====================================== */
 
-    async function changeStudentStatus(
-      row,
-      currentStatus
-    ) {
+    async function changeStudentStatus(row, currentStatus) {
 
-      const newStatus =
-        currentStatus === "Active"
-          ? "Left"
-          : "Active";
-
+      const newStatus = currentStatus === "Active" ? "Left" : "Active";
 
       const confirmText =
         currentStatus === "Active"
           ? "Mark this student as Left?"
           : "Mark this student as Active?";
 
-
-      if (
-        !confirm(confirmText)
-      ) {
-
+      if (!confirm(confirmText)) {
         return;
-
       }
 
-
-      const result =
-        await apiRequest({
-
-          action:
-            "updateStatus",
-
-          row:
-            row,
-
-          status:
-            newStatus
-
-        });
-
+      const result = await apiRequest({
+        action: "updateStatus",
+        row: row,
+        status: newStatus
+      });
 
       if (!result.success) {
-
-        alert(
-          result.message ||
-          "Unable to update status."
-        );
-
+        alert(result.message || "Unable to update status.");
         return;
-
       }
 
-
-      alert(
-        "Status updated successfully. ✅"
-      );
-
+      alert("Status updated successfully. ✅");
 
       await loadStudents();
 
@@ -2129,49 +1230,23 @@
        DELETE STUDENT
     ====================================== */
 
-    async function removeStudent(
-      row
-    ) {
+    async function removeStudent(row) {
 
-      if (
-        !confirm(
-          "Are you sure you want to delete this student?"
-        )
-      ) {
-
+      if (!confirm("Are you sure you want to delete this student?")) {
         return;
-
       }
 
-
-      const result =
-        await apiRequest({
-
-          action:
-            "deleteStudent",
-
-          row:
-            row
-
-        });
-
+      const result = await apiRequest({
+        action: "deleteStudent",
+        row: row
+      });
 
       if (!result.success) {
-
-        alert(
-          result.message ||
-          "Unable to delete student."
-        );
-
+        alert(result.message || "Unable to delete student.");
         return;
-
       }
 
-
-      alert(
-        "Student deleted successfully. ✅"
-      );
-
+      alert("Student deleted successfully. ✅");
 
       await loadStudents();
 
@@ -2182,97 +1257,92 @@
        ADD STUDENT
     ====================================== */
 
-    /* =====================================
-   ADD STUDENT
-====================================== */
+    document
+      .getElementById("student-form")
+      .addEventListener("submit", async event => {
 
-document
-  .getElementById("student-form")
-  .addEventListener("submit", async event => {
+        event.preventDefault();
 
-    event.preventDefault();
+        const form = document.getElementById("student-form");
 
-    const form = document.getElementById("student-form");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
+        const name = document.getElementById("s-name").value.trim();
+        const phone = document.getElementById("s-phone").value.trim();
+        const seatType = document.getElementById("s-seat").value;
+        const seatNumber = document.getElementById("s-seat-number").value;
+        const dueDate = document.getElementById("s-due").value;
 
-    const name = document.getElementById("s-name").value.trim();
-    const phone = document.getElementById("s-phone").value.trim();
-    const seatType = document.getElementById("s-seat").value;
-    const seatNumber = document.getElementById("s-seat-number").value;
-    const dueDate = document.getElementById("s-due").value;
+        const fee = document.getElementById("s-fee").value;
+        const admissionDate = document.getElementById("s-admission").value;
+        const galli = document.getElementById("s-galli").value.trim();
+        const village = document.getElementById("s-village").value.trim();
+        const taluka = document.getElementById("s-taluka").value.trim();
+        const district = document.getElementById("s-district").value;
 
-    // NEW FIELDS
-    const fee = document.getElementById("s-fee").value;
-    const admissionDate = document.getElementById("s-admission").value;
-    const galli = document.getElementById("s-galli").value.trim();
-    const village = document.getElementById("s-village").value.trim();
-    const taluka = document.getElementById("s-taluka").value.trim();
-    const district = document.getElementById("s-district").value;
+        if (!/^[0-9]{10}$/.test(phone)) {
+          alert("Please enter exactly 10 digits for phone number.");
+          return;
+        }
 
-    if (!/^[0-9]{10}$/.test(phone)) {
-      alert("Please enter exactly 10 digits for phone number.");
-      return;
-    }
+        if (!seatNumber) {
+          alert("Please select an empty seat.");
+          return;
+        }
 
-    if (!seatNumber) {
-      alert("Please select an empty seat.");
-      return;
-    }
+        if (!fee || Number(fee) <= 0) {
+          alert("Please enter a valid monthly fee.");
+          return;
+        }
 
-    if (!fee || Number(fee) <= 0) {
-      alert("Please enter a valid monthly fee.");
-      return;
-    }
+        if (!admissionDate) {
+          alert("Please select admission date.");
+          return;
+        }
 
-    if (!admissionDate) {
-      alert("Please select admission date.");
-      return;
-    }
+        if (!village || !taluka || !district) {
+          alert("Please fill Village, Taluka and District.");
+          return;
+        }
 
-    if (!village || !taluka || !district) {
-      alert("Please fill Village, Taluka and District.");
-      return;
-    }
+        const button = form.querySelector("button[type='submit']");
 
-    const button = form.querySelector("button[type='submit']");
+        button.disabled = true;
+        button.textContent = "Adding...";
 
-    button.disabled = true;
-    button.textContent = "Adding...";
+        const result = await apiRequest({
+          action: "addStudent",
+          name: name,
+          phone: phone,
+          seatType: seatType,
+          seatNumber: seatNumber,
+          dueDate: dueDate,
+          fee: fee,
+          admissionDate: admissionDate,
+          galli: galli,
+          village: village,
+          taluka: taluka,
+          district: district
+        });
 
-    const result = await apiRequest({
-      action: "addStudent",
-      name: name,
-      phone: phone,
-      seatType: seatType,
-      seatNumber: seatNumber,
-      dueDate: dueDate,
-      fee: fee,
-      admissionDate: admissionDate,
-      galli: galli,
-      village: village,
-      taluka: taluka,
-      district: district
-    });
+        button.disabled = false;
+        button.textContent = "Add Student";
 
-    button.disabled = false;
-    button.textContent = "Add Student";
+        if (!result.success) {
+          alert(result.message || "Unable to add student.");
+          return;
+        }
 
-    if (!result.success) {
-      alert(result.message || "Unable to add student.");
-      return;
-    }
+        alert("Student added successfully! ✅");
 
-    alert("Student added successfully! ✅");
+        form.reset();
 
-    form.reset();
+        await loadStudents();
 
-    await loadStudents();
-
-  });
+      });
 
 
     /* =====================================
@@ -2280,79 +1350,61 @@ document
     ====================================== */
 
     document
-      .getElementById(
-        "refresh-button"
-      )
-      .addEventListener(
-        "click",
-        async () => {
+      .getElementById("refresh-button")
+      .addEventListener("click", async () => {
 
-          const button =
-            document.getElementById(
-              "refresh-button"
-            );
+        const button = document.getElementById("refresh-button");
 
+        button.disabled = true;
+        button.textContent = "Refreshing...";
 
-          button.disabled =
-            true;
+        await loadStudents();
 
+        button.disabled = false;
+        button.textContent = "🔄 Refresh";
 
-          button.textContent =
-            "Refreshing...";
+      });
 
 
-          await loadStudents();
+    /* =====================================
+       ADDRESS FORMAT
+    ====================================== */
 
+    function formatAddress(student) {
 
-          button.disabled =
-            false;
+      return [
+        student.galli,
+        student.village,
+        student.taluka,
+        student.district
+      ].filter(Boolean).join(", ") || "-";
 
-
-          button.textContent =
-            "🔄 Refresh";
-
-        }
-      );
+    }
 
 
     /* =====================================
        DATE FORMAT
     ====================================== */
 
-    function formatDate(
-      value
-    ) {
+    function formatDate(value) {
 
       if (!value) {
         return "-";
       }
 
-
       try {
 
-        const date =
-          new Date(value);
+        const date = new Date(value);
 
-
-        if (
-          Number.isNaN(
-            date.getTime()
-          )
-        ) {
-
+        if (Number.isNaN(date.getTime())) {
           return String(value);
-
         }
 
-
-        return date.toLocaleDateString(
-          "en-IN",
-          {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"
-          }
-        );
+        return date.toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        });
 
       } catch (error) {
 
@@ -2367,33 +1419,14 @@ document
        ESCAPE HTML
     ====================================== */
 
-    function escapeHtml(
-      value
-    ) {
+    function escapeHtml(value) {
 
-      return String(
-        value ?? ""
-      )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
     }
 
@@ -2402,33 +1435,14 @@ document
        ESCAPE JAVASCRIPT
     ====================================== */
 
-    function escapeJs(
-      value
-    ) {
+    function escapeJs(value) {
 
-      return String(
-        value ?? ""
-      )
-        .replace(
-          /\\/g,
-          "\\\\"
-        )
-        .replace(
-          /'/g,
-          "\\'"
-        )
-        .replace(
-          /"/g,
-          '\\"'
-        )
-        .replace(
-          /\n/g,
-          "\\n"
-        )
-        .replace(
-          /\r/g,
-          "\\r"
-        );
+      return String(value ?? "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r");
 
     }
 
