@@ -104,6 +104,19 @@
 
     .table-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 
+    .student-table tr.empty-row td {
+      background: #f0fdf4;
+      color: #166534;
+    }
+
+    .student-table tr.divider-row td {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 14px;
+      border-top: 2px solid #cbd5e1;
+    }
+
     .small-button {
       padding: 6px 9px;
       border: none;
@@ -1001,121 +1014,223 @@
        RENDER STUDENTS
     ====================================== */
 
+    function buildStudentRow(student) {
+
+      const status = String(student.status || "").toLowerCase();
+
+      const statusClass =
+        status === "active" ? "status-active" : "status-left";
+
+      const reminder = String(student.reminderSent || "No");
+
+      return `
+
+        <tr>
+
+          <td>
+            <strong>${escapeHtml(student.name || "-")}</strong>
+          </td>
+
+
+          <td>${escapeHtml(student.phone || "-")}</td>
+
+
+          <td
+            class="seat-cell-clickable"
+            onclick="showSeatFromRow(${Number(student.row)})"
+          >
+            💺 ${escapeHtml(String(student.seatNumber || "-"))}
+          </td>
+
+
+          <td>${escapeHtml(student.seatType || "-")}</td>
+
+
+          <td>₹${escapeHtml(String(student.fee || "700"))}</td>
+
+
+          <td>${escapeHtml(formatDate(student.admissionDate))}</td>
+
+
+          <td>${escapeHtml(formatAddress(student))}</td>
+
+
+          <td>${escapeHtml(formatDate(student.dueDate))}</td>
+
+
+          <td class="${statusClass}">
+            ${escapeHtml(student.status || "-")}
+          </td>
+
+
+          <td>${escapeHtml(reminder)}</td>
+
+
+          <td>
+
+            <div class="table-actions">
+
+              <button
+                type="button"
+                class="small-button success-button"
+                onclick="markStudentPaid(${Number(student.row)})"
+              >
+                Paid
+              </button>
+
+              <button
+                type="button"
+                class="small-button primary-button"
+                onclick="sendReminder(${Number(student.row)})"
+              >
+                WhatsApp
+              </button>
+
+              <button
+                type="button"
+                class="small-button secondary-button"
+                onclick="changeStudentStatus(${Number(student.row)}, '${escapeJs(student.status || "Active")}')"
+              >
+                Status
+              </button>
+
+              <button
+                type="button"
+                class="small-button danger-button"
+                onclick="removeStudent(${Number(student.row)})"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+
+
+    function buildEmptySeatRow(seatNumber) {
+
+      return `
+
+        <tr class="empty-row">
+
+          <td><strong>🟢 Empty</strong></td>
+
+          <td>-</td>
+
+          <td
+            class="seat-cell-clickable"
+            onclick="showEmptySeat(${Number(seatNumber)})"
+          >
+            💺 ${escapeHtml(String(seatNumber))}
+          </td>
+
+          <td colspan="8">
+            This seat is empty
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+
+
+    function buildDividerRow(title) {
+
+      return `
+        <tr class="divider-row">
+          <td colspan="11">${escapeHtml(title)}</td>
+        </tr>
+      `;
+
+    }
+
+
+    /* Students are listed seat-number wise (1 to 70).
+       A seat with no active student shows an "Empty" row.
+       Students who have Left are listed at the bottom. */
+
     function renderStudents(students) {
 
       const body = document.getElementById("students-body");
 
-      if (!students.length) {
+      const activeBySeat = new Map();
+      const otherStudents = [];
 
-        body.innerHTML = `
-          <tr>
-            <td colspan="11">No students found.</td>
-          </tr>
-        `;
+      students.forEach(student => {
 
-        return;
+        const seat = Number(student.seatNumber);
+
+        const isActive =
+          String(student.status || "").toLowerCase() === "active";
+
+        if (isActive && seat >= 1 && seat <= 70) {
+
+          if (!activeBySeat.has(seat)) {
+            activeBySeat.set(seat, []);
+          }
+
+          activeBySeat.get(seat).push(student);
+
+        } else {
+
+          otherStudents.push(student);
+
+        }
+
+      });
+
+      const sectionTitles = {
+        1: "👦 Boys Seats — 1 to 48",
+        49: "👧 Girls Seats — 49 to 58",
+        59: "👦 Boys Seats — 59 to 70"
+      };
+
+      let html = "";
+
+      for (let seatNumber = 1; seatNumber <= 70; seatNumber++) {
+
+        if (sectionTitles[seatNumber]) {
+          html += buildDividerRow(sectionTitles[seatNumber]);
+        }
+
+        const seatStudents = activeBySeat.get(seatNumber);
+
+        if (seatStudents && seatStudents.length) {
+
+          seatStudents.forEach(student => {
+            html += buildStudentRow(student);
+          });
+
+        } else {
+
+          html += buildEmptySeatRow(seatNumber);
+
+        }
 
       }
 
-      body.innerHTML = students
-        .map(student => {
+      if (otherStudents.length) {
 
-          const status = String(student.status || "").toLowerCase();
+        otherStudents.sort(
+          (a, b) => Number(a.seatNumber) - Number(b.seatNumber)
+        );
 
-          const statusClass =
-            status === "active" ? "status-active" : "status-left";
+        html += buildDividerRow("🚪 Left / Inactive Students");
 
-          const reminder = String(student.reminderSent || "No");
+        otherStudents.forEach(student => {
+          html += buildStudentRow(student);
+        });
 
-          return `
+      }
 
-            <tr>
-
-              <td>
-                <strong>${escapeHtml(student.name || "-")}</strong>
-              </td>
-
-
-              <td>${escapeHtml(student.phone || "-")}</td>
-
-
-              <td
-                class="seat-cell-clickable"
-                onclick="showSeatFromRow(${Number(student.row)})"
-              >
-                💺 ${escapeHtml(String(student.seatNumber || "-"))}
-              </td>
-
-
-              <td>${escapeHtml(student.seatType || "-")}</td>
-
-
-              <td>₹${escapeHtml(String(student.fee || "700"))}</td>
-
-
-              <td>${escapeHtml(formatDate(student.admissionDate))}</td>
-
-
-              <td>${escapeHtml(formatAddress(student))}</td>
-
-
-              <td>${escapeHtml(formatDate(student.dueDate))}</td>
-
-
-              <td class="${statusClass}">
-                ${escapeHtml(student.status || "-")}
-              </td>
-
-
-              <td>${escapeHtml(reminder)}</td>
-
-
-              <td>
-
-                <div class="table-actions">
-
-                  <button
-                    type="button"
-                    class="small-button success-button"
-                    onclick="markStudentPaid(${Number(student.row)})"
-                  >
-                    Paid
-                  </button>
-
-                  <button
-                    type="button"
-                    class="small-button primary-button"
-                    onclick="sendReminder(${Number(student.row)})"
-                  >
-                    WhatsApp
-                  </button>
-
-                  <button
-                    type="button"
-                    class="small-button secondary-button"
-                    onclick="changeStudentStatus(${Number(student.row)}, '${escapeJs(student.status || "Active")}')"
-                  >
-                    Status
-                  </button>
-
-                  <button
-                    type="button"
-                    class="small-button danger-button"
-                    onclick="removeStudent(${Number(student.row)})"
-                  >
-                    Delete
-                  </button>
-
-                </div>
-
-              </td>
-
-            </tr>
-
-          `;
-
-        })
-        .join("");
+      body.innerHTML = html;
 
     }
 
