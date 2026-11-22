@@ -71,6 +71,39 @@
 
 
     /* =====================================
+       ADD STUDENT FORM — GROUPED SECTIONS
+    ===================================== */
+
+    .form-section { margin-bottom: 24px; }
+
+    .form-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 14px 0;
+      padding: 0 0 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      border-left: 3px solid #2563eb;
+    }
+
+    .form-section .cols-2,
+    .form-section .cols-3 {
+      display: grid;
+      gap: 15px;
+    }
+
+    .form-section .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .form-section .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .form-section .row-gap { margin-top: 15px; }
+
+    @media (max-width: 800px) {
+      .form-section .cols-2,
+      .form-section .cols-3 { grid-template-columns: 1fr; }
+    }
+
+
+    /* =====================================
        STUDENT TABLE
     ===================================== */
 
@@ -305,138 +338,161 @@
 
       <form id="student-form">
 
-        <div class="form-grid">
+        <!-- 👤 STUDENT DETAILS -->
+        <div class="form-section">
+          <h3 class="form-section-title">👤 Student Details</h3>
+
+          <div class="cols-2">
+
+            <div class="form-group">
+              <label for="s-name">Student Full Name</label>
+              <input type="text" id="s-name" placeholder="Enter student name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="s-phone">Phone Number</label>
+              <input
+                type="tel"
+                id="s-phone"
+                placeholder="10 digit mobile number"
+                maxlength="10"
+                inputmode="numeric"
+                required
+              >
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- 🪑 SEAT DETAILS -->
+        <div class="form-section">
+          <h3 class="form-section-title">🪑 Seat Details</h3>
+
+          <div class="cols-2">
+
+            <div class="form-group">
+              <label for="s-seat">Seat Type</label>
+              <select id="s-seat" required>
+                <option value="">Select Seat Type</option>
+                <option value="Non-AC">Non-AC</option>
+                <option value="AC">AC</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="s-seat-number">Seat Number</label>
+              <select id="s-seat-number" required>
+
+                <option value="">Select Empty Seat</option>
+
+                <optgroup label="👦 Boys Seats — 1 to 48">
+                  <script>
+                    for (let i = 1; i <= 48; i++) {
+                      document.write(`<option value="${i}">Seat ${i}</option>`);
+                    }
+                  </script>
+                </optgroup>
+
+                <optgroup label="👧 Girls Seats — 49 to 58">
+                  <script>
+                    for (let i = 49; i <= 58; i++) {
+                      document.write(`<option value="${i}">Seat ${i}</option>`);
+                    }
+                  </script>
+                </optgroup>
+
+                <optgroup label="👦 Boys Seats — 59 to 70">
+                  <script>
+                    for (let i = 59; i <= 70; i++) {
+                      document.write(`<option value="${i}">Seat ${i}</option>`);
+                    }
+                  </script>
+                </optgroup>
+
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- 💰 FEE & DATES -->
+        <div class="form-section">
+          <h3 class="form-section-title">💰 Fee &amp; Dates</h3>
+
+          <div class="cols-3">
+
+            <div class="form-group">
+              <label for="s-fee">Monthly Fee (₹)</label>
+              <input type="number" id="s-fee" placeholder="600" min="0" required>
+            </div>
+
+            <div class="form-group">
+              <label for="s-admission">Admission Date</label>
+              <input type="date" id="s-admission" required>
+            </div>
+
+            <div class="form-group">
+              <label for="s-due">Due Date</label>
+              <input type="date" id="s-due" required>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- 🏠 ADDRESS -->
+        <div class="form-section">
+          <h3 class="form-section-title">🏠 Address</h3>
 
           <div class="form-group">
-            <label for="s-name">Student Full Name</label>
-            <input type="text" id="s-name" placeholder="Enter student name" required>
-          </div>
-
-
-          <div class="form-group">
-            <label for="s-phone">Phone Number</label>
-            <input
-              type="tel"
-              id="s-phone"
-              placeholder="10 digit mobile number"
-              maxlength="10"
-              inputmode="numeric"
-              required
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label for="s-seat">Seat Type</label>
-            <select id="s-seat" required>
-              <option value="">Select Seat Type</option>
-              <option value="Non-AC">Non-AC</option>
-              <option value="AC">AC</option>
-            </select>
-          </div>
-
-
-          <div class="form-group">
-            <label for="s-seat-number">Seat Number</label>
-            <select id="s-seat-number" required>
-
-              <option value="">Select Empty Seat</option>
-
-              <optgroup label="👦 Boys Seats — 1 to 48">
-                <script>
-                  for (let i = 1; i <= 48; i++) {
-                    document.write(`<option value="${i}">Seat ${i}</option>`);
-                  }
-                </script>
-              </optgroup>
-
-              <optgroup label="👧 Girls Seats — 49 to 58">
-                <script>
-                  for (let i = 49; i <= 58; i++) {
-                    document.write(`<option value="${i}">Seat ${i}</option>`);
-                  }
-                </script>
-              </optgroup>
-
-              <optgroup label="👦 Boys Seats — 59 to 70">
-                <script>
-                  for (let i = 59; i <= 70; i++) {
-                    document.write(`<option value="${i}">Seat ${i}</option>`);
-                  }
-                </script>
-              </optgroup>
-
-            </select>
-          </div>
-
-
-          <div class="form-group">
-            <label for="s-due">Due Date</label>
-            <input type="date" id="s-due" required>
-          </div>
-
-
-          <div class="form-group">
-            <label for="s-fee">Monthly Fee (₹)</label>
-            <input type="number" id="s-fee" placeholder="600" min="0" required>
-          </div>
-
-
-          <div class="form-group">
-            <label for="s-admission">Admission Date</label>
-            <input type="date" id="s-admission" required>
-          </div>
-
-
-          <div class="form-group full-width">
             <label for="s-galli">Galli / Street / Area</label>
             <input type="text" id="s-galli" placeholder="डॉ. लेन">
           </div>
 
+          <div class="cols-3 row-gap">
 
-          <div class="form-group">
-            <label for="s-village">Village / Town</label>
-            <input type="text" id="s-village" placeholder="Gangakhed" list="village-list" autocomplete="off" required>
-            <datalist id="village-list"></datalist>
+            <div class="form-group">
+              <label for="s-district">District</label>
+              <select id="s-district" required>
+                <option value="">Select District</option>
+                <option>Parbhani</option>
+                <option>Beed</option>
+                <option>Latur</option>
+                <option>Nanded</option>
+                <option>Hingoli</option>
+                <option>Jalna</option>
+                <option>Pune</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="s-taluka">Taluka</label>
+
+              <!-- District with a list: dropdown of talukas -->
+              <select id="s-taluka" style="display:none;">
+                <option value="">Select Taluka</option>
+              </select>
+
+              <!-- Other district: type the taluka -->
+              <input type="text" id="s-taluka-text" placeholder="Taluka" required>
+            </div>
+
+            <div class="form-group">
+              <label for="s-village">Village / Town</label>
+              <input type="text" id="s-village" placeholder="Gangakhed" list="village-list" autocomplete="off" required>
+              <datalist id="village-list"></datalist>
+            </div>
+
           </div>
-
-
-          <div class="form-group">
-            <label for="s-district">District</label>
-            <select id="s-district" required>
-              <option value="">Select District</option>
-              <option>Parbhani</option>
-              <option>Beed</option>
-              <option>Latur</option>
-              <option>Nanded</option>
-              <option>Hingoli</option>
-              <option>Jalna</option>
-              <option>Pune</option>
-              <option>Other</option>
-            </select>
-          </div>
-
-
-          <div class="form-group full-width">
-            <label for="s-taluka">Taluka</label>
-
-            <!-- Parbhani district: dropdown of talukas -->
-            <select id="s-taluka" style="display:none;">
-              <option value="">Select Taluka</option>
-            </select>
-
-            <!-- Any other district: type the taluka -->
-            <input type="text" id="s-taluka-text" placeholder="Taluka" required>
-          </div>
-
-
-          <div class="form-group full-width">
-            <button type="submit" class="admin-button primary-button">
-              Add Student
-            </button>
-          </div>
-
         </div>
+
+
+        <button type="submit" class="admin-button primary-button" style="width:100%;">
+          Add Student
+        </button>
 
       </form>
 
