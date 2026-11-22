@@ -396,17 +396,12 @@
 
           <div class="form-group">
             <label for="s-village">Village / Town</label>
-            <input type="text" id="s-village" placeholder="Gangakhed" required>
+            <input type="text" id="s-village" placeholder="Gangakhed" list="village-list" autocomplete="off" required>
+            <datalist id="village-list"></datalist>
           </div>
 
 
           <div class="form-group">
-            <label for="s-taluka">Taluka</label>
-            <input type="text" id="s-taluka" placeholder="Gangakhed" required>
-          </div>
-
-
-          <div class="form-group full-width">
             <label for="s-district">District</label>
             <select id="s-district" required>
               <option value="">Select District</option>
@@ -419,6 +414,19 @@
               <option>Pune</option>
               <option>Other</option>
             </select>
+          </div>
+
+
+          <div class="form-group full-width">
+            <label for="s-taluka">Taluka</label>
+
+            <!-- Parbhani district: dropdown of talukas -->
+            <select id="s-taluka" style="display:none;">
+              <option value="">Select Taluka</option>
+            </select>
+
+            <!-- Any other district: type the taluka -->
+            <input type="text" id="s-taluka-text" placeholder="Taluka" required>
           </div>
 
 
@@ -627,6 +635,7 @@
         renderSeatMap(allStudents);
         renderStudents(allStudents);
         updateSeatOptions(allStudents);
+        updateVillageSuggestions(allStudents);
 
       } catch (error) {
 
@@ -1411,7 +1420,7 @@
         const admissionDate = document.getElementById("s-admission").value;
         const galli = document.getElementById("s-galli").value.trim();
         const village = document.getElementById("s-village").value.trim();
-        const taluka = document.getElementById("s-taluka").value.trim();
+        const taluka = getTalukaValue();
         const district = document.getElementById("s-district").value;
 
         if (!/^[0-9]{10}$/.test(phone)) {
@@ -1470,6 +1479,8 @@
         alert("Student added successfully! ✅");
 
         form.reset();
+
+        updateTalukaField();
 
         await loadStudents();
 
@@ -1576,6 +1587,192 @@
         .replace(/\r/g, "\\r");
 
     }
+
+
+    /* =====================================
+       TALUKA (depends on District)
+       District has a list -> dropdown (+ "Other" to type manually)
+       District has no list -> normal text box
+    ====================================== */
+
+    const TALUKAS = {
+      "Parbhani": [
+        "Parbhani", "Gangakhed", "Jintur", "Manwath", "Palam",
+        "Pathri", "Purna", "Selu", "Sonpeth"
+      ],
+      "Beed": [
+        "Beed", "Ambajogai", "Ashti", "Dharur", "Georai", "Kaij",
+        "Majalgaon", "Parli", "Patoda", "Shirur (Kasar)", "Wadwani"
+      ],
+      "Latur": [
+        "Latur", "Ahmedpur", "Ausa", "Chakur", "Deoni", "Jalkot",
+        "Nilanga", "Renapur", "Shirur Anantpal", "Udgir"
+      ],
+      "Nanded": [
+        "Nanded", "Ardhapur", "Bhokar", "Biloli", "Deglur", "Dharmabad",
+        "Hadgaon", "Himayatnagar", "Kandhar", "Kinwat", "Loha", "Mahur",
+        "Mudkhed", "Mukhed", "Naigaon", "Umri"
+      ],
+      "Hingoli": [
+        "Hingoli", "Aundha Nagnath", "Basmath", "Kalamnuri", "Sengaon"
+      ],
+      "Jalna": [
+        "Jalna", "Ambad", "Badnapur", "Bhokardan", "Ghansawangi",
+        "Jafrabad", "Mantha", "Partur"
+      ],
+      "Pune": [
+        "Pune City", "Haveli", "Khed", "Ambegaon", "Junnar", "Shirur",
+        "Baramati", "Indapur", "Daund", "Purandar", "Bhor", "Velhe",
+        "Mulshi", "Maval"
+      ]
+    };
+
+    function updateTalukaField() {
+
+      const district = document.getElementById("s-district").value;
+      const select = document.getElementById("s-taluka");
+      const input = document.getElementById("s-taluka-text");
+      const list = TALUKAS[district];
+
+      if (list) {
+
+        select.innerHTML =
+          '<option value="">Select Taluka</option>' +
+          list
+            .map(name => `<option value="${name}">${name}</option>`)
+            .join("") +
+          '<option value="Other">Other (type manually)</option>';
+
+        select.style.display = "";
+        select.required = true;
+
+        input.style.display = "none";
+        input.required = false;
+        input.value = "";
+
+      } else {
+
+        select.style.display = "none";
+        select.required = false;
+        select.innerHTML = '<option value="">Select Taluka</option>';
+
+        input.style.display = "";
+        input.required = true;
+
+      }
+
+    }
+
+    function onTalukaSelectChange() {
+
+      const select = document.getElementById("s-taluka");
+      const input = document.getElementById("s-taluka-text");
+
+      if (select.value === "Other") {
+
+        input.style.display = "";
+        input.required = true;
+        input.focus();
+
+      } else {
+
+        input.style.display = "none";
+        input.required = false;
+        input.value = "";
+
+      }
+
+    }
+
+    function getTalukaValue() {
+
+      const district = document.getElementById("s-district").value;
+      const select = document.getElementById("s-taluka");
+      const input = document.getElementById("s-taluka-text");
+
+      if (TALUKAS[district]) {
+
+        return select.value === "Other"
+          ? input.value.trim()
+          : select.value.trim();
+
+      }
+
+      return input.value.trim();
+
+    }
+
+    document
+      .getElementById("s-district")
+      .addEventListener("change", updateTalukaField);
+
+    document
+      .getElementById("s-taluka")
+      .addEventListener("change", onTalukaSelectChange);
+
+
+    /* =====================================
+       VILLAGE SUGGESTIONS
+       Villages already saved for students (same taluka)
+       are offered as suggestions while typing.
+       New villages can still be typed freely.
+    ====================================== */
+
+    function updateVillageSuggestions(students) {
+
+      const list = document.getElementById("village-list");
+
+      if (!list) {
+        return;
+      }
+
+      const district = document.getElementById("s-district").value;
+      const taluka = getTalukaValue();
+
+      const villages = new Set();
+
+      (students || []).forEach(student => {
+
+        const village = String(student.village || "").trim();
+
+        if (!village) {
+          return;
+        }
+
+        if (district && String(student.district || "").trim() !== district) {
+          return;
+        }
+
+        if (taluka && String(student.taluka || "").trim() !== taluka) {
+          return;
+        }
+
+        villages.add(village);
+
+      });
+
+      list.innerHTML = Array.from(villages)
+        .sort((a, b) => a.localeCompare(b))
+        .map(name => `<option value="${escapeHtml(name)}"></option>`)
+        .join("");
+
+    }
+
+    ["s-district", "s-taluka", "s-taluka-text"].forEach(id => {
+
+      const element = document.getElementById(id);
+
+      element.addEventListener("change", () => {
+        updateVillageSuggestions(allStudents);
+      });
+
+      element.addEventListener("input", () => {
+        updateVillageSuggestions(allStudents);
+      });
+
+    });
+
+    updateTalukaField();
 
 
     /* =====================================
