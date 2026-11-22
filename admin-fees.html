@@ -2182,174 +2182,97 @@
        ADD STUDENT
     ====================================== */
 
-    document
-      .getElementById(
-        "student-form"
-      )
-      .addEventListener(
-        "submit",
-        async event => {
+    /* =====================================
+   ADD STUDENT
+====================================== */
 
-          event.preventDefault();
+document
+  .getElementById("student-form")
+  .addEventListener("submit", async event => {
 
+    event.preventDefault();
 
-          const form =
-            document.getElementById(
-              "student-form"
-            );
+    const form = document.getElementById("student-form");
 
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
-          if (
-            !form.checkValidity()
-          ) {
+    const name = document.getElementById("s-name").value.trim();
+    const phone = document.getElementById("s-phone").value.trim();
+    const seatType = document.getElementById("s-seat").value;
+    const seatNumber = document.getElementById("s-seat-number").value;
+    const dueDate = document.getElementById("s-due").value;
 
-            form.reportValidity();
+    // NEW FIELDS
+    const fee = document.getElementById("s-fee").value;
+    const admissionDate = document.getElementById("s-admission").value;
+    const galli = document.getElementById("s-galli").value.trim();
+    const village = document.getElementById("s-village").value.trim();
+    const taluka = document.getElementById("s-taluka").value.trim();
+    const district = document.getElementById("s-district").value;
 
-            return;
+    if (!/^[0-9]{10}$/.test(phone)) {
+      alert("Please enter exactly 10 digits for phone number.");
+      return;
+    }
 
-          }
+    if (!seatNumber) {
+      alert("Please select an empty seat.");
+      return;
+    }
 
+    if (!fee || Number(fee) <= 0) {
+      alert("Please enter a valid monthly fee.");
+      return;
+    }
 
-          const name =
-            document
-              .getElementById(
-                "s-name"
-              )
-              .value
-              .trim();
+    if (!admissionDate) {
+      alert("Please select admission date.");
+      return;
+    }
 
+    if (!village || !taluka || !district) {
+      alert("Please fill Village, Taluka and District.");
+      return;
+    }
 
-          const phone =
-            document
-              .getElementById(
-                "s-phone"
-              )
-              .value
-              .trim();
+    const button = form.querySelector("button[type='submit']");
 
+    button.disabled = true;
+    button.textContent = "Adding...";
 
-          const seatType =
-            document
-              .getElementById(
-                "s-seat"
-              )
-              .value;
+    const result = await apiRequest({
+      action: "addStudent",
+      name: name,
+      phone: phone,
+      seatType: seatType,
+      seatNumber: seatNumber,
+      dueDate: dueDate,
+      fee: fee,
+      admissionDate: admissionDate,
+      galli: galli,
+      village: village,
+      taluka: taluka,
+      district: district
+    });
 
+    button.disabled = false;
+    button.textContent = "Add Student";
 
-          const seatNumber =
-            document
-              .getElementById(
-                "s-seat-number"
-              )
-              .value;
+    if (!result.success) {
+      alert(result.message || "Unable to add student.");
+      return;
+    }
 
+    alert("Student added successfully! ✅");
 
-          const dueDate =
-            document
-              .getElementById(
-                "s-due"
-              )
-              .value;
+    form.reset();
 
+    await loadStudents();
 
-          if (
-            !/^[0-9]{10}$/.test(
-              phone
-            )
-          ) {
-
-            alert(
-              "Please enter exactly 10 digits for phone number."
-            );
-
-            return;
-
-          }
-
-
-          if (!seatNumber) {
-
-            alert(
-              "Please select an empty seat."
-            );
-
-            return;
-
-          }
-
-
-          const button =
-            form.querySelector(
-              "button[type='submit']"
-            );
-
-
-          button.disabled =
-            true;
-
-
-          button.textContent =
-            "Adding...";
-
-
-          const result =
-            await apiRequest({
-
-              action:
-                "addStudent",
-
-              name:
-                name,
-
-              phone:
-                phone,
-
-              seatType:
-                seatType,
-
-              seatNumber:
-                seatNumber,
-
-              dueDate:
-                dueDate
-
-            });
-
-
-          button.disabled =
-            false;
-
-
-          button.textContent =
-            "Add Student";
-
-
-          if (
-            !result.success
-          ) {
-
-            alert(
-              result.message ||
-              "Unable to add student."
-            );
-
-            return;
-
-          }
-
-
-          alert(
-            "Student added successfully! ✅"
-          );
-
-
-          form.reset();
-
-
-          await loadStudents();
-
-        }
-      );
+  });
 
 
     /* =====================================
